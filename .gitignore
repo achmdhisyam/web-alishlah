@@ -16,3 +16,4 @@ app/Config/App.php
 writable/
 writable/debugbar/
 writable/logs
+scratch/
