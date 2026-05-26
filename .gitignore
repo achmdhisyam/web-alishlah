@@ -17,3 +17,8 @@ writable/
 writable/debugbar/
 writable/logs
 scratch/
+assets/upload/**
+!assets/upload/**/
+!assets/upload/**/index.php
+!assets/upload/**/index.html
+!assets/upload/**/.gitkeep
