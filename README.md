@@ -1,119 +1,111 @@
-# Website Profil dan Manajemen Sekolah menguunakan CodeIgniter 4 Framework
-Aplikasi website profil dan manajemen sekolah dari [Java Web Media](https://javawebmedia.com/) dengan berbagai fitur yang semoga bermanfaat. 
+# 🏫 Website Profil & Manajemen Sekolah (Web Al-Ishlah)
 
-Demo unofficial sementara https://haqi.sch.id/
+[![CodeIgniter](https://img.shields.io/badge/Framework-CodeIgniter%204-orange?style=for-the-badge&logo=codeigniter)](https://codeigniter.com)
+[![PHP](https://img.shields.io/badge/PHP-8.1%2B-blue?style=for-the-badge&logo=php)](https://www.php.net)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?style=for-the-badge&logo=bootstrap)](https://getbootstrap.com)
+[![AdminLTE](https://img.shields.io/badge/Admin-AdminLTE%203-red?style=for-the-badge)](https://adminlte.io)
+[![Laragon](https://img.shields.io/badge/Environment-Laragon-cyan?style=for-the-badge&logo=laravel)](https://laragon.org)
 
-Spesifikasi Teknis Source Code
-Website ini dikembangkan dengan beberapa spesifikasi:
-1. Dikembangan dengan Codeigniter 4. Pastikan teman-teman membaca Server Requirements dari CI4 ini yah.
-2. Template Admin menggunakan AdminLTE 3.2.0. Bisa diakses di https://adminlte.io/
-3. Template front end menggunakan Sandbox - Modern & Multipurpose Bootstrap 5 Template 3.4.0 dari https://sandbox.elemisthemes.com/.
-4. Notifikasi menggunakan Sweetalert
-5. Datatables dan plugin export
+Website Profil dan Manajemen Sekolah resmi **Al-Ishlah** yang dikembangkan menggunakan framework **CodeIgniter 4**. Aplikasi ini dirancang untuk memudahkan manajemen informasi sekolah, publikasi berita, profil guru/staff, pendaftaran siswa baru (PPDB), serta interaksi antara pihak sekolah, siswa, dan masyarakat umum.
 
-# Fitur-fitur Website meliputi:
+---
 
-## HALAMAN FRONT END:
+## ✨ Fitur Utama
 
-1. Halaman Beranda/Homepage
-2. Banner
-3. Halaman berita (update,pengumuman,indeks)
-4.  Halaman profile (Profil staf team, Layanan & produk, Prestasi & penghargaan, Ekstrakurikuler, Fasilitas sarana dan prasarana)
-5. Halaman Karya
-6. Halaman galeri gambar
-7. Halaman galeri video
-8. Halaman file download
-9. Halaman Tautan
-10. Halaman kontak
-11. Floating whatsapp button
-12. Login Siswa & Calon Siswa
-13. Pendaftaran
+### 🌐 Halaman Front-End (Publik)
+*   **Beranda (Homepage):** Banner dinamis, sambutan kepala sekolah, berita terbaru, dan statistik sekolah.
+*   **Profil Sekolah:** Sejarah yayasan, visi & misi, fasilitas, sarana & prasarana, serta ekstrakurikuler.
+*   **Direktori Staff & Guru:** Daftar tenaga pendidik beserta jabatan dan profil singkat.
+*   **Informasi & Pengumuman:** Artikel berita, agenda kegiatan sekolah, dan prestasi akademik/non-akademik.
+*   **Galeri Media:** Galeri foto kegiatan sekolah dan video dokumentasi (YouTube integration).
+*   **Unduhan (Downloads):** File formulir, dokumen penting, atau materi ajar yang dapat diunduh publik.
+*   **Portal Pendaftaran (PPDB):** Fitur registrasi calon siswa secara online beserta dashboard portal siswa.
+*   **Kontak & Integrasi WA:** Informasi alamat, form kontak, dan tombol WhatsApp melayang (*floating widget*).
 
-## HALAMAN BACK END:
-1. Login dan logout
-2. Halaman update profile dan ganti password
-3. Halaman Dashboard
-4. Halaman kelola pendaftar
-5. Halaman kelola berita dan kategorinya
-6. Halaman kelola Galeri dan Banner dan kategorinya
-7. Halaman kelola staff and team dan kategorinya
-8. Halaman kelola Peestasi dan penghargaan dan kategorinya
-9. Halaman kelola Event dan Agenda dan kategorinya
-10. Halaman kelola upload/download file dan kategorinya
-11. Halaman kelola video youtube
-12. Halaman kelola Karya dan kategorinya
-13. Halaman kelola Fasilitas dan kategorinya
-14. Halaman kelola Ekstrakurikuler dan kategorinya
-15. Halaman kelola Manajemen Siswa (Rombongan Belajar, Tahun Ajaran, Kelas)
-16. Halaman kelola Mitra dan kategorinya
-17. Halaman kelola Master Data (Link website, Jenjang Pendidikan, Agama, Hubungan Keluarga, Jenis pekerjaan)
-18. Halaman kelola menu front end
-19. Halaman kelola pengguna sistem
-20. Halaman kelola konfigurasi (website, logo dan icon, about us, banner, email, informasi detail sekolah)
-21. Pendaftaran Siswa Baru (PSB)
-22. Dan fitur lainnya
+### 🔐 Halaman Back-End (Administrator & Operator)
+*   **Dashboard Analytics:** Statistik pendaftar siswa baru, total berita, galeri, dan aktivitas sistem.
+*   **Manajemen Konten (CMS):** Kelola berita, kategori berita, event/agenda, galeri foto, dan video.
+*   **Manajemen Akademik:** Kelola data guru/staff, rombongan belajar (rombel), kelas, tahun ajaran, dan ekstrakurikuler.
+*   **Sistem PPDB Online:** Verifikasi pendaftar baru, manajemen berkas persyaratan, dan ekspor data siswa.
+*   **Manajemen Pengguna:** Pengaturan akun admin, operator, serta hak akses.
+*   **Konfigurasi Sistem:** Pengaturan profil sekolah, logo & favicon, info kontak, SMTP email, dan menu navigasi.
 
-## Mengakses Halaman Website dan Login ke Admin
-1. Buka browser Anda
-2. Ketik alamat http://websitekamu.com
-3. Untuk Login ke halaman Back End, silakan buka http://websitekamu.com/login
-4. Username admin: andoyo
-6. Password admin: andoyo
-5. Untuk Login siswa dan pendaftar, silahkan buka http://websitekamu.com/signin
+---
 
-Catatan : Beberapa fitur masih dalam tahap pengembangan, dan mungkin belum bekerja dengan baik
+## 🛠️ Spesifikasi Teknis
 
-# CodeIgniter 4 Framework
+*   **Framework Utama:** CodeIgniter `v4.x`
+*   **Admin Template:** AdminLTE `v3.2.0`
+*   **Front-End Template:** Sandbox - Modern & Multipurpose Bootstrap 5 Template `v3.4.0`
+*   **Notifikasi:** SweetAlert2 & Toastr
+*   **Data Grid:** DataTables (dengan fitur ekspor PDF/Excel)
+*   **PDF Generator:** mPDF
 
-## What is CodeIgniter?
+---
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 🚀 Panduan Instalasi Lokal (Laragon)
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Ikuti langkah-langkah di bawah ini untuk menjalankan project di komputer lokal menggunakan **Laragon**:
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### 1. Prasyarat Sistem
+Pastikan komputer Anda sudah terinstal:
+*   [Laragon Full](https://laragon.org/download/) (Direkomendasikan menggunakan PHP 8.1 atau PHP 8.2)
+*   [Composer](https://getcomposer.org/)
 
-The user guide corresponding to the latest version of the framework can be found
-[here](https://codeigniter4.github.io/userguide/).
+### 2. Kloning Project
+Letakkan folder project ini di dalam direktori root Laragon (`C:\laragon\www\`).
+```bash
+C:\laragon\www\project
+```
 
-## Important Change with index.php
+### 3. Instalasi Dependensi
+Buka terminal (bisa melalui terminal Laragon) di direktori project, lalu jalankan perintah berikut untuk mengunduh package composer yang dibutuhkan:
+```bash
+composer install
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### 4. Konfigurasi Environment (`.env`)
+Salin file konfigurasi environment dari template default `env` ke `.env`:
+```bash
+copy env .env
+```
+Buka file `.env` yang baru dibuat dan sesuaikan konfigurasi database Anda:
+```env
+CI_ENVIRONMENT = development
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+database.default.hostname = localhost
+database.default.database = nama_database
+database.default.username = root
+database.default.password = 
+database.default.DBDriver = MySQLi
+database.default.port = 3306
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 5. Konfigurasi Database
+1. Buka phpMyAdmin atau aplikasi database manager pilihan Anda (HeidiSQL, DBeaver, dll.).
+2. Buat database baru bernama `web_sekolah`.
+3. Import file database utama (jika disediakan file `.sql` di folder backup/db).
 
-## Repository Management
+### 6. Menjalankan Aplikasi
+Aplikasi dapat diakses dengan cara:
+*   **Melalui Virtual Host Laragon:** Klik **Start All** pada Laragon. 
+*   **Melalui Spark CLI:** Jalankan perintah berikut di terminal project:
+    ```bash
+    php spark serve
+    ```
+    Lalu buka browser di alamat [http://localhost:8080](http://localhost:8080).
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+---
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
 
-## Contributing
+## 📁 Struktur Direktori Penting
 
-We welcome contributions from the community.
+*   [`app/Controllers/`](file:///c:/laragon/www/websitesekolah-main/app/Controllers) - Logika kontroler utama aplikasi.
+*   [`app/Models/`](file:///c:/laragon/www/websitesekolah-main/app/Models) - Logika interaksi database.
+*   [`app/Views/`](file:///c:/laragon/www/websitesekolah-main/app/Views) - Template tampilan web (Front-End & Back-End).
+*   [`public/`](file:///c:/laragon/www/websitesekolah-main/public) - Aset publik (CSS, JS, Gambar) dan entry point utama `index.php`.
+*   [`assets/`](file:///c:/laragon/www/websitesekolah-main/assets) - Kumpulan plugin, vendor, dan aset asset-management.
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+---
 
-## Server Requirements
 
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
