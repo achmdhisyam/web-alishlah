@@ -65,7 +65,7 @@ class Sambutan extends BaseController
 		
 		$gambar = $this->request->getFile('gambar');
 		if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
-			$rules['gambar'] = 'ext_in[gambar,jpg,jpeg,gif,png,svg]|max_size[gambar,4096]';
+			$rules['gambar'] = 'ext_in[gambar,jpg,jpeg,gif,png,svg]|max_size[gambar,102400]';
 		}
 
 		if(strtolower($this->request->getMethod()) === 'post' && $this->validate($rules)) {
@@ -74,6 +74,7 @@ class Sambutan extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -129,7 +130,7 @@ class Sambutan extends BaseController
 		
 		$gambar = $this->request->getFile('gambar');
 		if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
-			$rules['gambar'] = 'ext_in[gambar,jpg,jpeg,gif,png,svg]|max_size[gambar,4096]';
+			$rules['gambar'] = 'ext_in[gambar,jpg,jpeg,gif,png,svg]|max_size[gambar,102400]';
 		}
 
 		if(strtolower($this->request->getMethod()) === 'post' && $this->validate($rules)) {
@@ -138,6 +139,7 @@ class Sambutan extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)

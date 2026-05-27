@@ -78,6 +78,8 @@ class Berita_model extends Model
         $this->where( [  'status_berita' => 'Publish',
                             'jenis_berita'  => 'Berita']);
         $this->orderBy('berita.tanggal_publish','DESC');
+        $query = $this->get();
+        return $query->getResult();
     }
 
     // home

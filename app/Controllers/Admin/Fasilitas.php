@@ -63,7 +63,7 @@ class Fasilitas extends BaseController
 				'judul_fasilitas' 	=> 'required|is_unique[fasilitas.judul_fasilitas]',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -71,6 +71,7 @@ class Fasilitas extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -193,7 +194,7 @@ class Fasilitas extends BaseController
 				'judul_fasilitas' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -201,6 +202,7 @@ class Fasilitas extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)

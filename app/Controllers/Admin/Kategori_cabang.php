@@ -21,7 +21,7 @@ class Kategori_cabang extends BaseController
 				'nama_kategori_cabang' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -29,6 +29,7 @@ class Kategori_cabang extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_kategori_cabangbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_kategori_cabangbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_kategori_cabangbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_kategori_cabangbaru)
@@ -88,7 +89,7 @@ class Kategori_cabang extends BaseController
 				'nama_kategori_cabang' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -96,6 +97,7 @@ class Kategori_cabang extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_kategori_cabangbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_kategori_cabangbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_kategori_cabangbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_kategori_cabangbaru)

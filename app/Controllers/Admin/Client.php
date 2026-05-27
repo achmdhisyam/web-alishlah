@@ -63,7 +63,7 @@ class Client extends BaseController
 				'gambar'	 	=> [
 					                'uploaded[gambar]',
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -71,6 +71,7 @@ class Client extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_clientbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_clientbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_clientbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_clientbaru)
@@ -201,7 +202,7 @@ class Client extends BaseController
 				'nama_client' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -209,6 +210,7 @@ class Client extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_clientbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_clientbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_clientbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_clientbaru)

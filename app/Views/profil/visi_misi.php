@@ -18,7 +18,7 @@
               <div class="card-body">
                 
                 <div class="mb-8">
-                  <h2 class="display-6 text-primary mb-3"><i class="uil uil-eye"></i> Visi</h2>
+                  <h2 class="display-6 text-primary mb-3"><i class="fas fa-check-circle"></i> Visi</h2>
                   <blockquote class="fs-lg border-start border-primary border-4 ps-4 italic">
                     <?php echo nl2br(htmlspecialchars($visi_misi->ringkasan)) ?>
                   </blockquote>
@@ -27,7 +27,7 @@
                 <hr class="my-8" />
 
                 <div>
-                  <h2 class="display-6 text-primary mb-3"><i class="uil uil-bullseye"></i> Misi</h2>
+                  <h2 class="display-6 text-primary mb-3"><i class="fas fa-check-circle"></i> Misi</h2>
                   <div class="post-content">
                     <?php echo $visi_misi->isi ?>
                   </div>

@@ -87,6 +87,9 @@ echo csrf_field();
 		<button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="modal" data-target="#modal-download">
 			<i class="fa fa-download"></i> Lihat File
 		</button>
+		<button type="button" class="btn btn-warning btn-sm mb-1" id="btn-ai-kembangkan">
+			<i class="fa fa-magic"></i> ✨ Kembangkan Tulisan dengan AI
+		</button>
 		<textarea id="isi" name="isi" class="form-control konten"><?php echo set_value('isi') ?></textarea>
 	</div>
 </div>
@@ -115,3 +118,69 @@ include('media.php');
 include('galeri.php');
 include('download.php');
 ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnAi = document.getElementById('btn-ai-kembangkan');
+    
+    if(btnAi) {
+        btnAi.addEventListener('click', function() {
+            const judul = document.querySelector('input[name="judul_berita"]').value;
+            // Dapatkan teks mentah (poin-poin) dari TinyMCE
+            let draftIsi = '';
+            if (typeof tinymce !== 'undefined' && tinymce.get('isi')) {
+                draftIsi = tinymce.get('isi').getContent({format: 'text'});
+            } else {
+                draftIsi = document.getElementById('isi').value;
+            }
+
+            if(!draftIsi.trim()) {
+                alert('Isi Berita (poin-poin di editor) tidak boleh kosong untuk dikembangkan oleh AI!');
+                return;
+            }
+
+            // Ubah tombol jadi loading
+            const originalText = btnAi.innerHTML;
+            btnAi.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sedang menulis...';
+            btnAi.disabled = true;
+
+            const formData = new FormData();
+            formData.append('judul', judul);
+            formData.append('draft_isi', draftIsi);
+
+            fetch('<?php echo base_url('admin/ai/kembangkanBerita') ?>', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                btnAi.innerHTML = originalText;
+                btnAi.disabled = false;
+
+                if(data.error) {
+                    alert('Error AI: ' + data.error);
+                } else if(data.success) {
+                    // Set Judul dari AI
+                    document.querySelector('input[name="judul_berita"]').value = data.judul;
+                    // Set TinyMCE content
+                    if (typeof tinymce !== 'undefined' && tinymce.get('isi')) {
+                        tinymce.get('isi').setContent(data.isi);
+                    } else {
+                        document.getElementById('isi').value = data.isi;
+                    }
+                    // Set Ringkasan
+                    document.querySelector('textarea[name="ringkasan"]').value = data.ringkasan;
+                }
+            })
+            .catch(error => {
+                btnAi.innerHTML = originalText;
+                btnAi.disabled = false;
+                alert('Terjadi kesalahan jaringan.');
+            });
+        });
+    }
+});
+</script>

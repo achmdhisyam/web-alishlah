@@ -21,7 +21,7 @@ class Video extends BaseController
 				'judul' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -29,6 +29,7 @@ class Video extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$judulbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$judulbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $judulbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$judulbaru)
@@ -92,7 +93,7 @@ class Video extends BaseController
 				'judul' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -100,6 +101,7 @@ class Video extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$judulbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$judulbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $judulbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$judulbaru)

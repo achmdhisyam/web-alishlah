@@ -125,7 +125,7 @@ class Program_pendidikan extends BaseController
 				'judul_program_pendidikan' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -133,6 +133,7 @@ class Program_pendidikan extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -194,7 +195,7 @@ class Program_pendidikan extends BaseController
 				'judul_program_pendidikan' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -202,6 +203,7 @@ class Program_pendidikan extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -358,12 +360,13 @@ class Program_pendidikan extends BaseController
 		if($this->request->getMethod() === 'POST' && $this->validate([
 			'file_excel' => [
 				'ext_in[file_excel,xlsx,xls,csv]',
-				'max_size[file_excel,4096]',
+				'max_size[file_excel,102400]',
 			],
 		])) {
 			$file = $this->request->getFile('file_excel');
 			$fileName = $file->getRandomName();
 			$file->move(WRITEPATH . '../assets/upload/file/', $fileName);
+			$this->compressImage(WRITEPATH . '../assets/upload/file/' . $fileName);
 			
 			$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
 			$reader->setReadDataOnly(TRUE);

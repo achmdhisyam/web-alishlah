@@ -102,7 +102,7 @@ class Pendaftaran extends BaseController
 
 	            // Kirim email
 	            if ($this->sendEmail($email, $subject, $message_html)) {
-	                $this->session->setFlashdata('sukses', 'Data Akun Berhasil Dibuat. Silakan lanjutkan memilih periode pendaftaran dan mengisi biodata.Email berhasil dikirim');
+	                $this->session->setFlashdata('sukses', 'Data Akun Berhasil Dibuat. Silakan lanjutkan memilih periode pendaftaran dan mengisi biodata. Email berhasil dikirim ke ' . $email);
 	            } else {
 	                $this->session->setFlashdata('warning', 'Data Akun Berhasil Dibuat. Silakan lanjutkan memilih periode pendaftaran dan mengisi biodata. Namun email gagal dikirm');
 	            }

@@ -21,7 +21,7 @@ class Kategori_staff extends BaseController
 				'nama_kategori_staff' 	=> 'required',
 				'gambar'	 			=> [
 								                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -29,6 +29,7 @@ class Kategori_staff extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_kategori_staffbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_kategori_staffbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_kategori_staffbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_kategori_staffbaru)
@@ -88,7 +89,7 @@ class Kategori_staff extends BaseController
 				'nama_kategori_staff' 	=> 'required',
 				'gambar'	 			=> [
 								                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -96,6 +97,7 @@ class Kategori_staff extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_kategori_staffbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_kategori_staffbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_kategori_staffbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_kategori_staffbaru)

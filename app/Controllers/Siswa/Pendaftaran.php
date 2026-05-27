@@ -564,23 +564,30 @@ class Pendaftaran extends BaseController
 		// Send registration email if not sent yet
 		if ($siswa && $siswa->email_pendaftaran_sent == 0) {
 			$emailData = [
-				'nama_siswa'     => $siswa->nama_siswa,
-				'kode_siswa'     => $siswa->kode_siswa,
-				'program'        => $siswa->judul_program_pendidikan,
-				'gelombang'      => $siswa->judul,
-				'tgl_pengumuman' => $this->website->tanggal_id($siswa->tanggal_pengumuman),
-				'namaweb'        => $konfigurasi->namaweb,
-				'link_login'     => base_url('signin')
+				'nama_siswa'      => $siswa->nama_siswa,
+				'kode_siswa'      => $siswa->kode_siswa,
+				'program'         => $siswa->judul_program_pendidikan,
+				'gelombang'       => $siswa->judul,
+				'tgl_pengumuman'  => $this->website->tanggal_id($siswa->tanggal_pengumuman),
+				'namaweb'         => $konfigurasi->namaweb,
+				'link_pengumuman' => base_url('check')
 			];
 			$htmlMessage = view('email_templates/pendaftaran_selesai', $emailData);
 			
-			if ($this->sendEmail($siswa->email, 'Pendaftaran PPDB Berhasil - ' . $konfigurasi->namaweb, $htmlMessage)) {
+			$recipientEmail = !empty($siswa->email_akun) ? $siswa->email_akun : $siswa->email;
+			if ($this->sendEmail($recipientEmail, 'Pendaftaran PPDB Berhasil - ' . $konfigurasi->namaweb, $htmlMessage)) {
 				$m_siswa->edit([
 					'id_siswa'               => $siswa->id_siswa,
 					'email_pendaftaran_sent' => 1
 				]);
 				// Reload fresh data to reflect changes in view
 				$siswa = $m_siswa->read($slug_siswa);
+				$this->session->setFlashdata('sukses', 'Pendaftaran Berhasil! Bukti pendaftaran telah dikirim ke email: ' . $recipientEmail);
+			} else {
+				// Log the error to writeable/logs for debugging if email sending fails
+				$email_service = \Config\Services::email();
+				log_message('error', 'Gagal mengirim email pendaftaran ke ' . $recipientEmail . '. Detail: ' . $email_service->printDebugger(['headers', 'subject', 'body']));
+				$this->session->setFlashdata('warning', 'Pendaftaran Berhasil disimpan, namun sistem gagal mengirim email bukti pendaftaran ke ' . $recipientEmail . '. Anda tetap dapat mengunduh bukti secara langsung.');
 			}
 		}
 

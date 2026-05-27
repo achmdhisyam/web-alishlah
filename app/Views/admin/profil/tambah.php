@@ -33,7 +33,7 @@ echo csrf_field();
 		<button type="button" class="btn btn-secondary btn-sm mb-1" data-toggle="modal" data-target="#modal-download">
 			<i class="fa fa-download"></i> Lihat File
 		</button>
-		<textarea id="isi" name="isi" class="form-control konten" rows="12" required><?php echo set_value('isi') ?></textarea>
+		<textarea id="isi" name="isi" class="form-control konten" rows="12"><?php echo set_value('isi') ?></textarea>
 	</div>
 </div>
 

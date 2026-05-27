@@ -82,7 +82,11 @@ class Gelombang extends BaseController
 						'link_login'         => base_url('signin')
 					];
 					$htmlMessage = view('email_templates/pengumuman_kelulusan', $emailData);
-					$this->sendEmail($s_detail->email, 'Pengumuman Hasil Seleksi SPMB - ' . $konfigurasi->namaweb, $htmlMessage);
+					$recipientEmail = !empty($s_detail->email_akun) ? $s_detail->email_akun : $s_detail->email;
+					if (!$this->sendEmail($recipientEmail, 'Pengumuman Hasil Seleksi SPMB - ' . $konfigurasi->namaweb, $htmlMessage)) {
+						$email_service = \Config\Services::email();
+						log_message('error', 'Gagal mengirim email pengumuman kelulusan (batch) ke ' . $recipientEmail . '. Detail: ' . $email_service->printDebugger(['headers', 'subject', 'body']));
+					}
 				}
 
    				$m_siswa->edit($data);
@@ -242,7 +246,7 @@ class Gelombang extends BaseController
 				'judul' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -250,6 +254,7 @@ class Gelombang extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$judulbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$judulbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $judulbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$judulbaru)
@@ -318,7 +323,7 @@ class Gelombang extends BaseController
 				'judul' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -326,6 +331,7 @@ class Gelombang extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$judulbaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$judulbaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $judulbaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$judulbaru)
@@ -408,7 +414,7 @@ class Gelombang extends BaseController
 				'nama_siswa' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 
@@ -439,6 +445,7 @@ class Gelombang extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_siswabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_siswabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_siswabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_siswabaru)
@@ -636,7 +643,7 @@ class Gelombang extends BaseController
 				'nama_siswa' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 
@@ -667,6 +674,7 @@ class Gelombang extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_siswabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_siswabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_siswabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_siswabaru)
@@ -889,7 +897,11 @@ class Gelombang extends BaseController
 					'link_login'         => base_url('signin')
 				];
 				$htmlMessage = view('email_templates/pengumuman_kelulusan', $emailData);
-				$this->sendEmail($siswa->email, 'Pengumuman Hasil Seleksi SPMB - ' . $konfigurasi->namaweb, $htmlMessage);
+				$recipientEmail = !empty($siswa->email_akun) ? $siswa->email_akun : $siswa->email;
+				if (!$this->sendEmail($recipientEmail, 'Pengumuman Hasil Seleksi SPMB - ' . $konfigurasi->namaweb, $htmlMessage)) {
+					$email_service = \Config\Services::email();
+					log_message('error', 'Gagal mengirim email pengumuman kelulusan ke ' . $recipientEmail . '. Detail: ' . $email_service->printDebugger(['headers', 'subject', 'body']));
+				}
 			}
 
 			// masuk database
@@ -925,7 +937,7 @@ class Gelombang extends BaseController
 				'gambar'	 	=> [
 									'uploaded[gambar]',
 					                'ext_in[gambar,jpg,jpeg,png,gif,zip,rar,doc,docx,xls,xlsx,ppt,pptx,pdf]',
-					                'max_size[gambar,24096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			// Image upload
@@ -934,6 +946,7 @@ class Gelombang extends BaseController
 			$file_ext 	= $avatar->guessExtension();
 			$file_size 	= $avatar->getSizeByUnit('mb');
             $avatar->move(WRITEPATH . '../assets/upload/pendaftaran/',$namabaru);
+            $this->compressImage(WRITEPATH . '../assets/upload/pendaftaran/' . $namabaru);
         	// masuk database
 		    $data = array(
         		'id_akun'				=> $akun->id_akun,

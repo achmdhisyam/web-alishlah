@@ -121,13 +121,14 @@ class Siswa extends BaseController
 			'ID_USER' 		=> 'required',
 			'file_excel'	=> [
 					                'ext_in[file_excel,xlsx,xls,csv]',
-					                'max_size[file_excel,4096]',
+					                'max_size[file_excel,102400]',
             					],
 		])) {
 			// File upload
 			$avatar  		= $this->request->getFile('file_excel');
 			$namabaru 		= $avatar->getName();
             $avatar->move(WRITEPATH . '../assets/upload/file/',$namabaru);
+            $this->compressImage(WRITEPATH . '../assets/upload/file/' . $namabaru);
            	// Masuk database
 	        $reader     	= \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
 	        $reader->setReadDataOnly(TRUE);
@@ -344,7 +345,7 @@ class Siswa extends BaseController
 				'nama_siswa' 	=> 'required',
 				'gambar'	 	=> [
 					                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 
@@ -375,6 +376,7 @@ class Siswa extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_siswabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_siswabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_siswabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_siswabaru)
@@ -537,7 +539,7 @@ class Siswa extends BaseController
 				'nama_siswa' 	=> 'required',
 				'gambar'	 			=> [
 								                'ext_in[gambar,jpg,jpeg,gif,png,svg]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if($this->request->getPost('identitas_wali')=='Ayah') {
@@ -567,6 +569,7 @@ class Siswa extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_siswabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_siswabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_siswabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_siswabaru)

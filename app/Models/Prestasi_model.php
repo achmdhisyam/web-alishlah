@@ -42,7 +42,7 @@ class Prestasi_model extends Model
         $builder->join('kategori_prestasi','kategori_prestasi.id_kategori_prestasi = prestasi.id_kategori_prestasi','LEFT');
         $builder->join('users','users.id_user = prestasi.id_user','LEFT');
         $builder->where('prestasi.status_prestasi',$status_prestasi);
-        $this->limit((int)$limit);
+        $builder->limit((int)$limit);
         $builder->orderBy('prestasi.id_prestasi','DESC');
         $query = $builder->get();
         return $query->getResult();

@@ -9,22 +9,271 @@ $site_setting   = $m_site->listing();
   /* Add your custom styles here */
 .whatsapp-link {
     position: fixed;
-    bottom: 30px;
-    right: 80px;
+    bottom: 35px;
+    right: 105px;
     z-index: 9999;
     transition: transform 0.3s ease-in-out;
 }
 a.whatsapp-link {
-  color: green;
-  background-color: #f5f5f5;
-  border: solid thin #eee;
-  border-radius: 10px;
-  padding: 10px 20px;
+    color: #fff;
+    background-color: #25D366;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-decoration: none;
+}
+a.whatsapp-link i {
+    font-size: 2rem;
 }
 .whatsapp-link:hover {
     transform: scale(1.1);
 }
 
+/* Chatbot Styles */
+.chatbot-toggler {
+    position: fixed;
+    bottom: 35px; /* Sejajar dengan WhatsApp */
+    right: 35px;
+    outline: none;
+    border: none;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #00ac37ff; /* Info color */
+    color: #fff;
+    transition: all 0.2s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.chatbot-toggler:hover {
+    transform: scale(1.1);
+}
+.chatbot-toggler i {
+    font-size: 1.5rem;
+    position: absolute;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.chatbot-toggler .fa-times {
+    opacity: 0;
+    transform: scale(0);
+}
+.show-chatbot .chatbot-toggler .fa-robot,
+.show-chatbot .chatbot-toggler .chatbot-icon-img {
+    opacity: 0;
+    transform: scale(0);
+}
+.show-chatbot .chatbot-toggler .fa-times {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.chatbot-wrapper {
+    position: fixed;
+    right: 35px;
+    bottom: 105px;
+    width: 300px;
+    max-width: 85vw; /* Responsif di layar kecil */
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.5);
+    transform-origin: bottom right;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    z-index: 9999;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+.show-chatbot .chatbot-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+.chatbot-header {
+    padding: 10px 15px;
+    background: #00ac37;
+    color: #fff;
+    position: relative;
+    text-align: center;
+}
+.chatbot-header h2 {
+    color: #fff;
+    font-size: 0.8rem;
+    margin: 0;
+    font-weight: bold;
+}
+.chatbot-body {
+    height: 320px;
+    max-height: 50vh; /* Responsif tinggi layar */
+    overflow-y: auto;
+    padding: 15px;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+.chatbot-body .chat {
+    display: flex;
+    margin-bottom: 15px;
+}
+.chatbot-body .chat p {
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 80%;
+}
+.chatbot-body .chat-incoming p {
+    background: #fff;
+    color: #333;
+    border: 1px solid #eee;
+    border-top-left-radius: 0;
+}
+.chatbot-body .chat-outgoing {
+    justify-content: flex-end;
+}
+.chatbot-body .chat-outgoing p {
+    background: #00ac37;
+    color: #fff;
+    border-top-right-radius: 0;
+}
+.chatbot-footer {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #fff;
+    border-top: none;
+}
+.chatbot-footer-inner {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background: #f1f3f5;
+    border-radius: 20px;
+    padding: 4px 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease-in-out;
+}
+.chatbot-footer-inner:focus-within {
+    border-color: #00ac37;
+    box-shadow: 0 0 6px rgba(0, 172, 55, 0.3);
+    background: #fff;
+}
+.chatbot-footer textarea {
+    height: 20px;
+    line-height: 20px;
+    max-height: 80px;
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 0;
+    font-size: 0.75rem;
+    background: transparent;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+.chatbot-footer textarea::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+.chatbot-footer button {
+    background: transparent;
+    border: none;
+    color: #00ac37;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0 0 0 8px;
+    transition: all 0.2s ease;
+}
+.chatbot-footer button:hover {
+    color: #008a2c;
+    transform: scale(1.1);
+}
+ 
+.quick-replies {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 8px 0;
+    margin-bottom: 4px;
+    background: transparent;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+.quick-replies::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+.quick-reply-btn:first-child {
+    margin-left: 16px;
+}
+.quick-reply-btn:last-child {
+    margin-right: 16px;
+}
+.quick-reply-btn {
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 4px 10px;
+    font-size: 0.65rem;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+    flex-shrink: 0;
+    outline: none;
+}
+.quick-reply-btn:hover {
+    background: #00ac37;
+    color: #fff;
+    border-color: #00ac37;
+    transform: translateY(-1px);
+}
+ 
+/* Responsive adjustments for Desktop (height stretch) & Mobile (centered) */
+@media (min-width: 768px) {
+    .chatbot-wrapper {
+        height: 600px;
+        max-height: calc(100vh - 150px);
+        width: 320px;
+    }
+    .chatbot-body {
+        flex: 1;
+        height: auto;
+        max-height: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .chatbot-wrapper {
+        right: auto;
+        bottom: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.5);
+        transform-origin: center;
+        width: 90%;
+        max-width: 340px;
+    }
+    .show-chatbot .chatbot-wrapper {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
 </style>
 <?php 
 $sek  = date('Y');
@@ -58,8 +307,45 @@ $awal = $sek-100;
 
 </script>
 <a href="https://api.whatsapp.com/send?phone=<?php echo $site_setting->hp ?>" class="whatsapp-link" target="_blank">
-        <i class="fab fa-whatsapp fa-3x"></i>
-    </a>
+        <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- AI Chatbot UI -->
+<button class="chatbot-toggler">
+    <?php if(!empty($site_setting->icon_chatbot)) { ?>
+        <img src="<?php echo base_url('assets/upload/image/'.$site_setting->icon_chatbot) ?>" class="chatbot-icon-img" style="width: 40px; height: 40px; border-radius: 50%; position: absolute; transition: opacity 0.2s ease, transform 0.2s ease;">
+    <?php } else { ?>
+        <i class="fas fa-robot"></i>
+    <?php } ?>
+    <i class="fas fa-times"></i>
+</button>
+<div class="chatbot-wrapper">
+    <div class="chatbot-header">
+        <h2>Asisten AI Madrasah</h2>
+    </div>
+    <div class="chatbot-body" id="chatbot-body">
+        <div class="chat chat-incoming">
+            <p>Halo! Saya Asisten Virtual dari <?php echo $this->website->namaweb() ?>. Ada yang bisa saya bantu terkait madrasah ini?</p>
+        </div>
+    </div>
+    <div class="quick-replies">
+        <button class="quick-reply-btn">Berapa biaya pendaftarannya?</button>
+        <button class="quick-reply-btn">Bagaimana syarat pendaftarannya?</button>
+        <button class="quick-reply-btn">Siapa kepala madrasah ini?</button>
+        <button class="quick-reply-btn">Di mana alamatnya?</button>
+        <button class="quick-reply-btn">Apa saja visi misinya?</button>
+        <button class="quick-reply-btn">Jadwal pendaftaran (Gelombang)?</button>
+        <button class="quick-reply-btn">Apa saja prestasi madrasah?</button>
+        <button class="quick-reply-btn">Berita terbaru?</button>
+    </div>
+    <div class="chatbot-footer">
+        <div class="chatbot-footer-inner">
+            <textarea id="chatbot-input" placeholder="Ketik pesan Anda..." required></textarea>
+            <button id="chatbot-send-btn"><i class="fas fa-arrow-up"></i></button>
+        </div>
+    </div>
+</div>
+<!-- /AI Chatbot UI -->
 
 <!--==============================
 Footer Area
@@ -228,6 +514,101 @@ $(document).on("click", ".disable-link", function(e){
     text: '<?php echo Session()->getFlashdata('sukses'); ?>',
   })
   <?php } ?>
+
+  // Chatbot Logic
+  $(document).ready(function() {
+      const chatbotToggler = document.querySelector(".chatbot-toggler");
+      const chatbotBody = document.querySelector("#chatbot-body");
+      const chatInput = document.querySelector("#chatbot-input");
+      const sendChatBtn = document.querySelector("#chatbot-send-btn");
+
+      chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+
+      const createChatLi = (message, className) => {
+          const chatLi = document.createElement("div");
+          chatLi.classList.add("chat", className);
+          let chatContent = className === "chat-outgoing" ? `<p></p>` : `<p></p>`;
+          chatLi.innerHTML = chatContent;
+          chatLi.querySelector("p").innerHTML = message;
+          return chatLi;
+      }
+
+      const generateResponse = (incomingChatLi, userMessage) => {
+          const messageElement = incomingChatLi.querySelector("p");
+          
+          $.ajax({
+              url: '<?php echo base_url('chatbot/send') ?>',
+              type: 'POST',
+              dataType: 'json',
+              data: {
+                  message: userMessage
+              },
+              success: function(res) {
+                  if(res.status === 'success') {
+                      let text = res.reply;
+                      // Simple markdown parser
+                      text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                      text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                      text = text.replace(/\n/g, '<br>');
+                      messageElement.innerHTML = text;
+                  } else {
+                      messageElement.innerHTML = "Maaf, terjadi kesalahan: " + res.message;
+                      messageElement.style.color = "#d9534f";
+                  }
+                  chatbotBody.scrollTo(0, chatbotBody.scrollHeight);
+              },
+              error: function() {
+                  messageElement.innerHTML = "Maaf, gagal terhubung ke server. Silakan coba lagi.";
+                  messageElement.style.color = "#d9534f";
+                  chatbotBody.scrollTo(0, chatbotBody.scrollHeight);
+              }
+          });
+      }
+
+      const handleChat = () => {
+          const userMessage = chatInput.value.trim();
+          if(!userMessage) return;
+
+          chatInput.value = "";
+          chatInput.style.height = "20px";
+
+          // Append user's message
+          chatbotBody.appendChild(createChatLi(userMessage, "chat-outgoing"));
+          chatbotBody.scrollTo(0, chatbotBody.scrollHeight);
+
+          setTimeout(() => {
+              // Show thinking indicator
+              const incomingChatLi = createChatLi("Mengetik...", "chat-incoming");
+              chatbotBody.appendChild(incomingChatLi);
+              chatbotBody.scrollTo(0, chatbotBody.scrollHeight);
+              generateResponse(incomingChatLi, userMessage);
+          }, 600);
+      }
+
+      // Auto-resize textarea as user types
+      chatInput.addEventListener("input", () => {
+          chatInput.style.height = "20px";
+          chatInput.style.height = `${Math.min(chatInput.scrollHeight, 80)}px`;
+      });
+
+      chatInput.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleChat();
+          }
+      });
+
+      sendChatBtn.addEventListener("click", handleChat);
+
+      // Quick Reply click event
+      document.querySelectorAll(".quick-reply-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+              chatInput.value = btn.innerText;
+              handleChat();
+              btn.blur(); // Menghilangkan fokus visual (warna hijau) setelah diklik
+          });
+      });
+  });
   </script>
   <script>
   $(function () {

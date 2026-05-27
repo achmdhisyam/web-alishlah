@@ -135,7 +135,7 @@ class Agenda extends BaseController
 				'nama_agenda' 	=> 'required',
 				'gambar'	 	=> [
 					                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -143,6 +143,7 @@ class Agenda extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -235,7 +236,7 @@ class Agenda extends BaseController
 				'nama_agenda' 	=> 'required',
 				'gambar'	 	=> [
 					                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -243,6 +244,7 @@ class Agenda extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -338,13 +340,14 @@ class Agenda extends BaseController
 					'gambar'	 	=> [
 										 'uploaded[gambar]',
 						                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-						                'max_size[gambar,4096]',
+						                'max_size[gambar,102400]',
 	            					],
 	        	])) {
 					// Image upload
 					$avatar  	= $this->request->getFile('gambar');
 					$namabaru 	= $avatar->getRandomName();
 		            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+		            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 		            // Create thumb
 		            $image = \Config\Services::image()
 				    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -367,7 +370,7 @@ class Agenda extends BaseController
 				[
 					'gambar'	 	=> [
 						                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-						                'max_size[gambar,4096]',
+						                'max_size[gambar,102400]',
 	            					],
 	        	])) {
 				if(!empty($_FILES['gambar']['name'])) {
@@ -375,6 +378,7 @@ class Agenda extends BaseController
 					$avatar  	= $this->request->getFile('gambar');
 					$namabaru 	= $avatar->getRandomName();
 		            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+		            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 		            // Create thumb
 		            $image = \Config\Services::image()
 				    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)

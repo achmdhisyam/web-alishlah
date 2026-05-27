@@ -22,7 +22,7 @@ class Link_website extends BaseController
 				'link_website' 			=> 'required|is_unique[link_website.link_website]',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -30,6 +30,7 @@ class Link_website extends BaseController
 				$avatar  					= $this->request->getFile('gambar');
 				$nama_link_websitebaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_link_websitebaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_link_websitebaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_link_websitebaru)
@@ -93,7 +94,7 @@ class Link_website extends BaseController
 				'nama_link_website' 	=> 'required',
 				'gambar'	 			=> [
 								                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-								                'max_size[gambar,4096]',
+								                'max_size[gambar,102400]',
 			            					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -101,6 +102,7 @@ class Link_website extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_link_websitebaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_link_websitebaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_link_websitebaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_link_websitebaru)

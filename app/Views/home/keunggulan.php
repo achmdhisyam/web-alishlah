@@ -9,15 +9,13 @@
     </div>
     <!-- /.row -->
     <div class="row gy-8 mb-5 justify-content-center">
-      <?php foreach($keunggulan as $item) { ?>
+      <?php $no=1; foreach($keunggulan as $item) { ?>
       <div class="col-md-6 col-lg-4">
         <div class="d-flex flex-row">
           <div>
-            <?php if($item->gambar != "") { ?>
-              <img src="<?php echo base_url('assets/upload/image/thumbs/'.$item->gambar) ?>" class="svg-inject icon-svg icon-svg-sm solid-duo text-grape-fuchsia me-4" alt="<?php echo $item->judul_keunggulan ?>" />
-            <?php } else { ?>
-              <i class="fa fa-check-circle text-primary fa-2x me-4"></i>
-            <?php } ?>
+            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-4" style="width: 45px; height: 45px; font-size: 20px; font-weight: bold;">
+                <?php echo $no; ?>
+            </div>
           </div>
           <div>
             <h3 class="fs-22 mb-1"><?php echo $item->judul_keunggulan ?></h3>
@@ -26,7 +24,7 @@
         </div>
       </div>
       <!--/column -->
-      <?php } ?>
+      <?php $no++; } ?>
     </div>
     <!--/.row -->
     

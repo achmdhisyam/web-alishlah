@@ -20,7 +20,7 @@ class Kategori_agenda extends BaseController
 				'nama_kategori_agenda' 		=> 'required',
 				'gambar'	 		=> [
 					                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -28,6 +28,7 @@ class Kategori_agenda extends BaseController
 				$avatar  			= $this->request->getFile('gambar');
 				$nama_kategori_agendabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/kategori_agenda/',$nama_kategori_agendabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/kategori_agenda/' . $nama_kategori_agendabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/kategori_agenda/'.$nama_kategori_agendabaru)
@@ -86,7 +87,7 @@ class Kategori_agenda extends BaseController
 				'nama_kategori_agenda' 		=> 'required',
 				'gambar'	 	=> [
 					                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-					                'max_size[gambar,4096]',
+					                'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -94,6 +95,7 @@ class Kategori_agenda extends BaseController
 				$avatar  	= $this->request->getFile('gambar');
 				$nama_kategori_agendabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/kategori_agenda/',$nama_kategori_agendabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/kategori_agenda/' . $nama_kategori_agendabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/kategori_agenda/'.$nama_kategori_agendabaru)

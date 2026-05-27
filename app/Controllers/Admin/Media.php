@@ -57,7 +57,7 @@ class Media extends BaseController
 				'file'	 	=> [
 									'uploaded[file]',
 					                'ext_in[file,jpg,jpeg,png,gif,zip,rar,doc,docx,xls,xlsx,ppt,pptx,pdf]',
-					                'max_size[file,24096]',
+					                'max_size[file,102400]',
             					],
         	])) {
 			if(!empty($_FILES['file']['name'])) {
@@ -67,6 +67,7 @@ class Media extends BaseController
 				$file_ext 	= $avatar->guessExtension();
 				$file_size 	= $avatar->getSizeByUnit('mb');
 	            $avatar->move(WRITEPATH . '../assets/upload/file/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/file/' . $namabaru);
 	        	// masuk database
 			    $data = array(
 	        		'id_user'				=> $this->session->get('id_user'),

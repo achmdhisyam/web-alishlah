@@ -4,45 +4,62 @@
     <meta charset="utf-8">
     <title>Pendaftaran Berhasil</title>
 </head>
-<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333333; margin: 0; padding: 20px; background-color: #f4f4f4;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #dddddd; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-        <h2 style="color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-top: 0;">Pendaftaran Anda Berhasil!</h2>
-        
-        <p>Halo <strong><?= esc($nama_siswa) ?></strong>,</p>
-        
-        <p>Terima kasih telah melengkapi biodata dan mengunggah dokumen pendukung untuk seleksi Penerimaan Peserta Didik Baru di <strong><?= esc($namaweb) ?></strong>.</p>
-        
-        <div style="background-color: #ebf5fb; border-left: 4px solid #3498db; padding: 15px; margin: 20px 0; border-radius: 4px;">
-            <p style="margin: 0; font-size: 16px;"><strong>KODE PENDAFTARAN ANDA:</strong></p>
-            <p style="margin: 5px 0 0 0; font-size: 24px; font-weight: bold; color: #2c3e50; letter-spacing: 2px;"><?= esc($kode_siswa) ?></p>
-        </div>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden;">
+        <tr>
+            <td style="background-color: #1a73e8; padding: 30px; text-align: center; color: #ffffff;">
+                <h1 style="margin: 0; font-size: 24px;">Pendaftaran Berhasil!</h1>
+                <p style="margin: 10px 0 0; font-size: 16px; opacity: 0.9;">Biodata & Dokumen Anda Telah Diterima</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 40px 30px;">
+                <p style="font-size: 16px; color: #333333; margin-top: 0;">Hai <strong><?= esc($nama_siswa) ?></strong>,</p>
+                <p style="font-size: 16px; color: #555555; line-height: 1.6;">Terima kasih telah melengkapi biodata dan mengunggah dokumen pendukung untuk seleksi Penerimaan Peserta Didik Baru di <strong><?= esc($namaweb) ?></strong>.</p>
+                
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 25px 0; background-color: #ebf5fb; border-radius: 5px; border-left: 4px solid #1a73e8;">
+                    <tr>
+                        <td style="padding: 15px;">
+                            <p style="margin: 0 0 5px; font-size: 14px; color: #555555;">KODE PENDAFTARAN ANDA</p>
+                            <p style="margin: 0; font-size: 22px; color: #1a73e8; font-weight: bold; letter-spacing: 1px;"><?= esc($kode_siswa) ?></p>
+                        </td>
+                    </tr>
+                </table>
 
-        <p>Simpan kode pendaftaran di atas dengan baik. Kode ini akan digunakan untuk memeriksa status kelulusan/pengumuman hasil seleksi.</p>
+                <p style="font-size: 16px; color: #555555; line-height: 1.6;">Simpan kode pendaftaran di atas dengan baik. Kode ini akan digunakan untuk memeriksa status kelulusan dan hasil seleksi Anda.</p>
 
-        <h3 style="color: #2c3e50; margin-top: 25px;">Detail Pendaftaran:</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee; font-weight: bold; width: 40%;">Program Pendidikan</td>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee;"><?= esc($program) ?></td>
-            </tr>
-            <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee; font-weight: bold;">Periode / Gelombang</td>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee;"><?= esc($gelombang) ?></td>
-            </tr>
-            <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee; font-weight: bold;">Tanggal Pengumuman</td>
-                <td style="padding: 8px; border-bottom: 1px solid #eeeeee;"><?= esc($tgl_pengumuman) ?></td>
-            </tr>
-        </table>
+                <h3 style="color: #333333; margin-top: 25px; font-size: 18px; border-bottom: 1px solid #eeeeee; padding-bottom: 8px;">Detail Pendaftaran:</h3>
+                <table width="100%" border="0" cellspacing="0" cellpadding="8" style="font-size: 15px; color: #555555;">
+                    <tr>
+                        <td width="40%" style="font-weight: bold; border-bottom: 1px solid #f1f1f1;">Program Pendidikan</td>
+                        <td style="border-bottom: 1px solid #f1f1f1;"><?= esc($program) ?></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border-bottom: 1px solid #f1f1f1;">Periode / Gelombang</td>
+                        <td style="border-bottom: 1px solid #f1f1f1;"><?= esc($gelombang) ?></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; border-bottom: 1px solid #f1f1f1;">Tanggal Pengumuman</td>
+                        <td style="border-bottom: 1px solid #f1f1f1;"><?= esc($tgl_pengumuman) ?></td>
+                    </tr>
+                </table>
 
-        <div style="text-align: center; margin: 30px 0 10px 0;">
-            <a href="<?= esc($link_login) ?>" style="background-color: #3498db; color: #ffffff; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block;">Masuk ke Dashboard Siswa</a>
-        </div>
-
-        <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 30px 0;">
-        <p style="font-size: 12px; color: #7f8c8d; text-align: center; margin-bottom: 0;">
-            Email ini dikirim secara otomatis oleh sistem SPMB <?= esc($namaweb) ?>. Harap tidak membalas email ini.
-        </p>
-    </div>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0;">
+                    <tr>
+                        <td align="center">
+                            <a href="<?= esc($link_pengumuman) ?>" style="display: inline-block; background-color: #1a73e8; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 14px 30px; border-radius: 5px; box-shadow: 0 2px 5px rgba(26,115,232,0.3);">Cek Status Pengumuman</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #f8f9fa; padding: 20px 30px; text-align: center; border-top: 1px solid #eeeeee;">
+                <p style="margin: 0; font-size: 12px; color: #777777;">
+                    Email ini dikirim secara otomatis oleh sistem SPMB <?= esc($namaweb) ?>. Harap tidak membalas email ini.
+                </p>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>

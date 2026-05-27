@@ -36,7 +36,10 @@ class Siswa_model extends Model
             hubungan.nama_hubungan,
             akun.nama AS nama_akun, akun.email AS email_akun, akun.username,
             program_pendidikan.judul_program_pendidikan,
-            gelombang.judul');
+            gelombang.judul,
+            gelombang.tanggal_buka,
+            gelombang.tanggal_tutup,
+            gelombang.tanggal_pengumuman');
         $builder->join('agama', 'agama.id_agama = siswa.id_agama', 'LEFT');
         $builder->join('agama agama_ayah', 'agama_ayah.id_agama = siswa.id_agama_ayah', 'LEFT');
         $builder->join('agama agama_ibu', 'agama_ibu.id_agama = siswa.id_agama_ibu', 'LEFT');
@@ -95,7 +98,7 @@ class Siswa_model extends Model
         $builder->select('jp.judul_program_pendidikan, jp.id_program_pendidikan, s.status_pendaftaran, COUNT(s.id_siswa) AS jumlah_siswa');
         $builder->join('program_pendidikan jp', 's.id_program_pendidikan = jp.id_program_pendidikan');
         $builder->where('s.id_gelombang',$id_gelombang);
-        $builder->groupBy('jp.judul_program_pendidikan, s.status_pendaftaran');
+        $builder->groupBy('jp.judul_program_pendidikan, jp.id_program_pendidikan, s.status_pendaftaran');
         $builder->orderBy('jp.judul_program_pendidikan, s.status_pendaftaran');
         $query = $builder->get();
         return $query->getResult();

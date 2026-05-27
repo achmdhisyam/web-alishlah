@@ -16,6 +16,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function($rout
     $routes->get('akun_pendaftar/delete/(:num)', 'Akun_pendaftar::delete/$1');
     $routes->post('admin/akun_pendaftar/proses', 'Admin\Akun_pendaftar::proses');
     
+    // Rute API AI
+    $routes->post('ai/kembangkanBerita', 'Ai::kembangkanBerita');
 
 });
 //lupa pendaftar
@@ -36,3 +38,6 @@ $routes->get('logout', 'Login::logout');
 // Google Auth Routes
 $routes->get('googleauth/login/(:any)', 'GoogleAuth::login/$1');
 $routes->get('googleauth/callback', 'GoogleAuth::callback');
+
+// Chatbot Route
+$routes->post('chatbot/send', 'Chatbot::send');

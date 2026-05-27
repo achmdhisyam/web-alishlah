@@ -41,6 +41,7 @@ class Akun extends BaseController
 					$avatar  	= $this->request->getFile('gambar');
 					$nama_baru 	= $avatar->getRandomName();
 		            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_baru);
+		            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_baru);
 		            // Create thumb
 		            $image = \Config\Services::image()
 				    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_baru)
@@ -90,6 +91,7 @@ class Akun extends BaseController
 					$avatar  	= $this->request->getFile('gambar');
 					$nama_baru 	= $avatar->getRandomName();
 		            $avatar->move(WRITEPATH . '../assets/upload/image/',$nama_baru);
+		            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $nama_baru);
 		            // Create thumb
 		            $image = \Config\Services::image()
 				    ->withFile(WRITEPATH . '../assets/upload/image/'.$nama_baru)

@@ -139,7 +139,7 @@ class Download extends BaseController
 				'gambar'	 	=> [
 									'uploaded[gambar]',
         'mime_in[gambar,image/jpg,image/jpeg,image/png,image/gif,application/zip,application/x-rar-compressed,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf]',
-        'max_size[gambar,24096]',
+        'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -149,6 +149,7 @@ class Download extends BaseController
 				$file_ext 	= $avatar->guessExtension();
 				$file_size 	= $avatar->getSizeByUnit('mb');
 	            $avatar->move(WRITEPATH . '../assets/upload/file/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/file/' . $namabaru);
 	        	// masuk database
 			    $data = array(
 	        		'id_user'				=> $this->session->get('id_user'),
@@ -204,7 +205,7 @@ class Download extends BaseController
 				'gambar'	 	=> [
 					              
         'mime_in[gambar,image/jpg,image/jpeg,image/png,image/gif,application/zip,application/x-rar-compressed,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf]',
-        'max_size[gambar,24096]',
+        'max_size[gambar,102400]',
             					],
         	])) {
 			if(!empty($_FILES['gambar']['name'])) {
@@ -214,6 +215,7 @@ class Download extends BaseController
 				$file_size 	= $avatar->getSizeByUnit('mb');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/file/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/file/' . $namabaru);
 	        	// masuk database
 	            $data = array(
 	            	'id_download'			=> $id_download,

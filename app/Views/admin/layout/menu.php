@@ -650,6 +650,12 @@ $SHOW_ALL  = ($IS_ADMIN || $IS_USER); // User seperti admin, kecuali 3 menu admi
                 </a>
               </li>
               <li class="nav-item">
+                <a href="<?php echo base_url('admin/konfigurasi/chatbot') ?>" class="nav-link <?php if($uri->getSegment(3)=="chatbot"){echo 'active';}?>">
+                  <i class="fa fa-arrow-right nav-icon"></i>
+                  <p>Ikon Chatbot</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="<?php echo base_url('admin/konfigurasi/icon') ?>" class="nav-link <?php if($uri->getSegment(3)=="icon"){echo 'active';}?>">
                   <i class="fa fa-arrow-right nav-icon"></i>
                   <p>Ganti Icon</p>

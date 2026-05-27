@@ -250,7 +250,7 @@ class Konfigurasi extends BaseController
 				'id_konfigurasi' 	=> 'required',
 				'banner'	 	=> [
 					                'ext_in[banner,jpg,jpeg,gif,png,svg]',
-					                'max_size[banner,4096]',
+					                'max_size[banner,102400]',
             					],
         	])) {
 			if(!empty($_FILES['banner']['name'])) {
@@ -258,6 +258,7 @@ class Konfigurasi extends BaseController
 				$avatar  	= $this->request->getFile('banner');
 				$namabaru 	= $avatar->getRandomName();
 	            $avatar->move(WRITEPATH . '../assets/upload/image/',$namabaru);
+	            $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 	            // Create thumb
 	            $image = \Config\Services::image()
 			    ->withFile(WRITEPATH . '../assets/upload/image/'.$namabaru)
@@ -363,7 +364,7 @@ class Konfigurasi extends BaseController
 	        'logo'           => [
 	            'uploaded[logo]',
 	            'mime_in[logo,image/jpg,image/jpeg,image/gif,image/png]',
-	            'max_size[logo,4096]',
+	            'max_size[logo,102400]',
 	        ],
 	    ])) {
 	        // Image upload
@@ -374,6 +375,7 @@ class Konfigurasi extends BaseController
 
 	        // Pindahkan file ke folder yang ditentukan
 	        $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+	        $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 
 	        // Create thumbnail
 	        $image = \Config\Services::image()
@@ -424,7 +426,7 @@ class Konfigurasi extends BaseController
 	        'login'           => [
 	            'uploaded[login]',
 	            'mime_in[login,image/jpg,image/jpeg,image/gif,image/png]',
-	            'max_size[login,4096]',
+	            'max_size[login,102400]',
 	        ],
 	    ])) {
 	        // Image upload
@@ -435,6 +437,7 @@ class Konfigurasi extends BaseController
 
 	        // Pindahkan file ke folder yang ditentukan
 	        $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+	        $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 
 	        // Create thumbnail
 	        $image = \Config\Services::image()
@@ -486,7 +489,7 @@ class Konfigurasi extends BaseController
 	        'icon'           => [
 	            'uploaded[icon]',
 	            'mime_in[icon,image/jpg,image/jpeg,image/gif,image/png]',
-	            'max_size[icon,4096]',
+	            'max_size[icon,102400]',
 	        ],
 	    ])) {
 	        // Image upload
@@ -497,6 +500,7 @@ class Konfigurasi extends BaseController
 
 	        // Pindahkan file ke folder yang ditentukan
 	        $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+	        $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
 
 	        // Create thumbnail
 	        $image = \Config\Services::image()
@@ -529,6 +533,60 @@ class Konfigurasi extends BaseController
 	            'title'       => 'Update Icon Website',
 	            'konfigurasi' => $konfigurasi,
 	            'content'     => 'admin/konfigurasi/icon'
+	        ];
+	        echo view('admin/layout/wrapper', $data);
+	    }
+	}
+
+	// chatbot icon
+	public function chatbot()
+	{
+	    $m_konfigurasi  = new Konfigurasi_model();
+	    $konfigurasi    = $m_konfigurasi->listing();
+
+	    // Start validasi
+	    if ($this->request->getMethod() === 'POST' && $this->validate([
+	        'id_konfigurasi' => 'required',
+	        'icon_chatbot'   => [
+	            'uploaded[icon_chatbot]',
+	            'mime_in[icon_chatbot,image/jpg,image/jpeg,image/gif,image/png]',
+	            'max_size[icon_chatbot,102400]',
+	        ],
+	    ])) {
+	        // Image upload
+	        $avatar = $this->request->getFile('icon_chatbot');
+	        $namabaru = $avatar->getRandomName();
+	        $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+	        $this->compressImage(WRITEPATH . '../assets/upload/image/' . $namabaru);
+
+	        // Create thumbnail
+	        $image = \Config\Services::image()
+	            ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
+	            ->fit(100, 100, 'center')
+	            ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
+
+	        // Hapus file lama
+	        if (!empty($konfigurasi->icon_chatbot) && file_exists(WRITEPATH . '../assets/upload/image/' . $konfigurasi->icon_chatbot)) {
+	            unlink(WRITEPATH . '../assets/upload/image/' . $konfigurasi->icon_chatbot);
+	        }
+	        if (!empty($konfigurasi->icon_chatbot) && file_exists(WRITEPATH . '../assets/upload/image/thumbs/' . $konfigurasi->icon_chatbot)) {
+	            unlink(WRITEPATH . '../assets/upload/image/thumbs/' . $konfigurasi->icon_chatbot);
+	        }
+
+	        $data = [
+	            'id_konfigurasi' => $konfigurasi->id_konfigurasi,
+	            'id_user'        => $this->session->get('id_user'),
+	            'icon_chatbot'   => $namabaru
+	        ];
+	        $m_konfigurasi->edit($data);
+
+	        $this->session->setFlashdata('sukses', 'Data telah diupdate');
+	        return redirect()->to(base_url('admin/konfigurasi/chatbot'));
+	    } else {
+	        $data = [
+	            'title'       => 'Update Ikon Chatbot',
+	            'konfigurasi' => $konfigurasi,
+	            'content'     => 'admin/konfigurasi/chatbot'
 	        ];
 	        echo view('admin/layout/wrapper', $data);
 	    }

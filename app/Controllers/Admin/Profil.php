@@ -36,6 +36,7 @@ class Profil extends BaseController
 		$data = [	'title'			=> $title,
 					'profil'		=> $profil,
 					'pagination'	=> $pager_links,
+                    'total'         => $total,
 					'content'		=> 'admin/profil/index'
 				];
 		echo view('admin/layout/wrapper',$data);
@@ -65,6 +66,11 @@ class Profil extends BaseController
 	public function tambah()
 	{
 		$m_profil 		= new Profil_model();
+		
+		// Batasi hanya boleh 1 profil/sejarah
+		if ($m_profil->total() >= 1) {
+			return redirect()->to(base_url('admin/profil'))->with('warning', 'Hanya diperbolehkan membuat 1 Sejarah/Profil. Silakan edit yang sudah ada.');
+		}
 
 		// Start validasi
 		if(strtolower($this->request->getMethod()) === 'post' && $this->validate(

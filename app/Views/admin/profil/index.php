@@ -7,9 +7,11 @@
             <button type="submit" name="submit" value="Cari" class="btn btn-secondary btn-flat">
             	<i class="fa fa-search"></i> Cari
             </button>
+            <?php if (isset($total) && $total < 1): ?>
             <a href="<?php echo base_url('admin/profil/tambah') ?>" class="btn btn-info">
 				<i class="fa fa-plus"></i> Tambah Baru
 			</a>
+			<?php endif; ?>
           </span>
         </div>
         <?php echo form_close() ?>
