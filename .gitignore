@@ -11,8 +11,8 @@
 
 # Config file
 # app/Config/
-app/Config/Database.php
-app/Config/App.php
+# app/Config/Database.php
+# app/Config/App.php
 writable/
 writable/debugbar/
 writable/logs
@@ -22,3 +22,4 @@ assets/upload/**
 !assets/upload/**/index.php
 !assets/upload/**/index.html
 !assets/upload/**/.gitkeep
+.env
