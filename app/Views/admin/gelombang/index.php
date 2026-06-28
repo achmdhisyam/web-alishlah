@@ -53,7 +53,7 @@
 					</span>
 				<?php }else{ ?>
 					<span class="badge bg-secondary">
-						<i class="fa fa-eye-slash"></i> <?php echo $gelombang->status_gelombang ?>
+						<i class="fa fa-eye-slash"></i> Tutup
 					</span>
 				<?php } ?>
 			</td>
@@ -68,10 +68,34 @@
 				<a href="<?php echo base_url('admin/gelombang/export/'.$gelombang->id_gelombang.'/Semua/Semua') ?>" class="btn btn-success btn-xs mb-1" target="_blank"><i class="fa fa-file-excel"></i> Ekspor</a>
 				<a href="<?php echo base_url('admin/gelombang/unduh_data/'.$gelombang->id_gelombang.'/Semua/Semua') ?>" class="btn btn-danger btn-xs mb-1" target="_blank"><i class="fa fa-file-pdf"></i> Unduh</a>
 				
-				<a href="<?php echo base_url('admin/gelombang/edit/'.$gelombang->id_gelombang) ?>" class="btn btn-secondary btn-xs mb-1"><i class="fa fa-edit"></i></a>
-				<a href="<?php echo base_url('admin/gelombang/delete/'.$gelombang->id_gelombang) ?>" class="btn btn-secondary btn-xs mb-1 delete-link"><i class="fa fa-trash"></i></a>
+				<a href="<?php echo base_url('admin/gelombang/edit/'.$gelombang->id_gelombang) ?>" class="btn btn-warning btn-xs mb-1"><i class="fa fa-edit"></i></a>
+				<a href="<?php echo base_url('admin/gelombang/delete/'.$gelombang->id_gelombang) ?>" class="btn btn-danger btn-xs mb-1 delete-gelombang" data-id="<?php echo $gelombang->id_gelombang ?>"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 		<?php $no++; } ?>
 	</tbody>
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.querySelectorAll('.delete-gelombang').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var href = this.href || '<?php echo base_url("admin/gelombang/delete/") ?>' + this.dataset.id;
+        Swal.fire({
+            title: 'Hapus Gelombang?',
+            text: 'Data gelombang dan seluruh pendaftar di dalamnya akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then(function(result) {
+            if (result.isConfirmed) {
+                window.location.href = href;
+            }
+        });
+    });
+});
+</script>

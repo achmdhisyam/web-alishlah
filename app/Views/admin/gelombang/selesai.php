@@ -1,14 +1,57 @@
+<?php
+// Function to format phone number
+if (!function_exists('format_phone_wa')) {
+    function format_phone_wa($phone) {
+        if (empty($phone)) return '';
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+        if (strpos($phone, '0') === 0) {
+            $phone = '62' . substr($phone, 1);
+        } elseif (strpos($phone, '8') === 0) {
+            $phone = '62' . $phone;
+        }
+        return $phone;
+    }
+}
 
+// Function to generate WA link
+if (!function_exists('get_wa_link')) {
+    function get_wa_link($phone, $tipe, $siswa, $website) {
+        $formatted = format_phone_wa($phone);
+        if (empty($formatted)) return '#';
+        
+        $status_pendaftaran_raw = $siswa->status_pendaftaran ?? 'Menunggu';
+        $status_pendaftaran_txt = 'Menunggu Verifikasi';
+        $langkah_selanjutnya = '';
 
-<p class="text-right">
-  <a href="<?php echo base_url('admin/gelombang/detail/'.$siswa->id_gelombang.'/Semua/'.$siswa->id_program_pendidikan) ?>" class="btn btn-outline-info btn-sm">
-    <i class="fa fa-arrow-left"></i> Kembali
-  </a>
-  <a href="<?php echo base_url('admin/gelombang/cetak/'.$siswa->slug_siswa) ?>" class="btn btn-danger btn-sm" target="_blank">
-    <i class="fa fa-file-pdf"></i>&nbsp;Cetak Bukti Pendaftaran
-  </a>
+        if ($status_pendaftaran_raw == 'Diterima') {
+            $status_pendaftaran_txt = 'DITERIMA (LULUS)';
+            $langkah_selanjutnya = "Selamat! Berkas pendaftaran telah diverifikasi dan dinyatakan Diterima. Silakan masuk ke dasbor pendaftaran siswa untuk mencetak Bukti Kelulusan dan mengikuti alur daftar ulang selanjutnya.";
+        } elseif ($status_pendaftaran_raw == 'Tidak-Diterima') {
+            $status_pendaftaran_txt = 'TIDAK DITERIMA (TIDAK LULUS)';
+            $langkah_selanjutnya = "Mohon maaf, pendaftaran Anda saat ini dinyatakan Belum Diterima. Terima kasih banyak atas minat dan partisipasi Bapak/Ibu.";
+        } elseif ($status_pendaftaran_raw == 'Diperiksa') {
+            $status_pendaftaran_txt = 'SEDANG DIPERIKSA';
+            $langkah_selanjutnya = "Berkas pendaftaran Anda saat ini sedang diperiksa secara detail oleh tim verifikator kami. Mohon untuk memantau dasbor pendaftaran siswa secara berkala.";
+        } else {
+            $status_pendaftaran_txt = 'MENUNGGU VERIFIKASI';
+            $langkah_selanjutnya = "Berkas pendaftaran Anda telah tersimpan dan berada dalam antrean Menunggu Verifikasi. Kami akan segera memeriksa berkas Anda. Mohon pastikan data dan berkas yang diunggah sudah lengkap dan benar.";
+        }
 
-</p>
+        $pesan = "Assalamu'alaikum Wr. Wb.\n\n"
+               . "Yth. Bapak/Ibu Orang Tua/Wali (" . $tipe . ") dari calon siswa *" . $siswa->nama_siswa . "* (No. Pendaftaran: *" . $siswa->kode_siswa . "*).\n\n"
+               . "Kami dari Panitia SPMB " . $website->namaweb() . " menginformasikan bahwa berkas pendaftaran online saat ini berstatus: *" . $status_pendaftaran_txt . "*.\n\n"
+               . "*Langkah Selanjutnya*:\n"
+               . $langkah_selanjutnya . "\n\n"
+               . "Silakan pantau perkembangan pendaftaran secara berkala melalui akun dasbor siswa Anda.\n"
+               . "Terima kasih atas perhatiannya.\n\n"
+               . "Salam hangat,\n"
+               . "Panitia SPMB " . $website->namaweb();
+               
+        return "https://api.whatsapp.com/send?phone=" . $formatted . "&text=" . urlencode($pesan);
+    }
+}
+?>
+
 
 
   <table class="table table-bordered table-sm printer">
@@ -163,7 +206,9 @@
       </tr>
       <tr>
         <td class="font-bold">Telepon/HP Ayah</td>
-        <td><?php echo $siswa->telepon_ayah ?></td>
+        <td>
+          <?php echo $siswa->telepon_ayah ?>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -197,7 +242,9 @@
       </tr>
       <tr>
         <td class="font-bold">Telepon/HP Ibu</td>
-        <td><?php echo $siswa->telepon_ibu ?></td>
+        <td>
+          <?php echo $siswa->telepon_ibu ?>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -231,7 +278,9 @@
       </tr>
       <tr>
         <td class="font-bold">Telepon/HP Wali</td>
-        <td><?php echo $siswa->telepon_wali ?></td>
+        <td>
+          <?php echo $siswa->telepon_wali ?>
+        </td>
       </tr>
     </tbody>
   </table>

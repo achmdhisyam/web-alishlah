@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="col-md-5">
+	<div class="col-md-5 mb-4 mb-md-0">
 		<div class="card">
 			<div class="card-header bg-light">
 				<strong>DETAIL AKUN</strong>
 			</div>
 			<div class="card-body">
-
-				<table class="table table-sm table-bordered">
+				<div class="table-responsive">
+					<table class="table table-sm table-bordered">
 					<thead>
 						<tr>
 							<th>Nama</th>
@@ -40,7 +40,7 @@
 						</tr>
 					</tbody>
 				</table>
-
+				</div>
 			</div>
 		</div>
 	</div>
@@ -86,10 +86,14 @@
                   <label for="loginEmail" class="text-primary">Alamat lengkap</label>
                 </div>
 
-                <p>
-                  <button type="reset" name="reset" value="reset" class="btn btn-warning rounded-pill btn-login w-40 mb-2">Reset &nbsp; <i class="fa fa-times-circle"></i></button>
-                  <button type="submit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-60 mb-2">Buat Akun dan Lanjutkan &nbsp; <i class="fa fa-arrow-circle-right"></i></button>
-                </p>
+                <div class="form-row row">
+                  <div class="col-sm-4 mb-2">
+                    <button type="reset" name="reset" value="reset" class="btn btn-warning rounded-pill btn-login w-100">Reset &nbsp; <i class="fa fa-times-circle"></i></button>
+                  </div>
+                  <div class="col-sm-8 mb-2">
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-100">Update Akun &nbsp; <i class="fa fa-save"></i></button>
+                  </div>
+                </div>
               </form>
 			</div>
 		</div>

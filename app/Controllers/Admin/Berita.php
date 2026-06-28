@@ -31,7 +31,7 @@ class Berita extends BaseController
 	        $berita 		= $m_berita->paginasi_admin_cari($keywords,$perPage, $page);
 		}else{
 			$total 			= $m_berita->total();
-			$title 			= 'Berita dan profil('.$total.')';
+			$title 			= 'Berita ('.$total.')';
 	        $page    		= (int) ($this->request->getGet('page') ?? 1);
 	        $perPage 		= $this->website->paginasi();
 	        $total   		= $total;
@@ -343,6 +343,13 @@ class Berita extends BaseController
    			return redirect()->to($pengalihan)->with('sukses', 'Berita berhasil tidak dipublikasikan');
 		}elseif($submit=='Delete') {
 			for($i=0; $i < sizeof($id_berita);$i++) {
+				$berita = $m_berita->detail($id_berita[$i]);
+				if ($berita && !empty($berita->gambar)) {
+					$path = WRITEPATH . '../assets/upload/image/' . $berita->gambar;
+					$thumb_path = WRITEPATH . '../assets/upload/image/thumbs/' . $berita->gambar;
+					if (file_exists($path)) { unlink($path); }
+					if (file_exists($thumb_path)) { unlink($thumb_path); }
+				}
 				$data = array(	'id_berita'	=> $id_berita[$i]);
    				$m_berita->delete($data);
    			}
@@ -354,8 +361,14 @@ class Berita extends BaseController
 	// Delete
 	public function delete($id_berita)
 	{
-		
 		$m_berita = new Berita_model();
+		$berita = $m_berita->detail($id_berita);
+		if ($berita && !empty($berita->gambar)) {
+			$path = WRITEPATH . '../assets/upload/image/' . $berita->gambar;
+			$thumb_path = WRITEPATH . '../assets/upload/image/thumbs/' . $berita->gambar;
+			if (file_exists($path)) { unlink($path); }
+			if (file_exists($thumb_path)) { unlink($thumb_path); }
+		}
 		$data = ['id_berita'	=> $id_berita];
 		$m_berita->delete($data);
 		// masuk database

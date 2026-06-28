@@ -5,7 +5,7 @@
 
                <div class="col-lg-10 mx-auto text-center">
               <h2 class="fs-16 text-uppercase mb-3 subjudul">Tentang <?php echo $this->website->namaweb() ?></h2>
-              <h4 class="display-6 text-center px-xl-10 px-xxl-15 mb-10"><?php echo $site->deskripsi ?></h3>
+              <h4 class="display-6 text-center px-xl-10 px-xxl-15 mb-10"><?php echo $site->deskripsi ?></h4>
               </div>
 
             </div>

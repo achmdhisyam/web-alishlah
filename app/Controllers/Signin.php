@@ -19,6 +19,14 @@ class Signin extends BaseController
 	public function index()
 	{
 		$session 		= \Config\Services::session();
+		if (!empty($session->get('username_siswa'))) {
+			$m_siswa = new \App\Models\Siswa_model();
+			$siswa = $m_siswa->akun($session->get('id_akun'));
+			if ($siswa) {
+				return redirect()->to(base_url('siswa/dasbor'));
+			}
+		}
+
 		if(isset($_GET['redirect'])) {
 			$this->session->set('pengalihan',$_GET['redirect']);
 		}

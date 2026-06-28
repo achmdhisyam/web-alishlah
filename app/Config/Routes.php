@@ -41,3 +41,8 @@ $routes->get('googleauth/callback', 'GoogleAuth::callback');
 
 // Chatbot Route
 $routes->post('chatbot/send', 'Chatbot::send');
+
+// PWA Manifest Routes
+$routes->get('manifest-siswa.json', 'Home::manifestSiswa');
+$routes->get('manifest-admin.json', 'Home::manifestAdmin');
+$routes->get('portal-siswa', 'Home::portalSiswa');

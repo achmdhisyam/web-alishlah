@@ -143,24 +143,31 @@ $(document).on("click", ".disable-link", function(e){
       title: 'Sukses...',
       text: 'Anda berhasil logout.',
     })
-  <?php }if(Session()->getFlashdata('warning')) { ?>
+  <?php } ?>
+  <?php 
+  $sessionWarning = Session()->getFlashdata('warning');
+  if($sessionWarning) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'warning',
     title: 'Oops...',
     timer: 3000,
     heightAuto: false,
-    text: '<?php echo Session()->getFlashdata('warning'); ?>',
+    text: '<?php echo $sessionWarning; ?>',
   })
   <?php } ?>
-  <?php if(Session()->getFlashdata('sukses')) { ?>
+  <?php 
+  $sessionSukses = Session()->getFlashdata('sukses');
+  if($sessionSukses) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'success',
     heightAuto: false,
     timer: 3000,
     title: 'Alhamdulillah...',
-    text: '<?php echo Session()->getFlashdata('sukses'); ?>',
+    text: '<?php echo $sessionSukses; ?>',
   })
   <?php } ?>
   </script>

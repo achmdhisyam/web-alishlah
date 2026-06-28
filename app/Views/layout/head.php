@@ -9,6 +9,14 @@
 <link rel="apple-touch-icon" href="<?= base_url('favicon.png') ?>">
 <link rel="shortcut icon" href="<?php echo $this->website->icon() ?>">
 
+<!-- PWA Integration -->
+<link rel="manifest" href="<?= base_url('manifest-siswa.json') ?>">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="<?= esc($this->website->namaweb()) ?>">
+<link rel="apple-touch-icon" href="<?php echo $this->website->icon() ?>">
+<meta name="theme-color" content="#00ac37">
+
 <meta name="generator" content="<?php echo $this->website->namaweb() ?>">
 <meta name="twitter:card" content="<?php echo strip_tags($description ?? '') ?>"/>
 <meta name="twitter:image:src" content="<?= $this->website->icon() ?>">

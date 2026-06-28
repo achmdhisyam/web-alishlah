@@ -44,8 +44,7 @@
 					<i class="far fa-square"></i>
         </button>
 			</th>
-			<th width="8%">Gambar</th>
-			<th width="50%">Judul Keunggulan</th>
+			<th width="58%">Judul Keunggulan</th>
 			<th width="20%">Penulis</th>
 			<th width="10%">Status</th>
 			<th></th>
@@ -60,11 +59,6 @@
           <label for="check_<?php echo $no ?>"></label>
         </div>
 				<?php echo $no ?>
-			</td>
-			<td>
-				<?php if($item->gambar=="") { echo '-'; }else{ ?>
-					<img src="<?php echo base_url('assets/upload/image/thumbs/'.$item->gambar) ?>" class="img img-thumbnail">
-				<?php } ?>
 			</td>
 			<td><a href="<?php echo base_url('admin/keunggulan/edit/'.$item->id_keunggulan) ?>">
 					<?php echo $item->judul_keunggulan ?>

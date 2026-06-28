@@ -113,7 +113,7 @@ class GoogleAuth extends BaseController
                 'id_akun'        => $akun->id_akun,
                 'nis'            => $akun->nis,
             ]);
-            return redirect()->to(base_url('pendaftaran'))->with('sukses', 'Berhasil login melalui Google.');
+            return redirect()->to(base_url('siswa/dasbor'))->with('sukses', 'Berhasil login melalui Google.');
         } else {
             // Seamless registration
             $data = [
@@ -137,7 +137,7 @@ class GoogleAuth extends BaseController
                 'email'          => $akunBaru->email,
                 'id_akun'        => $akunBaru->id_akun,
             ]);
-            return redirect()->to(base_url('pendaftaran'))->with('sukses', 'Pendaftaran akun via Google Berhasil!. Silakan memilih periode pendaftaran dan lanjutkan mengisi biodata. Email Informasi akun telah dikirim ke alamat Gmail Anda.');
+            return redirect()->to(base_url('siswa/dasbor'))->with('sukses', 'Pendaftaran akun via Google Berhasil!. Silakan memilih periode pendaftaran dan lanjutkan mengisi biodata. Email Informasi akun telah dikirim ke alamat Gmail Anda.');
         }
     }
 

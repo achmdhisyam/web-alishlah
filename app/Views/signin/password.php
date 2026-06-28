@@ -22,15 +22,21 @@
 
                 <!-- Tempat alert muncul -->
                 <div id="alert-placeholder">
-                  <?php if (session()->getFlashdata('warning')) { ?>
+                  <?php 
+                  $sessionWarning = session()->getFlashdata('warning');
+                  if ($sessionWarning) { 
+                  ?>
                     <div class="alert alert-warning">
-                        <?= session()->getFlashdata('warning'); ?>
+                        <?= $sessionWarning; ?>
                     </div>
                   <?php } ?>
 
-                  <?php if (session()->getFlashdata('sukses')) { ?>
+                  <?php 
+                  $sessionSukses = session()->getFlashdata('sukses');
+                  if ($sessionSukses) { 
+                  ?>
                     <div class="alert alert-success">
-                        <?= session()->getFlashdata('sukses'); ?>
+                        <?= $sessionSukses; ?>
                     </div>
                   <?php } ?>
                 </div>

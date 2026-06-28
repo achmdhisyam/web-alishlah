@@ -32,7 +32,7 @@ class Kategori extends BaseController
 			$this->session->setFlashdata('sukses','Data telah ditambah');
 			return redirect()->to(base_url('admin/kategori'));
 	    }else{
-			$data = [	'title'			=> 'Kategori Berita &amp; profil: '.$total->total,
+			$data = [	'title'			=> 'Kategori Berita : '.$total->total,
 						'kategori'		=> $kategori,
 						'content'		=> 'admin/kategori/index'
 					];

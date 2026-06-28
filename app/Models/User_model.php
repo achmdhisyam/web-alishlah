@@ -94,6 +94,17 @@ class User_model extends Model
         return $query->getRow();
     }
 
+    // check remember token
+    public function check_remember_token($token)
+    {
+        $builder = $this->db->table('users');
+        $builder->select('users.*,staff.nama AS nama_staff, staff.jabatan');
+        $builder->join('staff','staff.id_staff = users.id_staff','LEFT');
+        $builder->where('users.remember_token',$token);
+        $query = $builder->get();
+        return $query->getRow();
+    }
+
     // edit
     public function edit($data)
     {

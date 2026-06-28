@@ -1,12 +1,59 @@
-<p class="text-right">
-  <a href="<?php echo base_url('siswa/pendaftaran') ?>" class="btn btn-outline-info">
-    <i class="fa fa-arrow-left"></i> Kembali
-  </a>
-  <a href="<?php echo base_url('siswa/pendaftaran/cetak/'.$siswa->slug_siswa) ?>" class="btn btn-danger" target="_blank">
-    <i class="fa fa-file-pdf"></i>&nbsp;Cetak Bukti Pendaftaran
-  </a>
-</p>
-<p class="lead mb-6 text-start">Berikut adalah data pendaftaran Anda</p>
+<?php
+$db = \Config\Database::connect();
+$total_wajib = $db->table('jenis_dokumen')->where('status_jenis_dokumen', 'Wajib')->countAllResults();
+$sudah_upload = $db->table('dokumen')->where('id_siswa', $siswa->id_siswa)->countAllResults();
+$pct = $total_wajib > 0 ? min(100, round(($sudah_upload/$total_wajib)*100)) : 0;
+
+if ($pct >= 100) {
+?>
+<div class="alert alert-success border-0 shadow-sm mb-4 p-4 bg-white" style="border-left: 5px solid #28a745 !important;">
+  <div class="d-flex align-items-start">
+    <div class="mr-3 mt-1" style="font-size: 28px; color: #28a745;">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <div>
+      <h5 class="alert-heading font-weight-bold mb-2 text-dark" style="font-size: 16px;">Selamat! Pendaftaran Berhasil Diselesaikan</h5>
+      <p class="mb-3 text-secondary" style="font-size: 13.5px; line-height: 1.5;">
+        Seluruh biodata dan berkas persyaratan wajib Anda telah lengkap dan berhasil disimpan ke sistem.
+        <br><strong class="text-danger">PERHATIAN:</strong> Anda <strong>diwajibkan untuk mengunduh dan mencetak Bukti Pendaftaran</strong> di bawah ini. Dokumen tersebut wajib dibawa sebagai kartu peserta saat tahap verifikasi berkas fisik dan seleksi di sekolah.
+      </p>
+      <div class="d-flex flex-wrap" style="gap: 8px;">
+        <a href="<?php echo base_url('siswa/pendaftaran/cetak/'.$siswa->slug_siswa) ?>" class="btn btn-danger font-weight-bold" target="_blank" style="text-decoration: none !important;">
+          <i class="fa fa-file-pdf mr-1"></i> Cetak Bukti Pendaftaran
+        </a>
+        <a href="<?php echo base_url('siswa/dasbor') ?>" class="btn btn-primary font-weight-bold" style="text-decoration: none !important;">
+          <i class="fa fa-home mr-1"></i> Kembali ke Dasbor
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } else { ?>
+<div class="alert alert-warning border-0 shadow-sm mb-4 p-4 bg-white" style="border-left: 5px solid #ffc107 !important;">
+  <div class="d-flex align-items-start">
+    <div class="mr-3 mt-1" style="font-size: 28px; color: #ffc107;">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <div>
+      <h5 class="alert-heading font-weight-bold mb-2 text-dark" style="font-size: 16px;">Biodata Tersimpan (Pendaftaran Belum Lengkap)</h5>
+      <p class="mb-3 text-secondary" style="font-size: 13.5px; line-height: 1.5;">
+        Biodata pendaftaran Anda telah berhasil disimpan. Namun, <strong>pendaftaran Anda belum selesai</strong> karena Anda belum mengunggah seluruh dokumen berkas persyaratan wajib.
+        <br>Silakan lengkapi berkas dokumen Anda terlebih dahulu agar panitia dapat memproses pendaftaran Anda.
+      </p>
+      <div class="d-flex flex-wrap" style="gap: 8px;">
+        <a href="<?php echo base_url('siswa/pendaftaran/dokumen/'.$siswa->slug_siswa) ?>" class="btn btn-primary font-weight-bold" style="color: #ffffff !important; text-decoration: none !important;">
+          <i class="fa fa-upload mr-1"></i> Unggah Dokumen Persyaratan
+        </a>
+        <a href="<?php echo base_url('siswa/dasbor') ?>" class="btn btn-secondary font-weight-bold" style="color: #ffffff !important; text-decoration: none !important;">
+          <i class="fa fa-home mr-1"></i> Kembali ke Dasbor
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<?php } ?>
+
+<p class="lead mb-3 text-start font-weight-bold" style="font-size: 15px; color: #343a40;">Berikut adalah data pendaftaran Anda:</p>
 
   <table class="table table-bordered table-sm printer">
     <thead>
@@ -65,7 +112,22 @@
       </tr>
       <tr>
         <td class="font-bold">Alamat</td>
-        <td><?php echo nl2br($siswa->alamat) ?> <?php echo (!empty($siswa->kode_pos)) ? '(Kode Pos: ' . $siswa->kode_pos . ')' : ''; ?></td>
+        <td>
+          <?php 
+          if(!empty($siswa->rt) || !empty($siswa->rw) || !empty($siswa->kecamatan)) {
+              $full = $siswa->alamat;
+              if(!empty($siswa->rt) || !empty($siswa->rw)) { $full .= ', RT '.$siswa->rt.' / RW '.$siswa->rw; }
+              if(!empty($siswa->kelurahan)) { $full .= ', Kel. '.$siswa->kelurahan; }
+              if(!empty($siswa->kecamatan)) { $full .= ', Kec. '.$siswa->kecamatan; }
+              if(!empty($siswa->kabupaten)) { $full .= ', '.$siswa->kabupaten; }
+              if(!empty($siswa->provinsi)) { $full .= ', '.$siswa->provinsi; }
+              echo nl2br($full);
+          } else {
+              echo nl2br($siswa->alamat);
+          }
+          ?>
+          <?php echo (!empty($siswa->kode_pos)) ? '(Kode Pos: ' . $siswa->kode_pos . ')' : ''; ?>
+        </td>
       </tr>
       <tr>
         <td class="font-bold">Telepon</td>

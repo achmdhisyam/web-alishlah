@@ -389,6 +389,7 @@ class Rombel extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		// buka di browser
 		$mpdf->Output('Informasi-Kelas-'.$rombel->nama_kelas.'.pdf','I'); 
+		exit(0);
 	}
 
 	// excel

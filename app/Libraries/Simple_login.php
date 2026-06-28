@@ -8,7 +8,7 @@ use App\Models\Akun_model;
 class Simple_login
 {
 	// check login
-	public function login($username,$password,$pengalihan)
+	public function login($username,$password,$pengalihan,$remember = false)
 	{
 		$this->session  = \Config\Services::session();
 		$uri            = service('uri');
@@ -22,6 +22,26 @@ class Simple_login
 			$this->session->set('id_staff',$user->id_staff);
 			$this->session->set('nama',$user->nama);
 			$this->session->set('akses_level',$user->akses_level);
+
+			if ($remember) {
+				// Buat token remember me
+				$token = bin2hex(random_bytes(32));
+				// Simpan token di cookie selama 30 hari
+				helper('cookie');
+				set_cookie([
+					'name'   => 'remember_admin',
+					'value'  => $token,
+					'expire' => 30 * 24 * 3600,
+					'httponly' => true,
+					'secure' => false // Set to false to support local HTTP/Laragon
+				]);
+				// Simpan token ke database
+				$m_user->edit([
+					'id_user'        => $user->id_user,
+					'remember_token' => $token
+				]);
+			}
+
 			// $this->session->setFlashdata('sukses', 'Hai '.$user->nama.', Anda berhasil login');
 			// return redirect()->to(base_url('admin/dasbor'));
 			if($pengalihan!=='') {
@@ -57,6 +77,15 @@ class Simple_login
 			$this->session->set('jenis_akun',$user->jenis_akun);
 			$this->session->set('nis',$user->nis);
 			$this->session->set('nisn',$user->nisn);
+
+			helper('cookie');
+			set_cookie([
+				'name'     => 'sudah_daftar',
+				'value'    => '1',
+				'expire'   => 365 * 24 * 3600,
+				'httponly' => false,
+				'secure'   => false
+			]);
 		}
 	}
 
@@ -81,7 +110,18 @@ class Simple_login
 			$this->session->set('jenis_akun',$user->jenis_akun);
 			$this->session->set('nis',$user->nis);
 			$this->session->set('nisn',$user->nisn);
-			header("Location: siswa/dasbor");			
+
+			helper('cookie');
+			set_cookie([
+				'name'     => 'sudah_daftar',
+				'value'    => '1',
+				'expire'   => 365 * 24 * 3600,
+				'httponly' => false,
+				'secure'   => false
+			]);
+
+			session_write_close();
+			header("Location: " . base_url('siswa/dasbor'));			
             exit;
         }elseif($user2) {
         	// Jika username password benar
@@ -91,11 +131,25 @@ class Simple_login
 			$this->session->set('jenis_akun',$user2->jenis_akun);
 			$this->session->set('nis',$user2->nis);
 			$this->session->set('nisn',$user2->nisn);
-			header("Location: siswa/dasbor");
+
+			helper('cookie');
+			set_cookie([
+				'name'     => 'sudah_daftar',
+				'value'    => '1',
+				'expire'   => 365 * 24 * 3600,
+				'httponly' => false,
+				'secure'   => false
+			]);
+
+			session_write_close();
+			header("Location: " . base_url('siswa/dasbor'));
+			exit;
 		}else{
 			// jika username password salah
 			$this->session->setFlashdata('warning','Username atau password salah');
-			return redirect()->to(base_url('signin'));
+			session_write_close();
+			header("Location: " . base_url('signin'));
+			exit;
 		}
 	}
 
@@ -142,6 +196,23 @@ class Simple_login
 		$this->session  = \Config\Services::session();
 		if($this->session->get('username')=='') 
 		{
+			// Coba login otomatis menggunakan remember me cookie
+			helper('cookie');
+			$token = get_cookie('remember_admin');
+			if ($token) {
+				$m_user = new User_model();
+				$user = $m_user->check_remember_token($token);
+				if ($user) {
+					// Restore session
+					$this->session->set('username',$user->username);
+					$this->session->set('id_user',$user->id_user);
+					$this->session->set('id_staff',$user->id_staff);
+					$this->session->set('nama',$user->nama_staff ?? $user->username);
+					$this->session->set('akses_level',$user->akses_level);
+					return; // auto-login sukses
+				}
+			}
+
 			$pengalihan = str_replace('index.php/','',current_url());
 			$this->session->set('pengalihan',$pengalihan);
 			$this->session->setFlashdata('warning','Anda belum login');
@@ -168,6 +239,21 @@ class Simple_login
 	public function logout()
 	{
 		$this->session  = \Config\Services::session();
+		
+		// Clear remember token di database
+		$id_user = $this->session->get('id_user');
+		if ($id_user) {
+			$m_user = new User_model();
+			$m_user->edit([
+				'id_user'        => $id_user,
+				'remember_token' => null
+			]);
+		}
+		
+		// Hapus cookie remember me
+		helper('cookie');
+		delete_cookie('remember_admin');
+
 		$this->session->remove('username');
 		$this->session->remove('id_user');
 		$this->session->remove('akses_level');

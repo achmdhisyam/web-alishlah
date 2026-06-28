@@ -1,3 +1,18 @@
+<style>
+.google-btn {
+    border: 1px solid #dadce0 !important;
+    color: #3c4043 !important;
+    background-color: #fff !important;
+    transition: all 0.2s ease !important;
+}
+.google-btn:hover {
+    background-color: #f8f9fa !important;
+    border-color: #c4c6ca !important;
+    color: #1a0dab !important;
+    text-decoration: none !important;
+    box-shadow: 0 1px 3px rgba(60,64,67, 0.2) !important;
+}
+</style>
 
 <!-- /section -->
 <section class="wrapper bg-light">
@@ -24,12 +39,22 @@
                       echo '<span class="text-danger">'.$validation->listErrors().'</span>';
                   }
               ?>
+
+              <?php 
+              $sessionWarning = session()->getFlashdata('warning');
+              if ($sessionWarning) : 
+              ?>
+                <div class="alert alert-danger alert-dismissible fade show p-3 mb-3" role="alert" style="border-radius: 8px; font-size: 13.5px;">
+                  <i class="fas fa-exclamation-circle mr-1"></i> <?= $sessionWarning ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float: right; border: none; background: transparent; font-size: 16px; line-height: 1;">&times;</button>
+                </div>
+              <?php endif; ?>
   
              
               <?php echo form_open(base_url('signin'),' class=="text-start mb-3"'); ?>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="username" placeholder="NIS/Email" id="loginEmail">
-                  <label for="loginEmail">NIS/Email/Username</label>
+                  <input type="text" class="form-control" name="username" placeholder="Email/Username" id="loginEmail">
+                  <label for="loginEmail">Email/Username</label>
                 </div>
                 <div class="form-floating password-field mb-3">
                   <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword">
@@ -44,8 +69,8 @@
 
               <?php if(!empty($konfigurasi->google_client_id)) { ?>
               <p class="text-center mt-3">
-                  <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn-google">
-                      <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google"> Masuk dengan Google
+                  <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 rounded-pill py-2 font-weight-bold shadow-sm d-flex align-items-center justify-content-center google-btn" style="border: 1px solid #dadce0; color: #3c4043; background-color: #fff; transition: all 0.2s ease;">
+                      <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 20px; height: 20px; margin-right: 10px;"> Masuk dengan Google
                   </a>
               </p>
               <?php } ?>

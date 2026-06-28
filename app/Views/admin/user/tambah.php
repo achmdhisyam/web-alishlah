@@ -19,7 +19,7 @@ echo csrf_field();
 			<div class="modal-body">
 
 				<div class="form-group row">
-					<label class="col-3">Nama Pengguna</label>
+					<label class="col-3">Nama Pengguna<span class="text-danger">*</span></label>
 					<div class="col-9">
 						<input type="text" name="nama" class="form-control" placeholder="Nama user" value="<?php echo set_value('nama') ?>" required>
 					</div>
@@ -41,21 +41,21 @@ echo csrf_field();
 				</div>
 
 				<div class="form-group row">
-					<label class="col-3">Email</label>
+					<label class="col-3">Email<span class="text-danger">*</span></label>
 					<div class="col-9">
 						<input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo set_value('email') ?>" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
-					<label class="col-3">Username</label>
+					<label class="col-3">Username<span class="text-danger">*</span></label>
 					<div class="col-9">
 						<input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo set_value('username') ?>" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
-					<label class="col-3">Password</label>
+					<label class="col-3">Password<span class="text-danger">*</span></label>
 					<div class="col-9">
 						<input type="text" name="password" class="form-control" placeholder="Password" value="<?php echo set_value('password') ?>" required>
 					</div>

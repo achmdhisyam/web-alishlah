@@ -245,24 +245,31 @@ $(document).on("click", ".disable-link", function(e){
       title: 'Sukses...',
       text: 'Anda berhasil logout.',
     })
-  <?php }if(Session()->getFlashdata('warning')) { ?>
+  <?php } ?>
+  <?php 
+  $sessionWarning = Session()->getFlashdata('warning');
+  if($sessionWarning) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'warning',
     title: 'Oops...',
     timer: 3000,
     heightAuto: false,
-    text: '<?php echo Session()->getFlashdata('warning'); ?>',
+    text: '<?php echo $sessionWarning; ?>',
   })
   <?php } ?>
-  <?php if(Session()->getFlashdata('sukses')) { ?>
+  <?php 
+  $sessionSukses = Session()->getFlashdata('sukses');
+  if($sessionSukses) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'success',
     heightAuto: false,
     timer: 3000,
     title: 'Alhamdulillah...',
-    text: '<?php echo Session()->getFlashdata('sukses'); ?>',
+    text: '<?php echo $sessionSukses; ?>',
   })
   <?php } ?>
   </script>
@@ -345,7 +352,10 @@ $(document).on("click", ".disable-link", function(e){
   })
   // BS-Stepper Init
   document.addEventListener('DOMContentLoaded', function () {
-    window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+    var stepperEl = document.querySelector('.bs-stepper');
+    if (stepperEl) {
+      window.stepper = new Stepper(stepperEl);
+    }
   })
 
   
@@ -431,5 +441,50 @@ $(document).on("click", ".disable-link", function(e){
 
   
 </script>
+
+<!-- OneSignal Web Push Integration -->
+<?php
+$oneSignalAppId = getenv('ONESIGNAL_APP_ID');
+$externalUserId = '';
+if (Session()->get('username')) {
+    $externalUserId = 'admin_' . Session()->get('id_user');
+} elseif (Session()->get('username_siswa')) {
+    $externalUserId = 'siswa_' . Session()->get('id_akun');
+}
+?>
+<?php if(!empty($oneSignalAppId)) { ?>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "<?php echo $oneSignalAppId ?>",
+      serviceWorkerPath: "<?php echo parse_url(base_url('OneSignalSDKWorker.js'), PHP_URL_PATH) ?>",
+      serviceWorkerParam: {
+        scope: "<?php echo parse_url(base_url(), PHP_URL_PATH) ?>"
+      },
+      notifyButton: {
+        enable: false, // Disabling default bell to avoid UI clutter
+      },
+      welcomeNotification: {
+        disable: true
+      },
+    });
+    <?php if(!empty($externalUserId)) { ?>
+      await OneSignal.login("<?php echo $externalUserId ?>");
+      
+      // Auto-request permission on user login if not already granted
+      if (!OneSignal.Notifications.permission) {
+        try {
+          await OneSignal.Notifications.requestPermission();
+        } catch (e) {
+          console.warn("OneSignal Permission Request Error:", e);
+        }
+      }
+    <?php } ?>
+  });
+</script>
+<?php } ?>
+
 </body>
 </html>

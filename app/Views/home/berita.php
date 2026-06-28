@@ -71,6 +71,9 @@
           <!-- /.swiper-container -->
         </div>
         <!-- /.position-relative -->
+        <div class="text-center mt-6">
+          <a href="<?php echo base_url('berita') ?>" class="btn btn-outline-primary rounded-pill px-6">Lihat Semua Berita &nbsp;<i class="fa fa-arrow-right"></i></a>
+        </div>
       </div>
       <!-- /.container -->
     </section>

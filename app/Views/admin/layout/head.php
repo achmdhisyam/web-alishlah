@@ -10,7 +10,16 @@ $uri = service('uri');
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?php echo $title ?></title>
+  <script>var base_url = "<?php echo base_url('/') ?>";</script>
   <link rel="icon" href="<?php echo $this->website->icon() ?>">
+
+  <!-- PWA Integration -->
+  <link rel="manifest" href="<?= base_url('manifest-admin.json') ?>">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="<?= esc($this->website->namaweb()) ?>">
+  <link rel="apple-touch-icon" href="<?php echo $this->website->icon() ?>">
+  <meta name="theme-color" content="#343a40">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -90,8 +99,6 @@ $uri = service('uri');
   </style>
 
 <!-- isi berita dll -->
-
-<script src="<?= base_url('tinymce/tinymce.min.js') ?>"></script>
 
 <!-- TinyMCE Init -->
 <script>

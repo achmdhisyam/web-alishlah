@@ -5,9 +5,12 @@ $konfigurasi  = new Konfigurasi_model;
 $site         = $konfigurasi->listing();
 ?>
 <!-- SWEETALERT -->
-<?php if($session->getFlashdata('sukses')) { ?>
+<?php 
+$sessionSukses = $session->getFlashdata('sukses');
+if($sessionSukses) { 
+?>
 <script>
-  swal("Berhasil", "<?php echo $session->getFlashdata('sukses'); ?>","success")
+  swal("Berhasil", "<?php echo $sessionSukses; ?>","success")
 </script>
 <?php } ?>
 
@@ -17,9 +20,12 @@ $site         = $konfigurasi->listing();
 </script>
 <?php } ?>
 
-<?php if($session->getFlashdata('warning')) { ?>
+<?php 
+$sessionWarning = $session->getFlashdata('warning');
+if($sessionWarning) { 
+?>
 <script>
-  swal("Oops...", "<?php echo $session->getFlashdata('warning'); ?>","warning")
+  swal("Oops...", "<?php echo $sessionWarning; ?>","warning")
 </script>
 <?php } ?>
 

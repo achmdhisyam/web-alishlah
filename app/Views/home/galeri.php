@@ -31,6 +31,9 @@
         </div>
       </div>
     </div>
+    <div class="text-center mt-6">
+      <a href="<?php echo base_url('galeri') ?>" class="btn btn-outline-primary rounded-pill px-6">Lihat Semua Galeri &nbsp;<i class="fa fa-arrow-right"></i></a>
+    </div>
   </div>
 </section>
 <?php endif; ?>

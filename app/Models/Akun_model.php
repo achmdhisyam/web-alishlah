@@ -14,7 +14,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->orderBy('akun.id_akun','DESC');
         $query = $builder->get();
@@ -26,7 +26,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->limit(6);
         $builder->orderBy('akun.id_akun','DESC');
@@ -39,7 +39,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.jenis_akun',$jenis_akun);
         $builder->orderBy('akun.id_akun','DESC');
@@ -52,7 +52,7 @@ class Akun_model extends Model
     {
         $this->table('akun');
         $this->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $this->join('siswa','siswa.nis = akun.nis','LEFT');
+        $this->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $this->join('users','users.id_user = akun.id_user','LEFT');
         $this->limit((int)$limit,(int)$start);
         $this->orderBy('akun.id_akun','DESC');
@@ -65,7 +65,7 @@ class Akun_model extends Model
     {
         $this->table('akun');
         $this->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $this->join('siswa','siswa.nis = akun.nis','LEFT');
+        $this->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $this->join('users','users.id_user = akun.id_user','LEFT');
         $this->like('akun.judul_akun',$keywords,'BOTH');
         $this->orLike('akun.website',$keywords,'BOTH');
@@ -81,7 +81,7 @@ class Akun_model extends Model
     {
         $this->table('akun');
         $this->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user AS nama_user');
-        $this->join('siswa','siswa.nis = akun.nis','LEFT');
+        $this->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $this->join('users','users.id_user = akun.id_user','LEFT');
         $this->like('akun.judul_akun',$keywords,'BOTH');
         $this->orLike('akun.website',$keywords,'BOTH');
@@ -104,7 +104,7 @@ class Akun_model extends Model
     {
         $this->table('akun');
         $this->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $this->join('siswa','siswa.nis = akun.nis','LEFT');
+        $this->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $this->join('users','users.id_user = akun.id_user','LEFT');
         $this->where('akun.status_akun',$status_akun);
         $this->limit((int)$limit,(int)$start);
@@ -128,7 +128,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.email',$username);
         //$builder->where('akun.password',$password);
@@ -148,7 +148,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.nis',$username);
         // [PERBAIKAN KEAMANAN] Tidak lagi mencocokkan password di query
@@ -169,7 +169,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.kode_akun',$kode_akun);
         $builder->orderBy('akun.id_akun','DESC');
@@ -182,7 +182,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.email',$email);
         $builder->orderBy('akun.id_akun','DESC');
@@ -195,7 +195,7 @@ class Akun_model extends Model
     {
         $builder = $this->db->table('akun');
         $builder->select('akun.*, siswa.nama_siswa, siswa.slug_siswa, users.nama AS nama_user');
-        $builder->join('siswa','siswa.nis = akun.nis','LEFT');
+        $builder->join('siswa','siswa.id_akun = akun.id_akun','LEFT');
         $builder->join('users','users.id_user = akun.id_user','LEFT');
         $builder->where('akun.id_akun',$id_akun);
         $builder->orderBy('akun.id_akun','DESC');

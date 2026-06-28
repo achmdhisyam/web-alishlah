@@ -153,6 +153,13 @@ class Slider extends BaseController
 	public function delete($id_slider)
 	{
 		$m_slider = new Slider_model();
+		$slider = $m_slider->detail($id_slider);
+		if ($slider && !empty($slider->gambar)) {
+			$path = WRITEPATH . '../assets/upload/image/' . $slider->gambar;
+			$thumb_path = WRITEPATH . '../assets/upload/image/thumbs/' . $slider->gambar;
+			if (file_exists($path)) { unlink($path); }
+			if (file_exists($thumb_path)) { unlink($thumb_path); }
+		}
 		$m_slider->delete($id_slider);
 		$this->session->setFlashdata('sukses','Data slider telah dihapus');
 		return redirect()->to(base_url('admin/slider'));

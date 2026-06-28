@@ -37,7 +37,7 @@ abstract class BaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['form','website', 'text'];
+    protected $helpers = ['form','website', 'text', 'onesignal'];
 
     /**
      * Constructor.
@@ -102,6 +102,72 @@ abstract class BaseController extends Controller
         $email_service->setAltMessage($message_text);
 
         return $email_service->send();
+    }
+
+    protected function getWaliData()
+    {
+        $identitas_wali = $this->request->getPost('identitas_wali');
+        if ($identitas_wali == 'Ayah') {
+            return [
+                'id_agama_wali'       => $this->request->getPost('id_agama_ayah'),
+                'id_pekerjaan_wali'   => $this->request->getPost('id_pekerjaan_ayah'),
+                'id_jenjang_wali'     => $this->request->getPost('id_jenjang_ayah'),
+                'nama_wali'           => $this->request->getPost('nama_ayah'),
+                'alamat_wali'         => $this->request->getPost('alamat_ayah'),
+                'telepon_wali'        => $this->request->getPost('telepon_ayah'),
+                'rt_wali'             => $this->request->getPost('rt_ayah'),
+                'rw_wali'             => $this->request->getPost('rw_ayah'),
+                'kelurahan_wali'      => $this->request->getPost('kelurahan_ayah'),
+                'kecamatan_wali'      => $this->request->getPost('kecamatan_ayah'),
+                'kabupaten_wali'      => $this->request->getPost('kabupaten_ayah'),
+                'provinsi_wali'       => $this->request->getPost('provinsi_ayah'),
+                'kode_pos_wali'       => $this->request->getPost('kode_pos_ayah'),
+                'tempat_lahir_wali'   => $this->request->getPost('tempat_lahir_ayah'),
+                'tanggal_lahir_wali'  => $this->request->getPost('tanggal_lahir_ayah'),
+                'status_wn_wali'      => $this->request->getPost('status_wn_ayah'),
+                'penghasilan_wali'    => $this->request->getPost('penghasilan_ayah'),
+            ];
+        } elseif ($identitas_wali == 'Ibu') {
+            return [
+                'id_agama_wali'       => $this->request->getPost('id_agama_ibu'),
+                'id_pekerjaan_wali'   => $this->request->getPost('id_pekerjaan_ibu'),
+                'id_jenjang_wali'     => $this->request->getPost('id_jenjang_ibu'),
+                'nama_wali'           => $this->request->getPost('nama_ibu'),
+                'alamat_wali'         => $this->request->getPost('alamat_ibu'),
+                'telepon_wali'        => $this->request->getPost('telepon_ibu'),
+                'rt_wali'             => $this->request->getPost('rt_ibu'),
+                'rw_wali'             => $this->request->getPost('rw_ibu'),
+                'kelurahan_wali'      => $this->request->getPost('kelurahan_ibu'),
+                'kecamatan_wali'      => $this->request->getPost('kecamatan_ibu'),
+                'kabupaten_wali'      => $this->request->getPost('kabupaten_ibu'),
+                'provinsi_wali'       => $this->request->getPost('provinsi_ibu'),
+                'kode_pos_wali'       => $this->request->getPost('kode_pos_ibu'),
+                'tempat_lahir_wali'   => $this->request->getPost('tempat_lahir_ibu'),
+                'tanggal_lahir_wali'  => $this->request->getPost('tanggal_lahir_ibu'),
+                'status_wn_wali'      => $this->request->getPost('status_wn_ibu'),
+                'penghasilan_wali'    => $this->request->getPost('penghasilan_ibu'),
+            ];
+        } else {
+            return [
+                'id_agama_wali'       => $this->request->getPost('id_agama_wali'),
+                'id_pekerjaan_wali'   => $this->request->getPost('id_pekerjaan_wali'),
+                'id_jenjang_wali'     => $this->request->getPost('id_jenjang_wali'),
+                'nama_wali'           => $this->request->getPost('nama_wali'),
+                'alamat_wali'         => $this->request->getPost('alamat_wali'),
+                'telepon_wali'        => $this->request->getPost('telepon_wali'),
+                'rt_wali'             => $this->request->getPost('rt_wali'),
+                'rw_wali'             => $this->request->getPost('rw_wali'),
+                'kelurahan_wali'      => $this->request->getPost('kelurahan_wali'),
+                'kecamatan_wali'      => $this->request->getPost('kecamatan_wali'),
+                'kabupaten_wali'      => $this->request->getPost('kabupaten_wali'),
+                'provinsi_wali'       => $this->request->getPost('provinsi_wali'),
+                'kode_pos_wali'       => $this->request->getPost('kode_pos_wali'),
+                'tempat_lahir_wali'   => $this->request->getPost('tempat_lahir_wali'),
+                'tanggal_lahir_wali'  => $this->request->getPost('tanggal_lahir_wali'),
+                'status_wn_wali'      => $this->request->getPost('status_wn_wali'),
+                'penghasilan_wali'    => $this->request->getPost('penghasilan_wali'),
+            ];
+        }
     }
 
     protected function logActivity($kategori, $aktivitas)

@@ -199,6 +199,13 @@ class Galeri extends BaseController
    			return redirect()->to($pengalihan)->with('sukses', 'Galeri berhasil tidak dipublikasikan');
 		}elseif($submit=='Delete') {
 			for($i=0; $i < sizeof($id_galeri);$i++) {
+				$galeri = $m_galeri->detail($id_galeri[$i]);
+				if ($galeri && !empty($galeri->gambar)) {
+					$path = WRITEPATH . '../assets/upload/image/' . $galeri->gambar;
+					$thumb_path = WRITEPATH . '../assets/upload/image/thumbs/' . $galeri->gambar;
+					if (file_exists($path)) { unlink($path); }
+					if (file_exists($thumb_path)) { unlink($thumb_path); }
+				}
 				$data = array(	'id_galeri'	=> $id_galeri[$i]);
    				$m_galeri->delete($data);
    			}
@@ -278,8 +285,14 @@ class Galeri extends BaseController
 	// Delete
 	public function delete($id_galeri)
 	{
-		
 		$m_galeri = new Galeri_model();
+		$galeri = $m_galeri->detail($id_galeri);
+		if ($galeri && !empty($galeri->gambar)) {
+			$path = WRITEPATH . '../assets/upload/image/' . $galeri->gambar;
+			$thumb_path = WRITEPATH . '../assets/upload/image/thumbs/' . $galeri->gambar;
+			if (file_exists($path)) { unlink($path); }
+			if (file_exists($thumb_path)) { unlink($thumb_path); }
+		}
 		$data = ['id_galeri'	=> $id_galeri];
 		$m_galeri->delete($data);
 		// masuk database

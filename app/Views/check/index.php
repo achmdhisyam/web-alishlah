@@ -73,6 +73,12 @@
               <?php }else{ ?>
                 <div class="alert alert-warning">Mohon maaf, data pendaftaran tidak ditemukan</div>
               <?php }} ?>
+
+              <div class="mt-4 text-center">
+                <a href="<?php echo base_url() ?>" class="btn btn-outline-primary btn-sm">
+                  <i class="fa fa-home"></i>&nbsp; Kembali ke Beranda
+                </a>
+              </div>
             
           </div>
         </div>

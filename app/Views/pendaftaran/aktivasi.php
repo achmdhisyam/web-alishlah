@@ -3,13 +3,17 @@
     <div class="row justify-content-center">
       <div class="col-lg-6 text-center">
 
-        <?php if(session()->getFlashdata('sukses')): ?>
+        <?php 
+        $sessionSukses = session()->getFlashdata('sukses');
+        $sessionWarning = session()->getFlashdata('warning');
+        if($sessionSukses): 
+        ?>
           <div class="alert alert-success">
-            <?= session()->getFlashdata('sukses'); ?>
+            <?= $sessionSukses; ?>
           </div>
-        <?php elseif(session()->getFlashdata('warning')): ?>
+        <?php elseif($sessionWarning): ?>
           <div class="alert alert-warning">
-            <?= session()->getFlashdata('warning'); ?>
+            <?= $sessionWarning; ?>
           </div>
         <?php endif; ?>
 

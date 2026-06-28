@@ -132,7 +132,7 @@ echo csrf_field();
 <div class="form-group row">
 	<label class="col-3">Nomor Whatsapp <i class="fab fa-whatsapp text-success"></i></label>
 	<div class="col-6">
-		<input type="text" name="whatsapp" class="form-control" value="<?php echo $konfigurasi->telepon ?>">
+		<input type="text" name="whatsapp" class="form-control" value="<?php echo $konfigurasi->whatsapp ?>">
 		<small class="text-warning">Format nomor: 628122727427</small>
 	</div>
 </div>

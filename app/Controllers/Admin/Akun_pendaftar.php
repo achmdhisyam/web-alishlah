@@ -109,6 +109,7 @@ class Akun_pendaftar extends BaseController
     public function delete($id)
     {
         $this->db->table('akun')->delete(['id_akun'=>$id]);
+        $this->db->table('siswa')->delete(['id_akun'=>$id]);
         return redirect()->to(base_url('admin/akun_pendaftar'))->with('sukses','Data berhasil dihapus');
     }
 
@@ -131,6 +132,7 @@ class Akun_pendaftar extends BaseController
     if ($submit == "Delete") {
         foreach($id_akun as $id) {
             $this->db->table('akun')->delete(['id_akun'=>$id]);
+            $this->db->table('siswa')->delete(['id_akun'=>$id]);
         }
         return redirect()->to($pengalihan)->with('sukses','Data berhasil dihapus');
     }

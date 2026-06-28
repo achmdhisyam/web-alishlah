@@ -38,6 +38,9 @@
           <!-- /.swiper -->
         </div>
         <!-- /.swiper-container -->
+        <div class="text-center mt-6">
+          <a href="<?php echo base_url('prestasi') ?>" class="btn btn-outline-light rounded-pill px-6">Lihat Semua Prestasi &nbsp;<i class="fa fa-arrow-right"></i></a>
+        </div>
       </div>
       <!-- /.container -->
       

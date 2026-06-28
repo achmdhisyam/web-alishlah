@@ -30,6 +30,22 @@ echo csrf_field();
 </div>
 
 <div class="form-group row">
+	<label class="col-3">Email Admin Penerima Notifikasi SPMB</label>
+	<div class="col-6">
+		<input type="email" name="email_admin_spmb" class="form-control" placeholder="admin.spmb@sekolah.sch.id" value="<?php echo $konfigurasi->email_admin_spmb ?? '' ?>">
+		<small class="text-secondary">Email yang akan menerima notifikasi otomatis ketika ada pendaftar baru.</small>
+	</div>
+</div>
+
+<div class="form-group row">
+	<label class="col-3">Nomor Whatsapp Admin SPMB <i class="fab fa-whatsapp text-success"></i></label>
+	<div class="col-6">
+		<input type="text" name="whatsapp_spmb" class="form-control" placeholder="628123456789" value="<?php echo $konfigurasi->whatsapp_spmb ?? '' ?>">
+		<small class="text-secondary">Nomor WhatsApp khusus untuk penerima konfirmasi pendaftaran dari siswa (gunakan format kode negara, contoh: 628123456789).</small>
+	</div>
+</div>
+
+<div class="form-group row">
 	<label class="col-3">Informasi pendaftaran</label>
 	<div class="col-9">
 		<textarea id="isi" name="keterangan_pendaftaran" class="form-control konten" rows="5"><?php echo $konfigurasi->keterangan_pendaftaran ?></textarea>

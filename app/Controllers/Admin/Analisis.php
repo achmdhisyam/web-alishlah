@@ -36,11 +36,24 @@ class Analisis extends BaseController
         $queryProgram = $db->query("SELECT jp.judul_program_pendidikan as program, COUNT(s.id_siswa) as total 
                                     FROM siswa s
                                     JOIN program_pendidikan jp ON s.id_program_pendidikan = jp.id_program_pendidikan 
-                                    GROUP BY s.id_program_pendidikan");
+                                    GROUP BY s.id_program_pendidikan, jp.judul_program_pendidikan");
         $programStats = $queryProgram->getResult();
 
         // 3. Sebaran Jenis Kelamin
-        $queryGender = $db->query("SELECT jenis_kelamin, COUNT(id_siswa) as total FROM siswa GROUP BY jenis_kelamin");
+        $queryGender = $db->query("SELECT 
+                                    CASE 
+                                        WHEN jenis_kelamin IN ('L', 'Laki-laki') THEN 'L'
+                                        WHEN jenis_kelamin IN ('P', 'Perempuan') THEN 'P'
+                                        ELSE 'L'
+                                    END as jenis_kelamin,
+                                    COUNT(id_siswa) as total 
+                                   FROM siswa 
+                                   GROUP BY 
+                                    CASE 
+                                        WHEN jenis_kelamin IN ('L', 'Laki-laki') THEN 'L'
+                                        WHEN jenis_kelamin IN ('P', 'Perempuan') THEN 'P'
+                                        ELSE 'L'
+                                    END");
         $genderStats = $queryGender->getResult();
 
         // 4. Tren Pendaftaran Harian (30 hari terakhir)

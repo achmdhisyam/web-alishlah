@@ -37,7 +37,7 @@ abstract class BaseController extends \App\Controllers\BaseController
      *
      * @var array
      */
-    protected $helpers = ['form','website', 'text'];
+    protected $helpers = ['form','website', 'text', 'onesignal'];
 
     /**
      * Constructor.

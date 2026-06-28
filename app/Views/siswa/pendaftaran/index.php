@@ -55,7 +55,20 @@
 		          
 				</small>
 			</td>
-      		<td><?php echo $siswa->alamat ?>
+      		<td>
+            <?php 
+            if(!empty($siswa->rt) || !empty($siswa->rw) || !empty($siswa->kecamatan)) {
+                $full = $siswa->alamat;
+                if(!empty($siswa->rt) || !empty($siswa->rw)) { $full .= ', RT '.$siswa->rt.' / RW '.$siswa->rw; }
+                if(!empty($siswa->kelurahan)) { $full .= ', Kel. '.$siswa->kelurahan; }
+                if(!empty($siswa->kecamatan)) { $full .= ', Kec. '.$siswa->kecamatan; }
+                if(!empty($siswa->kabupaten)) { $full .= ', '.$siswa->kabupaten; }
+                if(!empty($siswa->provinsi)) { $full .= ', '.$siswa->provinsi; }
+                echo nl2br($full);
+            } else {
+                echo nl2br($siswa->alamat);
+            }
+            ?>
       			<small>
       				<br><span class="text-secondary">Telepon:</span> <?php echo $siswa->telepon ?>
       				<br><span class="text-secondary">Email:</span> <?php echo $siswa->email ?>
@@ -68,11 +81,11 @@
       		
 		    <td>
 		        <?php if($siswa->status_pendaftaran=='Menunggu') { ?>
-                    <span class="badge badge-warning"><i class="fa fa-clock"></i>&nbsp;<?php echo $siswa->status_pendaftaran ?></span>
+                    <span class="badge badge-warning"><i class="fa fa-clock"></i>&nbsp;Menunggu</span>
                   <?php }elseif($siswa->status_pendaftaran=='Diterima') { ?>
-                    <span class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp;<?php echo $siswa->status_pendaftaran ?></span>
+                    <span class="badge badge-success"><i class="fa fa-check-circle"></i>&nbsp;Diterima</span>
                   <?php }elseif($siswa->status_pendaftaran=='Tidak-Diterima') { ?>
-                    <span class="badge badge-danger"><i class="fa fa-times-circle"></i>&nbsp;<?php echo $siswa->status_pendaftaran ?></span>
+                    <span class="badge badge-danger"><i class="fa fa-times-circle"></i>&nbsp;Tidak Diterima</span>
                   <?php }else{ ?>
                     <span class="badge badge-info"><i class="fa fa-tasks"></i>&nbsp;<?php echo $siswa->status_pendaftaran ?></span>
                   <?php } ?>

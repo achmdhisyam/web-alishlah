@@ -3,6 +3,9 @@ use App\Models\Nav_model;
 use App\Models\Konfigurasi_model;
 $m_menu         = new Nav_model();
 $nav_profil     = $m_menu->profil('Profil');
+if (!isset($m_site)) {
+    $m_site = new Konfigurasi_model();
+}
 $site_setting   = $m_site->listing();
 ?>
 <style type="text/css" media="screen">
@@ -156,7 +159,7 @@ a.whatsapp-link i {
     align-items: center;
     padding: 8px 12px;
     background: #fff;
-    border-top: none;
+    border-top: 1px solid #eee;
 }
 .chatbot-footer-inner {
     display: flex;
@@ -210,7 +213,7 @@ a.whatsapp-link i {
     flex-wrap: nowrap;
     overflow-x: auto;
     gap: 8px;
-    padding: 8px 0;
+    padding: 8px 16px;
     margin-bottom: 4px;
     background: transparent;
     scrollbar-width: none; /* Firefox */
@@ -218,12 +221,6 @@ a.whatsapp-link i {
 }
 .quick-replies::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
-}
-.quick-reply-btn:first-child {
-    margin-left: 16px;
-}
-.quick-reply-btn:last-child {
-    margin-right: 16px;
 }
 .quick-reply-btn {
     background: transparent;
@@ -434,56 +431,41 @@ $(document).ready(function(){
   // Popup Delete
   $(document).on("click", ".delete-link", function(e){
     e.preventDefault();
-    url = $(this).attr("href");
+    var url = $(this).attr("href");
     Swal.fire({
         title: 'Anda yakin?',
         text: "Jika dihapus, data tidak dapat dikembalikan lagi!",
-        icon: 'info',
-        timer: 5000,
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, Hapus Data!'
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus Data!',
+        cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-              url: url,
-              success: function(resp){
-                window.location.href = url;
-              }
-            });
-        }
-      })
-  });
-
- // Popup Delete
-$(document).on("click", ".disable-link", function(e){
-  e.preventDefault();
-  url = $(this).attr("href");
-  Swal.fire({
-    title:"Yakin akan mengupdate data ini?",
-    type: "warning",
-    showCancelButton: true,
-    confirmButtonClass: 'btn btn-danger',
-    cancelButtonClass: 'btn btn-success',
-    buttonsStyling: false,
-    confirmButtonText: "Delete",
-    cancelButtonText: "Cancel",
-    closeOnConfirm: false,
-    showLoaderOnConfirm: true,
-  },
-  function(isConfirm){
-    if(isConfirm){
-      $.ajax({
-        url: url,
-        success: function(resp){
           window.location.href = url;
         }
       });
-    }
-    return false;
   });
-});
+
+  // Popup Update/Disable
+  $(document).on("click", ".disable-link", function(e){
+    e.preventDefault();
+    var url = $(this).attr("href");
+    Swal.fire({
+      title: "Yakin akan mengupdate data ini?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Ya, Update!",
+      cancelButtonText: "Batal"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = url;
+      }
+    });
+  });
 
 
   <?php if(isset($_GET['logout'])) { ?>
@@ -494,27 +476,80 @@ $(document).on("click", ".disable-link", function(e){
       title: 'Sukses...',
       text: 'Anda berhasil logout.',
     })
-  <?php }if(Session()->getFlashdata('warning')) { ?>
+  <?php } ?>
+  <?php 
+  $sessionWarning = Session()->getFlashdata('warning');
+  if($sessionWarning) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'warning',
     title: 'Oops...',
     timer: 3000,
     heightAuto: false,
-    text: '<?php echo Session()->getFlashdata('warning'); ?>',
+    text: '<?php echo $sessionWarning; ?>',
   })
   <?php } ?>
-  <?php if(Session()->getFlashdata('sukses')) { ?>
+  <?php 
+  $sessionSukses = Session()->getFlashdata('sukses');
+  if($sessionSukses) { 
+  ?>
   // Notifikasi
   Swal.fire({
     icon: 'success',
     heightAuto: false,
     timer: 3000,
     title: 'Alhamdulillah...',
-    text: '<?php echo Session()->getFlashdata('sukses'); ?>',
+    text: '<?php echo $sessionSukses; ?>',
   })
   <?php } ?>
+  </script>
 
+  <!-- OneSignal Web Push Integration -->
+  <?php
+  $oneSignalAppId = getenv('ONESIGNAL_APP_ID');
+  $externalUserId = '';
+  if (Session()->get('username')) {
+      $externalUserId = 'admin_' . Session()->get('id_user');
+  } elseif (Session()->get('username_siswa')) {
+      $externalUserId = 'siswa_' . Session()->get('id_akun');
+  }
+  ?>
+  <?php if(!empty($oneSignalAppId)) { ?>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "<?php echo $oneSignalAppId ?>",
+        serviceWorkerPath: "<?php echo parse_url(base_url('OneSignalSDKWorker.js'), PHP_URL_PATH) ?>",
+        serviceWorkerParam: {
+          scope: "<?php echo parse_url(base_url(), PHP_URL_PATH) ?>"
+        },
+        notifyButton: {
+          enable: false, // Disabling default bell to avoid UI clutter
+        },
+        welcomeNotification: {
+          disable: true
+        },
+      });
+      <?php if(!empty($externalUserId)) { ?>
+        await OneSignal.login("<?php echo $externalUserId ?>");
+        
+        // Auto-request permission on user login if not already granted
+        if (!OneSignal.Notifications.permission) {
+          try {
+            await OneSignal.Notifications.requestPermission();
+          } catch (e) {
+            console.warn("OneSignal Permission Request Error:", e);
+          }
+        }
+      <?php } ?>
+    });
+  </script>
+  <?php } ?>
+
+  <script>
   // Chatbot Logic
   $(document).ready(function() {
       const chatbotToggler = document.querySelector(".chatbot-toggler");

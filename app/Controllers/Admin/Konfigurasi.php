@@ -90,6 +90,8 @@ class Konfigurasi extends BaseController
 						'selesai_pendaftaran'		=> $this->website->tanggal_input($this->request->getPost('selesai_pendaftaran')),
 						'pengumuman_pendaftaran'	=> $this->website->tanggal_input($this->request->getPost('pengumuman_pendaftaran')),
 						'keterangan_pendaftaran'	=> $this->request->getPost('keterangan_pendaftaran'),
+						'email_admin_spmb'			=> $this->request->getPost('email_admin_spmb'),
+						'whatsapp_spmb'				=> $this->request->getPost('whatsapp_spmb'),
 					];
 			$m_konfigurasi->edit($data);
 			// masuk database
@@ -318,6 +320,7 @@ class Konfigurasi extends BaseController
 		$this->response->setHeader('Content-Type', 'application/pdf');
 		// buka di browser
 		$mpdf->Output('Informasi-Sekolah.pdf','I'); 
+		exit(0);
 	}
 
 	// seo
