@@ -1,6 +1,7 @@
 <?php 
 include('popup.php');
 include('banner.php');
+include('spmb_menu.php');
 include('jenjang.php');
 include('yayasan.php');
 // include('program_pendidikan.php');

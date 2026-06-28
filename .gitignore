@@ -23,3 +23,14 @@ assets/upload/**
 !assets/upload/**/index.html
 !assets/upload/**/.gitkeep
 .env
+
+# Composer dependencies
+vendor/
+
+# IDE and system files
+.idea/
+.vscode/
+Thumbs.db
+*.bak
+*.tmp
+db_show_config.php

@@ -319,4 +319,52 @@ class Siswa_model extends Model
     return $builder->get()->getRow();
 }
 
+    /**
+     * Centralized cascading delete for student physical files and database references.
+     */
+    public function deleteSiswaCascading($id_siswa, $deleteAkun = true)
+    {
+        $siswa = $this->db->table('siswa')->where('id_siswa', $id_siswa)->get()->getRow();
+        if (!$siswa) {
+            return false;
+        }
+
+        // 1. Delete physical photo image & thumbs
+        if (!empty($siswa->gambar)) {
+            $file_path = './assets/upload/image/' . $siswa->gambar;
+            $thumb_path = './assets/upload/image/thumbs/' . $siswa->gambar;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+            if (file_exists($thumb_path)) {
+                unlink($thumb_path);
+            }
+        }
+
+        // 2. Delete physical document files
+        $dokumen = $this->db->table('dokumen')->where('id_siswa', $id_siswa)->get()->getResult();
+        foreach ($dokumen as $dok) {
+            if (!empty($dok->gambar)) {
+                $doc_path = './assets/upload/pendaftaran/' . $dok->gambar;
+                if (file_exists($doc_path)) {
+                    unlink($doc_path);
+                }
+            }
+        }
+
+        // 3. Delete database references
+        $this->db->table('dokumen')->where('id_siswa', $id_siswa)->delete();
+        $this->db->table('siswa_rombel')->where('id_siswa', $id_siswa)->delete();
+        $this->db->table('siswa_logs')->where('id_siswa', $id_siswa)->delete();
+
+        // 4. Delete login account if instructed (admin side)
+        if ($deleteAkun && !empty($siswa->id_akun)) {
+            $this->db->table('akun')->where('id_akun', $siswa->id_akun)->delete();
+        }
+
+        // 5. Delete the main student row
+        $this->db->table('siswa')->where('id_siswa', $id_siswa)->delete();
+        return true;
+    }
+
 }

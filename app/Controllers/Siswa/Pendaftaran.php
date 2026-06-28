@@ -92,6 +92,17 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_ayah');
 				$alamat_wali 		= $this->request->getPost('alamat_ayah');
 				$telepon_wali		= $this->request->getPost('telepon_ayah');
+				$rt_wali			= $this->request->getPost('rt_ayah');
+				$rw_wali			= $this->request->getPost('rw_ayah');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_ayah');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_ayah');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_ayah');
+				$provinsi_wali		= $this->request->getPost('provinsi_ayah');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_ayah');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_ayah');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_ayah');
+				$status_wn_wali		= $this->request->getPost('status_wn_ayah');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_ayah');
 			}elseif($this->request->getPost('identitas_wali')=='Ibu') {
 				$id_agama_wali 		= $this->request->getPost('id_agama_ibu');
 				$id_pekerjaan_wali 	= $this->request->getPost('id_pekerjaan_ibu');
@@ -99,6 +110,17 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_ibu');
 				$alamat_wali 		= $this->request->getPost('alamat_ibu');
 				$telepon_wali		= $this->request->getPost('telepon_ibu');
+				$rt_wali			= $this->request->getPost('rt_ibu');
+				$rw_wali			= $this->request->getPost('rw_ibu');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_ibu');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_ibu');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_ibu');
+				$provinsi_wali		= $this->request->getPost('provinsi_ibu');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_ibu');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_ibu');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_ibu');
+				$status_wn_wali		= $this->request->getPost('status_wn_ibu');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_ibu');
 			}else{
 				$id_agama_wali 		= $this->request->getPost('id_agama_wali');
 				$id_pekerjaan_wali 	= $this->request->getPost('id_pekerjaan_wali');
@@ -106,7 +128,19 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_wali');
 				$alamat_wali 		= $this->request->getPost('alamat_wali');
 				$telepon_wali		= $this->request->getPost('telepon_wali');
+				$rt_wali			= $this->request->getPost('rt_wali');
+				$rw_wali			= $this->request->getPost('rw_wali');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_wali');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_wali');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_wali');
+				$provinsi_wali		= $this->request->getPost('provinsi_wali');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_wali');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_wali');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_wali');
+				$status_wn_wali		= $this->request->getPost('status_wn_wali');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_wali');
 			}
+
 			if(!empty($_FILES['gambar']['name'])) {
 				// Image upload
 				$avatar  					= $this->request->getFile('gambar');
@@ -139,6 +173,7 @@ class Pendaftaran extends BaseController
 							'id_program_pendidikan'	=> $this->request->getPost('id_program_pendidikan'),
 							'kode_siswa'			=> strtoupper(random_string('alnum', 8)),
 							'slug_siswa'			=> $slug_siswa,
+							'email'					=> $this->request->getPost('email'),
 							'nisn'					=> $this->request->getPost('nisn'),
 							'status_wn'				=> $this->request->getPost('status_wn'),
 							'nama_siswa'			=> $this->request->getPost('nama_siswa'),
@@ -146,6 +181,13 @@ class Pendaftaran extends BaseController
 							'tempat_lahir'			=> $this->request->getPost('tempat_lahir'),
 							'tanggal_lahir'			=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir')),
 							'alamat'				=> $this->request->getPost('alamat'),
+							'rt'					=> $this->request->getPost('rt'),
+							'rw'					=> $this->request->getPost('rw'),
+							'kelurahan'				=> $this->request->getPost('kelurahan'),
+							'kecamatan'				=> $this->request->getPost('kecamatan'),
+							'kabupaten'				=> $this->request->getPost('kabupaten'),
+							'provinsi'				=> $this->request->getPost('provinsi'),
+							'kode_pos'				=> $this->request->getPost('kode_pos'),
 							'telepon'				=> $this->request->getPost('telepon'),
 							'jenis_kelamin'			=> $this->request->getPost('jenis_kelamin'),
 							'nama_ayah'				=> $this->request->getPost('nama_ayah'),
@@ -161,13 +203,34 @@ class Pendaftaran extends BaseController
 							'penghasilan_ibu'		=> $this->request->getPost('penghasilan_ibu'),
 							'status_hidup_ibu'		=> $this->request->getPost('status_hidup_ibu'),
 							'nama_wali'				=> $nama_wali,
-							'tempat_lahir_wali'		=> $this->request->getPost('tempat_lahir_wali'),
-							'tanggal_lahir_wali'	=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir_wali')),
-							'status_wn_wali'		=> $this->request->getPost('status_wn_wali'),
-							'penghasilan_wali'		=> $this->request->getPost('penghasilan_wali'),
+							'tempat_lahir_wali'		=> $tempat_lahir_wali,
+							'tanggal_lahir_wali'	=> $this->website->tanggal_input($tanggal_lahir_wali),
+							'status_wn_wali'		=> $status_wn_wali,
+							'penghasilan_wali'		=> $penghasilan_wali,
 							'alamat_ayah'			=> $this->request->getPost('alamat_ayah'),
+							'rt_ayah'				=> $this->request->getPost('rt_ayah'),
+							'rw_ayah'				=> $this->request->getPost('rw_ayah'),
+							'kelurahan_ayah'		=> $this->request->getPost('kelurahan_ayah'),
+							'kecamatan_ayah'		=> $this->request->getPost('kecamatan_ayah'),
+							'kabupaten_ayah'		=> $this->request->getPost('kabupaten_ayah'),
+							'provinsi_ayah'			=> $this->request->getPost('provinsi_ayah'),
+							'kode_pos_ayah'			=> $this->request->getPost('kode_pos_ayah'),
 							'alamat_ibu'			=> $this->request->getPost('alamat_ibu'),
+							'rt_ibu'				=> $this->request->getPost('rt_ibu'),
+							'rw_ibu'				=> $this->request->getPost('rw_ibu'),
+							'kelurahan_ibu'			=> $this->request->getPost('kelurahan_ibu'),
+							'kecamatan_ibu'			=> $this->request->getPost('kecamatan_ibu'),
+							'kabupaten_ibu'			=> $this->request->getPost('kabupaten_ibu'),
+							'provinsi_ibu'			=> $this->request->getPost('provinsi_ibu'),
+							'kode_pos_ibu'			=> $this->request->getPost('kode_pos_ibu'),
 							'alamat_wali'			=> $alamat_wali,
+							'rt_wali'				=> $rt_wali,
+							'rw_wali'				=> $rw_wali,
+							'kelurahan_wali'		=> $kelurahan_wali,
+							'kecamatan_wali'		=> $kecamatan_wali,
+							'kabupaten_wali'		=> $kabupaten_wali,
+							'provinsi_wali'			=> $provinsi_wali,
+							'kode_pos_wali'			=> $kode_pos_wali,
 							'telepon_ayah'			=> $this->request->getPost('telepon_ayah'),
 							'telepon_ibu'			=> $this->request->getPost('telepon_ibu'),
 							'telepon_wali'			=> $telepon_wali,
@@ -183,6 +246,42 @@ class Pendaftaran extends BaseController
 							'tanggal_post'			=> date('Y-m-d H:i:s')
 						];
 				$m_siswa->tambah($data);
+				$siswa_baru_id = $this->db->insertID();
+
+				// Kirim Push Notification OneSignal ke Admin
+				$admins = $this->db->table('users')->select('id_user')->get()->getResult();
+				$adminPushIds = [];
+				foreach ($admins as $ad) {
+					$adminPushIds[] = 'admin_' . $ad->id_user;
+				}
+				if (!empty($adminPushIds)) {
+					send_push_notification(
+						$adminPushIds,
+						"Siswa baru bernama " . $this->request->getPost('nama_siswa') . " telah mendaftar online.",
+						"Pendaftar Baru PPDB!",
+						base_url('admin/siswa/detail/' . $siswa_baru_id)
+					);
+				}
+
+				// Kirim notifikasi email ke Admin SPMB jika dikonfigurasi
+				$emailAdmin = !empty($konfigurasi->email_admin_spmb) ? $konfigurasi->email_admin_spmb : $konfigurasi->email;
+				if (!empty($emailAdmin)) {
+					$linkKelola = base_url('admin/gelombang/dokumen/' . $slug_siswa);
+					$programId = $this->request->getPost('id_program_pendidikan');
+					$programObj = $programId ? $m_program_pendidikan->detail($programId) : null;
+					$programNama = $programObj ? $programObj->judul_program_pendidikan : '-';
+
+					$dataEmailAdmin = [
+						'nama_siswa'  => $this->request->getPost('nama_siswa'),
+						'nisn'        => $this->request->getPost('nisn'),
+						'program'     => $programNama,
+						'telepon'     => $this->request->getPost('telepon'),
+						'link_kelola' => $linkKelola,
+						'namaweb'     => $konfigurasi->namaweb
+					];
+					$messageAdmin = view('email_templates/pendaftar_baru_admin', $dataEmailAdmin);
+					$this->sendEmail($emailAdmin, '📢 Pendaftar Baru SPMB - ' . $this->request->getPost('nama_siswa'), $messageAdmin);
+				}
 				// masuk database
 				$this->session->setFlashdata('sukses','Data telah ditambah');
 				return redirect()->to(base_url('siswa/pendaftaran/dokumen/'.$slug_siswa));
@@ -209,6 +308,7 @@ class Pendaftaran extends BaseController
 							'id_program_pendidikan'	=> $this->request->getPost('id_program_pendidikan'),
 							'kode_siswa'			=> strtoupper(random_string('alnum', 8)),
 							'slug_siswa'			=> $slug_siswa,
+							'email'					=> $this->request->getPost('email'),
 							'nisn'					=> $this->request->getPost('nisn'),
 							'status_wn'				=> $this->request->getPost('status_wn'),
 							'nama_siswa'			=> $this->request->getPost('nama_siswa'),
@@ -216,6 +316,13 @@ class Pendaftaran extends BaseController
 							'tempat_lahir'			=> $this->request->getPost('tempat_lahir'),
 							'tanggal_lahir'			=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir')),
 							'alamat'				=> $this->request->getPost('alamat'),
+							'rt'					=> $this->request->getPost('rt'),
+							'rw'					=> $this->request->getPost('rw'),
+							'kelurahan'				=> $this->request->getPost('kelurahan'),
+							'kecamatan'				=> $this->request->getPost('kecamatan'),
+							'kabupaten'				=> $this->request->getPost('kabupaten'),
+							'provinsi'				=> $this->request->getPost('provinsi'),
+							'kode_pos'				=> $this->request->getPost('kode_pos'),
 							'telepon'				=> $this->request->getPost('telepon'),
 							'jenis_kelamin'			=> $this->request->getPost('jenis_kelamin'),
 							'nama_ayah'				=> $this->request->getPost('nama_ayah'),
@@ -231,13 +338,34 @@ class Pendaftaran extends BaseController
 							'penghasilan_ibu'		=> $this->request->getPost('penghasilan_ibu'),
 							'status_hidup_ibu'		=> $this->request->getPost('status_hidup_ibu'),
 							'nama_wali'				=> $nama_wali,
-							'tempat_lahir_wali'		=> $this->request->getPost('tempat_lahir_wali'),
-							'tanggal_lahir_wali'	=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir_wali')),
-							'status_wn_wali'		=> $this->request->getPost('status_wn_wali'),
-							'penghasilan_wali'		=> $this->request->getPost('penghasilan_wali'),
+							'tempat_lahir_wali'		=> $tempat_lahir_wali,
+							'tanggal_lahir_wali'	=> $this->website->tanggal_input($tanggal_lahir_wali),
+							'status_wn_wali'		=> $status_wn_wali,
+							'penghasilan_wali'		=> $penghasilan_wali,
 							'alamat_ayah'			=> $this->request->getPost('alamat_ayah'),
+							'rt_ayah'				=> $this->request->getPost('rt_ayah'),
+							'rw_ayah'				=> $this->request->getPost('rw_ayah'),
+							'kelurahan_ayah'		=> $this->request->getPost('kelurahan_ayah'),
+							'kecamatan_ayah'		=> $this->request->getPost('kecamatan_ayah'),
+							'kabupaten_ayah'		=> $this->request->getPost('kabupaten_ayah'),
+							'provinsi_ayah'			=> $this->request->getPost('provinsi_ayah'),
+							'kode_pos_ayah'			=> $this->request->getPost('kode_pos_ayah'),
 							'alamat_ibu'			=> $this->request->getPost('alamat_ibu'),
+							'rt_ibu'				=> $this->request->getPost('rt_ibu'),
+							'rw_ibu'				=> $this->request->getPost('rw_ibu'),
+							'kelurahan_ibu'			=> $this->request->getPost('kelurahan_ibu'),
+							'kecamatan_ibu'			=> $this->request->getPost('kecamatan_ibu'),
+							'kabupaten_ibu'			=> $this->request->getPost('kabupaten_ibu'),
+							'provinsi_ibu'			=> $this->request->getPost('provinsi_ibu'),
+							'kode_pos_ibu'			=> $this->request->getPost('kode_pos_ibu'),
 							'alamat_wali'			=> $alamat_wali,
+							'rt_wali'				=> $rt_wali,
+							'rw_wali'				=> $rw_wali,
+							'kelurahan_wali'		=> $kelurahan_wali,
+							'kecamatan_wali'		=> $kecamatan_wali,
+							'kabupaten_wali'		=> $kabupaten_wali,
+							'provinsi_wali'			=> $provinsi_wali,
+							'kode_pos_wali'			=> $kode_pos_wali,
 							'telepon_ayah'			=> $this->request->getPost('telepon_ayah'),
 							'telepon_ibu'			=> $this->request->getPost('telepon_ibu'),
 							'telepon_wali'			=> $telepon_wali,
@@ -253,6 +381,25 @@ class Pendaftaran extends BaseController
 						];
 				// masuk database
 				$m_siswa->tambah($data);
+				// Kirim notifikasi email ke Admin SPMB jika dikonfigurasi
+				$emailAdmin = !empty($konfigurasi->email_admin_spmb) ? $konfigurasi->email_admin_spmb : $konfigurasi->email;
+				if (!empty($emailAdmin)) {
+					$linkKelola = base_url('admin/gelombang/dokumen/' . $slug_siswa);
+					$programId = $this->request->getPost('id_program_pendidikan');
+					$programObj = $programId ? $m_program_pendidikan->detail($programId) : null;
+					$programNama = $programObj ? $programObj->judul_program_pendidikan : '-';
+
+					$dataEmailAdmin = [
+						'nama_siswa'  => $this->request->getPost('nama_siswa'),
+						'nisn'        => $this->request->getPost('nisn'),
+						'program'     => $programNama,
+						'telepon'     => $this->request->getPost('telepon'),
+						'link_kelola' => $linkKelola,
+						'namaweb'     => $konfigurasi->namaweb
+					];
+					$messageAdmin = view('email_templates/pendaftar_baru_admin', $dataEmailAdmin);
+					$this->sendEmail($emailAdmin, '📢 Pendaftar Baru SPMB - ' . $this->request->getPost('nama_siswa'), $messageAdmin);
+				}
 				$this->session->setFlashdata('sukses','Data telah ditambah');
 				return redirect()->to(base_url('siswa/pendaftaran/dokumen/'.$slug_siswa));
 			}
@@ -318,6 +465,17 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_ayah');
 				$alamat_wali 		= $this->request->getPost('alamat_ayah');
 				$telepon_wali		= $this->request->getPost('telepon_ayah');
+				$rt_wali			= $this->request->getPost('rt_ayah');
+				$rw_wali			= $this->request->getPost('rw_ayah');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_ayah');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_ayah');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_ayah');
+				$provinsi_wali		= $this->request->getPost('provinsi_ayah');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_ayah');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_ayah');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_ayah');
+				$status_wn_wali		= $this->request->getPost('status_wn_ayah');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_ayah');
 			}elseif($this->request->getPost('identitas_wali')=='Ibu') {
 				$id_agama_wali 		= $this->request->getPost('id_agama_ibu');
 				$id_pekerjaan_wali 	= $this->request->getPost('id_pekerjaan_ibu');
@@ -325,6 +483,17 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_ibu');
 				$alamat_wali 		= $this->request->getPost('alamat_ibu');
 				$telepon_wali		= $this->request->getPost('telepon_ibu');
+				$rt_wali			= $this->request->getPost('rt_ibu');
+				$rw_wali			= $this->request->getPost('rw_ibu');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_ibu');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_ibu');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_ibu');
+				$provinsi_wali		= $this->request->getPost('provinsi_ibu');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_ibu');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_ibu');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_ibu');
+				$status_wn_wali		= $this->request->getPost('status_wn_ibu');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_ibu');
 			}else{
 				$id_agama_wali 		= $this->request->getPost('id_agama_wali');
 				$id_pekerjaan_wali 	= $this->request->getPost('id_pekerjaan_wali');
@@ -332,6 +501,17 @@ class Pendaftaran extends BaseController
 				$nama_wali			= $this->request->getPost('nama_wali');
 				$alamat_wali 		= $this->request->getPost('alamat_wali');
 				$telepon_wali		= $this->request->getPost('telepon_wali');
+				$rt_wali			= $this->request->getPost('rt_wali');
+				$rw_wali			= $this->request->getPost('rw_wali');
+				$kelurahan_wali		= $this->request->getPost('kelurahan_wali');
+				$kecamatan_wali		= $this->request->getPost('kecamatan_wali');
+				$kabupaten_wali		= $this->request->getPost('kabupaten_wali');
+				$provinsi_wali		= $this->request->getPost('provinsi_wali');
+				$kode_pos_wali		= $this->request->getPost('kode_pos_wali');
+				$tempat_lahir_wali	= $this->request->getPost('tempat_lahir_wali');
+				$tanggal_lahir_wali	= $this->request->getPost('tanggal_lahir_wali');
+				$status_wn_wali		= $this->request->getPost('status_wn_wali');
+				$penghasilan_wali	= $this->request->getPost('penghasilan_wali');
 			}
 			if(!empty($_FILES['gambar']['name'])) {
 				// Image upload
@@ -344,7 +524,7 @@ class Pendaftaran extends BaseController
 			    ->fit(100, 100, 'center')
 			    ->save(WRITEPATH . '../assets/upload/image/thumbs/'.$nama_siswabaru);
 	        	// masuk database
-	        	$slug_siswa 	= strtolower(url_title($this->request->getVar('nama_siswa'))).'-'.strtoupper(random_string('alnum', 8));
+	        	$slug_siswa 	= $siswa->slug_siswa ?: strtolower(url_title($this->request->getVar('nama_siswa'))).'-'.strtoupper(random_string('alnum', 8));
 				$data = [	'id_siswa'				=> $siswa->id_siswa,
 							'id_user'				=> $this->session->get('id_user'),
 							'id_gelombang'			=> $id_gelombang,
@@ -358,12 +538,13 @@ class Pendaftaran extends BaseController
 							'id_jenjang_ayah'		=> $this->request->getPost('id_jenjang_ayah'),
 							'id_jenjang_ibu'		=> $this->request->getPost('id_jenjang_ibu'),
 							'id_jenjang_wali'		=> $id_jenjang_wali,
-							'id_tahun'				=> $this->request->getPost('id_tahun'),
-							'id_kelas'				=> $this->request->getPost('id_kelas'),
-							'id_jenjang'			=> $this->request->getPost('id_jenjang'),
+							'id_tahun'				=> $this->request->getPost('id_tahun') ?: $siswa->id_tahun,
+							'id_kelas'				=> $this->request->getPost('id_kelas') ?: $siswa->id_kelas,
+							'id_jenjang'			=> $this->request->getPost('id_jenjang') ?: $siswa->id_jenjang,
 							'id_hubungan'			=> $this->request->getPost('id_hubungan'),
 							'id_akun'				=> $akun->id_akun,
 							'id_program_pendidikan'	=> $this->request->getPost('id_program_pendidikan'),
+							'email'					=> $this->request->getPost('email'),
 							'nisn'					=> $this->request->getPost('nisn'),
 							'status_wn'				=> $this->request->getPost('status_wn'),
 							'nama_siswa'			=> $this->request->getPost('nama_siswa'),
@@ -371,6 +552,13 @@ class Pendaftaran extends BaseController
 							'tempat_lahir'			=> $this->request->getPost('tempat_lahir'),
 							'tanggal_lahir'			=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir')),
 							'alamat'				=> $this->request->getPost('alamat'),
+							'rt'					=> $this->request->getPost('rt'),
+							'rw'					=> $this->request->getPost('rw'),
+							'kelurahan'				=> $this->request->getPost('kelurahan'),
+							'kecamatan'				=> $this->request->getPost('kecamatan'),
+							'kabupaten'				=> $this->request->getPost('kabupaten'),
+							'provinsi'				=> $this->request->getPost('provinsi'),
+							'kode_pos'				=> $this->request->getPost('kode_pos'),
 							'telepon'				=> $this->request->getPost('telepon'),
 							'jenis_kelamin'			=> $this->request->getPost('jenis_kelamin'),
 							'nama_ayah'				=> $this->request->getPost('nama_ayah'),
@@ -386,13 +574,34 @@ class Pendaftaran extends BaseController
 							'penghasilan_ibu'		=> $this->request->getPost('penghasilan_ibu'),
 							'status_hidup_ibu'		=> $this->request->getPost('status_hidup_ibu'),
 							'nama_wali'				=> $nama_wali,
-							'tempat_lahir_wali'		=> $this->request->getPost('tempat_lahir_wali'),
-							'tanggal_lahir_wali'	=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir_wali')),
-							'status_wn_wali'		=> $this->request->getPost('status_wn_wali'),
-							'penghasilan_wali'		=> $this->request->getPost('penghasilan_wali'),
+							'tempat_lahir_wali'		=> $tempat_lahir_wali,
+							'tanggal_lahir_wali'	=> $this->website->tanggal_input($tanggal_lahir_wali),
+							'status_wn_wali'		=> $status_wn_wali,
+							'penghasilan_wali'		=> $penghasilan_wali,
 							'alamat_ayah'			=> $this->request->getPost('alamat_ayah'),
+							'rt_ayah'				=> $this->request->getPost('rt_ayah'),
+							'rw_ayah'				=> $this->request->getPost('rw_ayah'),
+							'kelurahan_ayah'		=> $this->request->getPost('kelurahan_ayah'),
+							'kecamatan_ayah'		=> $this->request->getPost('kecamatan_ayah'),
+							'kabupaten_ayah'		=> $this->request->getPost('kabupaten_ayah'),
+							'provinsi_ayah'			=> $this->request->getPost('provinsi_ayah'),
+							'kode_pos_ayah'			=> $this->request->getPost('kode_pos_ayah'),
 							'alamat_ibu'			=> $this->request->getPost('alamat_ibu'),
+							'rt_ibu'				=> $this->request->getPost('rt_ibu'),
+							'rw_ibu'				=> $this->request->getPost('rw_ibu'),
+							'kelurahan_ibu'			=> $this->request->getPost('kelurahan_ibu'),
+							'kecamatan_ibu'			=> $this->request->getPost('kecamatan_ibu'),
+							'kabupaten_ibu'			=> $this->request->getPost('kabupaten_ibu'),
+							'provinsi_ibu'			=> $this->request->getPost('provinsi_ibu'),
+							'kode_pos_ibu'			=> $this->request->getPost('kode_pos_ibu'),
 							'alamat_wali'			=> $alamat_wali,
+							'rt_wali'				=> $rt_wali,
+							'rw_wali'				=> $rw_wali,
+							'kelurahan_wali'		=> $kelurahan_wali,
+							'kecamatan_wali'		=> $kecamatan_wali,
+							'kabupaten_wali'		=> $kabupaten_wali,
+							'provinsi_wali'			=> $provinsi_wali,
+							'kode_pos_wali'			=> $kode_pos_wali,
 							'telepon_ayah'			=> $this->request->getPost('telepon_ayah'),
 							'telepon_ibu'			=> $this->request->getPost('telepon_ibu'),
 							'telepon_wali'			=> $telepon_wali,
@@ -402,13 +611,14 @@ class Pendaftaran extends BaseController
 							'jumlah_saudara'		=> $this->request->getPost('jumlah_saudara'),
 							'gambar'				=> $nama_siswabaru,
 							'identitas_wali'		=> $this->request->getPost('identitas_wali'),
+							'slug_siswa'			=> $slug_siswa,
 						];
 				$m_siswa->edit($data);
 				$this->session->setFlashdata('sukses','Data telah diupdate');
-				return redirect()->to(base_url('siswa/pendaftaran'));
+				return redirect()->to(base_url('siswa/pendaftaran/dokumen/'.$slug_siswa));
 			}else{
 				// masuk database
-				$slug_siswa 	= strtolower(url_title($this->request->getVar('nama_siswa'))).'-'.strtoupper(random_string('alnum', 8));
+				$slug_siswa 	= $siswa->slug_siswa ?: strtolower(url_title($this->request->getVar('nama_siswa'))).'-'.strtoupper(random_string('alnum', 8));
 				$data = [	'id_siswa'				=> $siswa->id_siswa,
 							'id_user'				=> $this->session->get('id_user'),
 							'id_gelombang'			=> $id_gelombang,
@@ -422,12 +632,13 @@ class Pendaftaran extends BaseController
 							'id_jenjang_ayah'		=> $this->request->getPost('id_jenjang_ayah'),
 							'id_jenjang_ibu'		=> $this->request->getPost('id_jenjang_ibu'),
 							'id_jenjang_wali'		=> $id_jenjang_wali,
-							'id_tahun'				=> $this->request->getPost('id_tahun'),
-							'id_kelas'				=> $this->request->getPost('id_kelas'),
-							'id_jenjang'			=> $this->request->getPost('id_jenjang'),
+							'id_tahun'				=> $this->request->getPost('id_tahun') ?: $siswa->id_tahun,
+							'id_kelas'				=> $this->request->getPost('id_kelas') ?: $siswa->id_kelas,
+							'id_jenjang'			=> $this->request->getPost('id_jenjang') ?: $siswa->id_jenjang,
 							'id_hubungan'			=> $this->request->getPost('id_hubungan'),
 							'id_akun'				=> $akun->id_akun,
 							'id_program_pendidikan'	=> $this->request->getPost('id_program_pendidikan'),
+							'email'					=> $this->request->getPost('email'),
 							'nisn'					=> $this->request->getPost('nisn'),
 							'status_wn'				=> $this->request->getPost('status_wn'),
 							'nama_siswa'			=> $this->request->getPost('nama_siswa'),
@@ -435,6 +646,13 @@ class Pendaftaran extends BaseController
 							'tempat_lahir'			=> $this->request->getPost('tempat_lahir'),
 							'tanggal_lahir'			=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir')),
 							'alamat'				=> $this->request->getPost('alamat'),
+							'rt'					=> $this->request->getPost('rt'),
+							'rw'					=> $this->request->getPost('rw'),
+							'kelurahan'				=> $this->request->getPost('kelurahan'),
+							'kecamatan'				=> $this->request->getPost('kecamatan'),
+							'kabupaten'				=> $this->request->getPost('kabupaten'),
+							'provinsi'				=> $this->request->getPost('provinsi'),
+							'kode_pos'				=> $this->request->getPost('kode_pos'),
 							'telepon'				=> $this->request->getPost('telepon'),
 							'jenis_kelamin'			=> $this->request->getPost('jenis_kelamin'),
 							'nama_ayah'				=> $this->request->getPost('nama_ayah'),
@@ -450,13 +668,34 @@ class Pendaftaran extends BaseController
 							'penghasilan_ibu'		=> $this->request->getPost('penghasilan_ibu'),
 							'status_hidup_ibu'		=> $this->request->getPost('status_hidup_ibu'),
 							'nama_wali'				=> $nama_wali,
-							'tempat_lahir_wali'		=> $this->request->getPost('tempat_lahir_wali'),
-							'tanggal_lahir_wali'	=> $this->website->tanggal_input($this->request->getPost('tanggal_lahir_wali')),
-							'status_wn_wali'		=> $this->request->getPost('status_wn_wali'),
-							'penghasilan_wali'		=> $this->request->getPost('penghasilan_wali'),
+							'tempat_lahir_wali'		=> $tempat_lahir_wali,
+							'tanggal_lahir_wali'	=> $this->website->tanggal_input($tanggal_lahir_wali),
+							'status_wn_wali'		=> $status_wn_wali,
+							'penghasilan_wali'		=> $penghasilan_wali,
 							'alamat_ayah'			=> $this->request->getPost('alamat_ayah'),
+							'rt_ayah'				=> $this->request->getPost('rt_ayah'),
+							'rw_ayah'				=> $this->request->getPost('rw_ayah'),
+							'kelurahan_ayah'		=> $this->request->getPost('kelurahan_ayah'),
+							'kecamatan_ayah'		=> $this->request->getPost('kecamatan_ayah'),
+							'kabupaten_ayah'		=> $this->request->getPost('kabupaten_ayah'),
+							'provinsi_ayah'			=> $this->request->getPost('provinsi_ayah'),
+							'kode_pos_ayah'			=> $this->request->getPost('kode_pos_ayah'),
 							'alamat_ibu'			=> $this->request->getPost('alamat_ibu'),
+							'rt_ibu'				=> $this->request->getPost('rt_ibu'),
+							'rw_ibu'				=> $this->request->getPost('rw_ibu'),
+							'kelurahan_ibu'			=> $this->request->getPost('kelurahan_ibu'),
+							'kecamatan_ibu'			=> $this->request->getPost('kecamatan_ibu'),
+							'kabupaten_ibu'			=> $this->request->getPost('kabupaten_ibu'),
+							'provinsi_ibu'			=> $this->request->getPost('provinsi_ibu'),
+							'kode_pos_ibu'			=> $this->request->getPost('kode_pos_ibu'),
 							'alamat_wali'			=> $alamat_wali,
+							'rt_wali'				=> $rt_wali,
+							'rw_wali'				=> $rw_wali,
+							'kelurahan_wali'		=> $kelurahan_wali,
+							'kecamatan_wali'		=> $kecamatan_wali,
+							'kabupaten_wali'		=> $kabupaten_wali,
+							'provinsi_wali'			=> $provinsi_wali,
+							'kode_pos_wali'			=> $kode_pos_wali,
 							'telepon_ayah'			=> $this->request->getPost('telepon_ayah'),
 							'telepon_ibu'			=> $this->request->getPost('telepon_ibu'),
 							'telepon_wali'			=> $telepon_wali,
@@ -465,11 +704,12 @@ class Pendaftaran extends BaseController
 							'anak_ke'				=> $this->request->getPost('anak_ke'),
 							'jumlah_saudara'		=> $this->request->getPost('jumlah_saudara'),
 							'identitas_wali'		=> $this->request->getPost('identitas_wali'),
+							'slug_siswa'			=> $slug_siswa,
 						];
-				// masuk database
 				$m_siswa->edit($data);
+				// masuk database
 				$this->session->setFlashdata('sukses','Data telah diupdate');
-				return redirect()->to(base_url('siswa/pendaftaran'));
+				return redirect()->to(base_url('siswa/pendaftaran/dokumen/'.$slug_siswa));
 			}
 	    }else{
 
@@ -497,7 +737,22 @@ class Pendaftaran extends BaseController
 		$m_dokumen 			= new Dokumen_model();
 
 		$konfigurasi 		= $m_konfigurasi->listing();
+		if(empty(Session()->get('username_siswa'))) {
+			$this->session->setFlashdata('warning','Anda belum login');
+			return redirect()->to(base_url('signin'));
+		}
+
 		$siswa 				= $m_siswa->read($slug_siswa);
+		if (empty($siswa)) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		}
+
+		// Keamanan: Siswa hanya boleh mengakses dokumennya sendiri
+		if ($siswa->id_akun != $this->session->get('id_akun')) {
+			$this->session->setFlashdata('warning','Anda tidak memiliki akses ke halaman tersebut');
+			return redirect()->to(base_url('siswa/pendaftaran'));
+		}
+
 		$jenis_dokumen 		= $m_jenis_dokumen->listing();
 		$akun 				= $m_akun->detail($siswa->id_akun);
 
@@ -658,6 +913,13 @@ class Pendaftaran extends BaseController
 	public function hapus($kode_dokumen,$kode_siswa)
 	{
 		$m_dokumen = new Dokumen_model();
+		$dokumen = $m_dokumen->kode_dokumen($kode_dokumen);
+		if ($dokumen && !empty($dokumen->gambar)) {
+			$filepath = WRITEPATH . '../assets/upload/pendaftaran/' . $dokumen->gambar;
+			if (file_exists($filepath)) {
+				@unlink($filepath);
+			}
+		}
 		$data = ['kode_dokumen'	=> $kode_dokumen];
 		$m_dokumen->hapus($data);
 		// masuk database
@@ -669,10 +931,11 @@ class Pendaftaran extends BaseController
 	public function delete($slug_siswa)
 	{
 		$m_siswa = new Siswa_model();
-		$id_akun 	= $this->session->get('id_akun');
-		$data = ['slug_siswa'	=> $slug_siswa,
-				'id_akun'		=> $id_akun];
-		$m_siswa->hapus($data);
+		$id_akun = $this->session->get('id_akun');
+		$siswa = $m_siswa->getSiswaBySlugAndAkun($slug_siswa, $id_akun);
+		if ($siswa) {
+			$m_siswa->deleteSiswaCascading($siswa->id_siswa, false);
+		}
 		// masuk database
 		$this->session->setFlashdata('sukses','Data telah dihapus');
 		return redirect()->to(base_url('siswa/pendaftaran'));

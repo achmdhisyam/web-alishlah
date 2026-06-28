@@ -31,15 +31,16 @@ $uri = service('uri');
 <div class="row">
   <div class="col-md-6">
     <div class="input-group input-group-sm">
-      <button type="submit" class="btn btn-secondary btn-sm" id="hapus-data-btn" name="submit" value="delete" title="Hapus"><i class="fa fa-trash"></i> </button>
-      <select name="status_siswa" class="form-control">
-        <option value="Aktif">Aktif</option>
-        <option value="Lulus">Lulus</option>
-        <option value="Meninggal">Meninggal</option>
-        <option value="Pindah">Pindah</option>
+      <select name="aksi_massal" class="form-control" id="aksi-massal-select" required>
+        <option value="">-- Pilih Aksi Massal --</option>
+        <option value="delete">Hapus Pendaftar Terpilih</option>
+        <option value="update-Aktif">Ubah Status: Aktif</option>
+        <option value="update-Lulus">Ubah Status: Lulus</option>
+        <option value="update-Meninggal">Ubah Status: Meninggal</option>
+        <option value="update-Pindah">Ubah Status: Pindah</option>
       </select>
       <span class="input-group-btn" >
-        <button type="submit" class="btn btn-secondary btn-sm" name="submit" value="update"><i class="fa fa-save"></i> Update Status Siswa</button>
+        <button type="submit" class="btn btn-secondary btn-sm" name="proses_aksi" id="proses-aksi-massal-btn"><i class="fa fa-play"></i> Proses Aksi</button>
       </span>
     </div>
   </div>
@@ -132,7 +133,7 @@ $uri = service('uri');
         <a href="<?php echo base_url('admin/siswa/cetak/'.$siswa->id_siswa) ?>" class="btn btn-dark btn-sm mb-1" title="Cetak" target="_blank"><i class="fa fa-print"></i></a>
         <a href="<?php echo base_url('admin/siswa/unduh/'.$siswa->id_siswa) ?>" class="btn btn-danger btn-sm mb-1" title="Unduh" target="_blank"><i class="fa fa-file-pdf"></i></a>
         <a href="<?php echo base_url('admin/siswa/edit/'.$siswa->id_siswa) ?>" class="btn btn-warning btn-sm mb-1" title="Edit"><i class="fa fa-edit"></i></a>
-				<a href="<?php echo base_url('admin/siswa/delete/'.$siswa->id_siswa) ?>" class="btn btn-secondary btn-sm delete-link mb-1" title="Hapus"><i class="fa fa-trash"></i></a>
+				<a href="<?php echo base_url('admin/siswa/delete/'.$siswa->id_siswa) ?>" class="btn btn-danger btn-sm delete-link mb-1" title="Hapus"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>
 		<?php $i++; } ?>
@@ -140,6 +141,74 @@ $uri = service('uri');
 </table>
 
 <?php echo form_close(); ?>
+
+<script>
+$(document).ready(function() {
+  $('#form-hapus-data').on('submit', function(e) {
+    var form = this;
+    var action = $('#aksi-massal-select').val();
+    
+    // Cek apakah ada checkbox yang dicentang
+    var checked = $('.mailbox-messages input[type="checkbox"]:checked').length;
+    if (checked === 0) {
+      e.preventDefault();
+      Swal.fire({
+        icon: 'warning',
+        title: 'Perhatian',
+        text: 'Anda belum memilih pendaftar. Silakan centang minimal satu pendaftar.',
+        confirmButtonColor: '#3085d6'
+      });
+      return false;
+    }
+    
+    if (!action) {
+      e.preventDefault();
+      Swal.fire({
+        icon: 'warning',
+        title: 'Perhatian',
+        text: 'Silakan pilih salah satu aksi massal.',
+        confirmButtonColor: '#3085d6'
+      });
+      return false;
+    }
+    
+    if (action === 'delete') {
+      e.preventDefault();
+      Swal.fire({
+        title: 'Anda yakin?',
+        text: "Seluruh data pendaftar terpilih akan dihapus permanen dari sistem!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus Semua!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    } else if (action.startsWith('update-')) {
+      e.preventDefault();
+      var status = action.replace('update-', '');
+      Swal.fire({
+        title: 'Ubah Status?',
+        text: "Status pendaftar terpilih akan diubah menjadi: " + status,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, Ubah!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    }
+  });
+});
+</script>
 
 <div class="clearfix"><hr></div>
 <div class="pull-right"><?php if(isset($pagin)) { echo $pagin; } ?></div>
