@@ -44,39 +44,58 @@ class GoogleAuth extends BaseController
             return redirect()->to(base_url())->with('warning', 'Gagal login melalui Google.');
         }
 
-        // 1. Tukar Code dengan Access Token
-        $client = \Config\Services::curlrequest();
-        $response = $client->post('https://oauth2.googleapis.com/token', [
-            'form_params' => [
-                'code'          => $code,
-                'client_id'     => $this->konfigurasi->google_client_id,
-                'client_secret' => $this->konfigurasi->google_client_secret,
-                'redirect_uri'  => base_url('googleauth/callback'),
-                'grant_type'    => 'authorization_code',
-            ],
-        ]);
-
-        $tokenData = json_decode($response->getBody(), true);
-        if (isset($tokenData['access_token'])) {
-            $accessToken = $tokenData['access_token'];
-
-            // 2. Ambil data profil user
-            $profileResponse = $client->get('https://www.googleapis.com/oauth2/v2/userinfo', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $accessToken,
+        try {
+            // 1. Tukar Code dengan Access Token
+            $client = \Config\Services::curlrequest();
+            $response = $client->post('https://oauth2.googleapis.com/token', [
+                'form_params' => [
+                    'code'          => $code,
+                    'client_id'     => $this->konfigurasi->google_client_id,
+                    'client_secret' => $this->konfigurasi->google_client_secret,
+                    'redirect_uri'  => base_url('googleauth/callback'),
+                    'grant_type'    => 'authorization_code',
                 ],
+                'http_errors' => false
             ]);
 
-            $userData = json_decode($profileResponse->getBody(), true);
-            $email = $userData['email'];
-            $name  = $userData['name'];
-            $role  = $this->session->get('google_auth_role');
+            $statusCode = $response->getStatusCode();
+            $tokenData = json_decode($response->getBody(), true);
 
-            if ($role == 'admin') {
-                return $this->processAdmin($email, $name);
-            } else {
-                return $this->processSiswa($email, $name);
+            if ($statusCode !== 200) {
+                $errorMsg = $tokenData['error_description'] ?? $tokenData['error'] ?? 'Unknown token exchange error';
+                return redirect()->to(base_url('signin'))->with('warning', 'Google Auth Error: ' . $errorMsg);
             }
+
+            if (isset($tokenData['access_token'])) {
+                $accessToken = $tokenData['access_token'];
+
+                // 2. Ambil data profil user
+                $profileResponse = $client->get('https://www.googleapis.com/oauth2/v2/userinfo', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $accessToken,
+                    ],
+                    'http_errors' => false
+                ]);
+
+                $profileStatus = $profileResponse->getStatusCode();
+                $userData = json_decode($profileResponse->getBody(), true);
+
+                if ($profileStatus !== 200) {
+                    return redirect()->to(base_url('signin'))->with('warning', 'Gagal mengambil data profil Google.');
+                }
+
+                $email = $userData['email'];
+                $name  = $userData['name'];
+                $role  = $this->session->get('google_auth_role');
+
+                if ($role == 'admin') {
+                    return $this->processAdmin($email, $name);
+                } else {
+                    return $this->processSiswa($email, $name);
+                }
+            }
+        } catch (\Exception $e) {
+            return redirect()->to(base_url('signin'))->with('warning', 'Kesalahan sistem Google Login: ' . $e->getMessage());
         }
 
         return redirect()->to(base_url())->with('warning', 'Gagal memverifikasi akun Google.');
