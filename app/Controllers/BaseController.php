@@ -88,7 +88,7 @@ abstract class BaseController extends Controller
         $email_service = \Config\Services::email();
         $email_service->initialize($email_config);
         $email_service->setFrom($konfigurasi->smtp_user, $this->website->namaweb());
-        $email_service->setReplyTo($konfigurasi->email ?? $konfigurasi->smtp_user, $this->website->namaweb());
+        $email_service->setReplyTo($konfigurasi->smtp_user, $this->website->namaweb());
         $email_service->setTo((string) $to);
         $email_service->setSubject($subject);
 

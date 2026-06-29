@@ -120,7 +120,7 @@ class Signin extends BaseController
 	            $email_service = \Config\Services::email();
 	            $email_service->initialize($email_config);
 	            $email_service->setFrom($konfigurasi->smtp_user, $this->website->namaweb());
-	            $email_service->setReplyTo($konfigurasi->email, $this->website->namaweb());
+	            $email_service->setReplyTo($konfigurasi->smtp_user, $this->website->namaweb());
 	            $email_service->setTo($email);
 	            $email_service->setSubject('Reset Password Akun Siswa - ' . $this->website->namaweb());
 

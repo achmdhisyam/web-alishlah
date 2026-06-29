@@ -170,7 +170,7 @@ class GoogleAuth extends BaseController
         $email_service = \Config\Services::email();
         $email_service->initialize($email_config);
         $email_service->setFrom($this->konfigurasi->smtp_user, $this->konfigurasi->namaweb);
-        $email_service->setReplyTo($this->konfigurasi->email, $this->konfigurasi->namaweb);
+        $email_service->setReplyTo($this->konfigurasi->smtp_user, $this->konfigurasi->namaweb);
         $email_service->setTo($email);
         $email_service->setSubject('Pendaftaran Akun Berhasil - ' . $this->konfigurasi->namaweb);
 
