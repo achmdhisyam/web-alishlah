@@ -74,6 +74,15 @@ class CreateAkun extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'autologin_token' => [
+                'type' => 'VARCHAR',
+                'constraint' => 64,
+                'null' => true,
+            ],
+            'autologin_expires' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
             'tanggal_post' => [
                 'type' => 'DATETIME',
             ],
