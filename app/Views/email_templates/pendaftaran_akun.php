@@ -28,12 +28,12 @@
                     </tr>
                 </table>
 
-                <p style="font-size: 16px; color: #555555; line-height: 1.6;">Untuk melanjutkan proses pendaftaran (memilih periode dan mengisi biodata), silakan login menggunakan akun Anda melalui tombol di bawah ini:</p>
+                <p style="font-size: 16px; color: #555555; line-height: 1.6;">Untuk melanjutkan proses pendaftaran (memilih periode dan mengisi biodata), silakan masuk ke dashboard pendaftaran Anda melalui tombol di bawah ini:</p>
                 
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0;">
                     <tr>
                         <td align="center">
-                            <a href="<?= esc($link_login) ?>" style="display: inline-block; background-color: #1a73e8; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 14px 30px; border-radius: 5px; box-shadow: 0 2px 5px rgba(26,115,232,0.3);">Login Sekarang</a>
+                            <a href="<?= esc($link_login) ?>" style="display: inline-block; background-color: #1a73e8; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; padding: 14px 30px; border-radius: 5px; box-shadow: 0 2px 5px rgba(26,115,232,0.3);">Masuk ke Dashboard</a>
                         </td>
                     </tr>
                 </table>

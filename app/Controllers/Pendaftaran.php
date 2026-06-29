@@ -79,6 +79,8 @@ class Pendaftaran extends BaseController
 				'telepon'					=> 'required',
 				'konfirmasi_password' 		=> 'required|matches[password]',
         	])) {
+        		$autologin_token = bin2hex(random_bytes(32));
+        		$autologin_expires = date('Y-m-d H:i:s', strtotime('+24 hours'));
         		$data = array(
 					'jenis_akun'		=> 'Pendaftar',
 					'status_akun'		=> 'Aktif',
@@ -92,6 +94,8 @@ class Pendaftaran extends BaseController
 					'telepon'			=> $this->request->getVar('telepon'),
 					'kode_akun'			=> $kode_akun,
 					'link_reset' 		=> $kode_akun,
+					'autologin_token'   => $autologin_token,
+					'autologin_expires' => $autologin_expires,
 					'tanggal_post'		=> date('Y-m-d H:i:s')
 	        	);
 	        	$m_akun->tambah($data);
@@ -111,7 +115,7 @@ class Pendaftaran extends BaseController
 				$dataEmail = [
 					'nama' => $nama,
 					'email' => $email,
-					'link_login' => base_url('signin'),
+					'link_login' => base_url('signin/autologin/' . $autologin_token),
 					'namaweb' => $this->website->namaweb()
 				];
 				$message_html = view('email_templates/pendaftaran_akun', $dataEmail);

@@ -116,20 +116,24 @@ class GoogleAuth extends BaseController
             return redirect()->to(base_url('siswa/dasbor'))->with('sukses', 'Berhasil login melalui Google.');
         } else {
             // Seamless registration
+            $autologin_token = bin2hex(random_bytes(32));
+            $autologin_expires = date('Y-m-d H:i:s', strtotime('+24 hours'));
             $data = [
-                'nama'         => $name,
-                'email'        => $email,
-                'username'     => $email,
-                'password'     => password_hash(bin2hex(random_bytes(4)), PASSWORD_DEFAULT),
-                'status_akun'  => 'Aktif',
-                'kode_akun'    => bin2hex(random_bytes(16)),
-                'tanggal_post' => date('Y-m-d H:i:s'),
+                'nama'              => $name,
+                'email'             => $email,
+                'username'          => $email,
+                'password'          => password_hash(bin2hex(random_bytes(4)), PASSWORD_DEFAULT),
+                'status_akun'       => 'Aktif',
+                'kode_akun'         => bin2hex(random_bytes(16)),
+                'autologin_token'   => $autologin_token,
+                'autologin_expires' => $autologin_expires,
+                'tanggal_post'      => date('Y-m-d H:i:s'),
             ];
             $m_akun->tambah($data);
             $akunBaru = $m_akun->email($email);
 
             // Kirim Email Selamat Datang
-            $this->sendWelcomeEmail($email, $name);
+            $this->sendWelcomeEmail($email, $name, $autologin_token);
 
             $this->session->set([
                 'username_siswa' => $akunBaru->email,
@@ -141,7 +145,7 @@ class GoogleAuth extends BaseController
         }
     }
 
-    private function sendWelcomeEmail($email, $nama)
+    private function sendWelcomeEmail($email, $nama, $autologin_token)
     {
         $email_config = [
             'protocol'   => $this->konfigurasi->protocol,
@@ -160,7 +164,7 @@ class GoogleAuth extends BaseController
         $dataEmail = [
             'nama'       => $nama,
             'email'      => $email,
-            'link_login' => base_url('signin'),
+            'link_login' => base_url('signin/autologin/' . $autologin_token),
             'namaweb'    => $this->konfigurasi->namaweb
         ];
 

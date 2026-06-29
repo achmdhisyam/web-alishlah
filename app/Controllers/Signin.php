@@ -205,4 +205,60 @@ class Signin extends BaseController
 		echo view('layout/wrapper-pendaftaran', $data);
 	}
 
+	// Auto-login (Magic Link)
+	public function autologin($token = null)
+	{
+		if (empty($token)) {
+			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+		}
+
+		$m_akun = new \App\Models\Akun_model();
+		$akun = $m_akun->detail_by_autologin_token($token);
+
+		if (!$akun) {
+			$this->session->setFlashdata('warning', 'Link login otomatis tidak valid.');
+			return redirect()->to(base_url('signin'));
+		}
+
+		// Check expiration (24 hours)
+		$now = date('Y-m-d H:i:s');
+		if (empty($akun->autologin_expires) || $akun->autologin_expires < $now) {
+			// Clear expired token
+			$m_akun->edit([
+				'id_akun'           => $akun->id_akun,
+				'autologin_token'   => null,
+				'autologin_expires' => null
+			]);
+			$this->session->setFlashdata('warning', 'Link login otomatis telah kedaluwarsa. Silakan masukkan email dan password Anda untuk masuk.');
+			return redirect()->to(base_url('signin'));
+		}
+
+		// Token is valid! Auto-login the user
+		$this->session->set('username_siswa', $akun->email);
+		$this->session->set('id_akun', $akun->id_akun);
+		$this->session->set('nama_siswa', $akun->nama);
+		$this->session->set('jenis_akun', $akun->jenis_akun);
+		$this->session->set('nis', $akun->nis);
+		$this->session->set('nisn', $akun->nisn);
+
+		// Set cookie
+		helper('cookie');
+		set_cookie([
+			'name'     => 'sudah_daftar',
+			'value'    => '1',
+			'expire'   => 365 * 24 * 3600,
+			'httponly' => false,
+			'secure'   => false
+		]);
+
+		// Single-use token: clear it so it can't be used again
+		$m_akun->edit([
+			'id_akun'           => $akun->id_akun,
+			'autologin_token'   => null,
+			'autologin_expires' => null
+		]);
+
+		$this->session->setFlashdata('sukses', 'Selamat Datang Kembali! Anda berhasil masuk secara otomatis.');
+		return redirect()->to(base_url('siswa/dasbor'));
+	}
 }

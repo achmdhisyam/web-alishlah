@@ -268,7 +268,12 @@ class Akun_model extends Model
                         ->getRow();
     }
 
-    
-
+    public function detail_by_autologin_token($token)
+    {
+        return $this->db->table('akun')
+                        ->where('autologin_token', $token)
+                        ->get()
+                        ->getRow();
+    }
 }
 
