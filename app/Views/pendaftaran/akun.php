@@ -3,14 +3,22 @@
     border: 1px solid #dadce0 !important;
     color: #3c4043 !important;
     background-color: #fff !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.25s cubic-bezier(.4, 0, .2, 1) !important;
+    font-size: 15px !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
 }
 .google-btn:hover {
     background-color: #f8f9fa !important;
     border-color: #c4c6ca !important;
-    color: #1a0dab !important;
+    color: #1a73e8 !important;
     text-decoration: none !important;
-    box-shadow: 0 1px 3px rgba(60,64,67, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(60,64,67, 0.15) !important;
+    transform: translateY(-1px);
+}
+.google-btn:active {
+    background-color: #f1f3f4 !important;
+    transform: translateY(0);
 }
 </style>
 
@@ -76,8 +84,8 @@
             <!-- Google SSO Button (Prioritized at the top) -->
             <?php if(!empty($konfigurasi->google_client_id)) { ?>
             <div class="mb-4 text-center">
-                <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 rounded-pill py-2 font-weight-bold shadow-sm d-flex align-items-center justify-content-center google-btn" style="border: 1px solid #dadce0; color: #3c4043; background-color: #fff; transition: all 0.2s ease;">
-                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 20px; height: 20px; margin-right: 10px;"> Daftar Instan dengan Akun Google
+                <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 d-flex align-items-center justify-content-center google-btn shadow-sm">
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Daftar Instan dengan Akun Google
                 </a>
                 <div class="d-flex align-items-center my-4">
                   <div class="flex-grow-1 bg-secondary-subtle" style="height: 1px;"></div>
