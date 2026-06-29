@@ -85,21 +85,20 @@
             <?php if(!empty($konfigurasi->google_client_id)) { ?>
             <div class="mb-4 text-center">
                 <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 d-flex align-items-center justify-content-center google-btn shadow-sm">
-                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Daftar Instan dengan Akun Google (Direkomendasikan)
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 20px; height: 20px; margin-right: 10px;"> Daftar dengan Google
                 </a>
             </div>
             <?php } ?>
 
             <div class="text-center my-4">
-              <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-4" data-bs-toggle="collapse" data-bs-target="#manualRegisterCollapse" aria-expanded="false" aria-controls="manualRegisterCollapse" style="font-size: 12.5px; font-weight: 500;">
-                <i class="fa fa-envelope mr-1"></i> Daftar Manual dengan Email
-              </button>
+              <a href="#manualRegisterCollapse" data-bs-toggle="collapse" class="text-secondary hover" style="font-size: 13.5px; font-weight: 500; text-decoration: none;">
+                Atau daftar dengan email manual <i class="fa fa-chevron-down ms-1" style="font-size: 10px;"></i>
+              </a>
             </div>
 
             <!-- Collapsible Manual Register Form -->
             <div class="collapse <?php if(!empty($errors)) echo 'show'; ?>" id="manualRegisterCollapse">
-              <div class="card card-body p-4 border-dashed bg-light-subtle text-start" style="border: 1.5px dashed #dee2e6; border-radius: 12px; margin-bottom: 20px;">
-                <p class="small text-muted mb-3"><i class="fa fa-info-circle text-info"></i> Silakan isi data di bawah ini untuk mendaftar secara manual.</p>
+              <div class="card card-body p-4 text-start mb-4" style="border: 1px solid #dee2e6; border-radius: 12px; background-color: #f8f9fa;">
                 
                 <?php echo form_open(base_url('pendaftaran/akun'), ['id' => 'formRegister', 'class' => 'mb-0']) ?>
                   
