@@ -185,27 +185,42 @@ $(document).ready(function(){
   // Popup Delete
   $(document).on("click", ".delete-link", function(e){
     e.preventDefault();
-    url = $(this).attr("href");
+    var url = $(this).attr("href");
     Swal.fire({
         title: 'Anda yakin?',
         text: "Jika dihapus, data tidak dapat dikembalikan lagi!",
-        icon: 'info',
-        timer: 5000,
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya, Hapus Data!'
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus Data!',
+        cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-              url: url,
-              success: function(resp){
-                window.location.href = url;
-              }
-            });
+          window.location.href = url;
         }
-      })
+      });
   });
+
+  // Global confirmation function for inline onclick="confirmation(event)"
+  function confirmation(e) {
+    e.preventDefault();
+    var url = e.currentTarget.getAttribute('href');
+    Swal.fire({
+        title: 'Anda yakin?',
+        text: "Jika dihapus, data tidak dapat dikembalikan lagi!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus Data!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url;
+        }
+      });
+  }
 
  // Popup Delete
 $(document).on("click", ".disable-link", function(e){
