@@ -222,6 +222,60 @@ $(document).ready(function(){
       });
   }
 
+  // Handle form submit for bulk delete buttons globally
+  $(document).on("click", "button[type='submit'][value='Delete'], button[type='submit'][title*='Hapus'], input[type='submit'][value='Delete']", function(e){
+    var btn = $(this);
+    var form = btn.closest("form");
+    
+    // Check if there are any checked items in the form
+    var checked = form.find('.mailbox-messages input[type="checkbox"]:checked').length;
+    if (checked === 0) {
+      e.preventDefault();
+      Swal.fire({
+        icon: 'warning',
+        title: 'Perhatian',
+        text: 'Silakan centang item yang ingin dihapus terlebih dahulu.',
+        confirmButtonColor: '#3085d6'
+      });
+      return false;
+    }
+
+    e.preventDefault();
+    Swal.fire({
+        title: 'Anda yakin?',
+        text: "Seluruh data terpilih akan dihapus permanen dari sistem!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus Semua!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // To submit the form with the specific button value, we append a hidden input with the button name and value
+          $('<input>').attr({
+              type: 'hidden',
+              name: btn.attr('name'),
+              value: btn.attr('value')
+          }).appendTo(form);
+          form.submit();
+        }
+      });
+  });
+
+  // Dynamic status select button styling for aksi-massal-select
+  $(document).on("change", "#aksi-massal-select", function() {
+    var val = $(this).val();
+    var btn = $("#proses-aksi-massal-btn");
+    if (val === "delete") {
+      btn.removeClass("btn-secondary btn-info btn-warning btn-success btn-light btn-dark")
+         .addClass("btn-danger");
+    } else {
+      btn.removeClass("btn-danger btn-secondary btn-info btn-warning btn-success btn-light btn-dark")
+         .addClass("btn-secondary");
+    }
+  });
+
  // Popup Delete
 $(document).on("click", ".disable-link", function(e){
   e.preventDefault();
