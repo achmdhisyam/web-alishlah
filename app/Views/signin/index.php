@@ -63,39 +63,38 @@
               <?php if(!empty($konfigurasi->google_client_id)) { ?>
               <div class="mb-4">
                   <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 d-flex align-items-center justify-content-center google-btn shadow-sm">
-                      <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Masuk dengan Google
+                      <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Masuk dengan Akun Google (Direkomendasikan)
                   </a>
-                  <div class="d-flex align-items-center my-4">
-                    <div class="flex-grow-1 bg-secondary-subtle" style="height: 1px;"></div>
-                    <span class="mx-3 text-secondary" style="font-size: 13px; font-weight: 500;">atau gunakan email manual</span>
-                    <div class="flex-grow-1 bg-secondary-subtle" style="height: 1px;"></div>
-                  </div>
               </div>
               <?php } ?>
 
-              <?php 
-              $validation = \Config\Services::validation();
-              $errors = $validation->getErrors();
-              if(!empty($errors))
-              {
-                  echo '<div class="alert alert-danger text-start" style="font-size: 13px;">'.$validation->listErrors().'</div>';
-              }
-              ?>
-
-              <?php echo form_open(base_url('signin'),' class="text-start mb-3"'); ?>
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" name="username" placeholder="Email/Username" id="loginEmail" required>
-                  <label for="loginEmail">Email/Username</label>
-                </div>
-                <div class="form-floating password-field mb-3">
-                  <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword" required>
-                  <span class="password-toggle"><i class="uil uil-eye"></i></span>
-                  <label for="loginPassword">Password</label>
-                </div>
-                <button type="submit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-100 mb-2">
-                  Masuk&nbsp;<i class="fa fa-arrow-right"></i>
+              <div class="text-center my-4">
+                <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-4" data-bs-toggle="collapse" data-bs-target="#manualLoginCollapse" aria-expanded="false" aria-controls="manualLoginCollapse" style="font-size: 12.5px; font-weight: 500;">
+                  <i class="fa fa-envelope mr-1"></i> Masuk dengan Email & Password
                 </button>
-              </form>
+              </div>
+
+              <!-- Collapsible Manual Login Form -->
+              <div class="collapse <?php if(!empty($errors)) echo 'show'; ?>" id="manualLoginCollapse">
+                <div class="card card-body p-4 border-dashed bg-light-subtle text-start" style="border: 1.5px dashed #dee2e6; border-radius: 12px;">
+                  <p class="small text-muted mb-3"><i class="fa fa-info-circle text-info"></i> Gunakan form ini hanya jika Anda tidak menggunakan Google Login.</p>
+                  
+                  <?php echo form_open(base_url('signin'),' class="text-start mb-0"'); ?>
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" name="username" placeholder="Email/Username" id="loginEmail" required>
+                      <label for="loginEmail">Email/Username</label>
+                    </div>
+                    <div class="form-floating password-field mb-3">
+                      <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword" required>
+                      <span class="password-toggle"><i class="uil uil-eye"></i></span>
+                      <label for="loginPassword">Password</label>
+                    </div>
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-100">
+                      Masuk&nbsp;<i class="fa fa-arrow-right"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
 
               <p class="mb-1 mt-4">Kembali ke <a href="<?php echo base_url() ?>">Beranda</a> | <a href="<?php echo base_url('signin/reset') ?>" class="hover">Lupa Password?</a></p>
               <p class="mb-0">Belum punya akun? <a href="<?php echo base_url('pendaftaran/akun') ?>">Buat akun sekarang!</a></p>

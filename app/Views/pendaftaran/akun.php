@@ -85,51 +85,58 @@
             <?php if(!empty($konfigurasi->google_client_id)) { ?>
             <div class="mb-4 text-center">
                 <a href="<?php echo base_url('googleauth/login/siswa') ?>" class="btn btn-light w-100 d-flex align-items-center justify-content-center google-btn shadow-sm">
-                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Daftar Instan dengan Akun Google
+                    <img src="https://www.gstatic.com/images/branding/product/1x/googleg_48dp.png" alt="Google" style="width: 22px; height: 22px; margin-right: 12px;"> Daftar Instan dengan Akun Google (Direkomendasikan)
                 </a>
-                <div class="d-flex align-items-center my-4">
-                  <div class="flex-grow-1 bg-secondary-subtle" style="height: 1px;"></div>
-                  <span class="mx-3 text-secondary" style="font-size: 13px; font-weight: 500;">atau gunakan email manual</span>
-                  <div class="flex-grow-1 bg-secondary-subtle" style="height: 1px;"></div>
-                </div>
             </div>
             <?php } ?>
 
-            <?php echo form_open(base_url('pendaftaran/akun'), ['id' => 'formRegister']) ?>
-              
-              <div class="form-floating mb-4">
-                <input type="text" class="form-control" name="nama" value="<?php echo set_value('nama') ?>" placeholder="Name" id="loginName" required>
-                <label for="loginName" class="text-primary">Nama Lengkap <span class="text-danger">*</span></label>
-              </div>
+            <div class="text-center my-4">
+              <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-4" data-bs-toggle="collapse" data-bs-target="#manualRegisterCollapse" aria-expanded="false" aria-controls="manualRegisterCollapse" style="font-size: 12.5px; font-weight: 500;">
+                <i class="fa fa-envelope mr-1"></i> Daftar Manual dengan Email
+              </button>
+            </div>
 
-              <div class="form-floating mb-4 position-relative">
-                <input type="email" class="form-control" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" id="loginEmail" required>
-                <label for="loginEmail" class="text-primary">Email (Username) <span class="text-danger">*</span></label>
-                <div id="emailFeedback" class="mt-1" style="font-size: 12px; display: none;"></div>
-              </div>
+            <!-- Collapsible Manual Register Form -->
+            <div class="collapse <?php if(!empty($errors)) echo 'show'; ?>" id="manualRegisterCollapse">
+              <div class="card card-body p-4 border-dashed bg-light-subtle text-start" style="border: 1.5px dashed #dee2e6; border-radius: 12px; margin-bottom: 20px;">
+                <p class="small text-muted mb-3"><i class="fa fa-info-circle text-info"></i> Silakan isi data di bawah ini untuk mendaftar secara manual.</p>
+                
+                <?php echo form_open(base_url('pendaftaran/akun'), ['id' => 'formRegister', 'class' => 'mb-0']) ?>
+                  
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="nama" value="<?php echo set_value('nama') ?>" placeholder="Name" id="loginName" required>
+                    <label for="loginName" class="text-primary">Nama Lengkap <span class="text-danger">*</span></label>
+                  </div>
 
-              <div class="form-floating password-field mb-4">
-                <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword" minlength="6" maxlength="32" required>
-                <span class="password-toggle"><i class="uil uil-eye"></i></span>
-                <label for="loginPassword" class="text-primary">Password <span class="text-danger">*</span> (min 6 & max 32 kar.)</label>
-              </div>
+                  <div class="form-floating mb-3 position-relative">
+                    <input type="email" class="form-control" name="email" value="<?php echo set_value('email') ?>" placeholder="Email" id="loginEmail" required>
+                    <label for="loginEmail" class="text-primary">Email (Username) <span class="text-danger">*</span></label>
+                    <div id="emailFeedback" class="mt-1" style="font-size: 12px; display: none;"></div>
+                  </div>
 
-              <div class="form-floating password-field mb-4">
-                <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password" id="loginPasswordConfirm" minlength="6" maxlength="32" required>
-                <span class="password-toggle"><i class="uil uil-eye"></i></span>
-                <label for="loginPasswordConfirm" class="text-primary">Konfirmasi Password <span class="text-danger">*</span></label>
-              </div>
+                  <div class="form-floating password-field mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword" minlength="6" maxlength="32" required>
+                    <span class="password-toggle"><i class="uil uil-eye"></i></span>
+                    <label for="loginPassword" class="text-primary">Password <span class="text-danger">*</span> (min 6 & max 32 kar.)</label>
+                  </div>
 
-              <div class="form-floating mb-4">
-                <input type="text" class="form-control" name="telepon" value="<?php echo set_value('telepon') ?>" placeholder="Telepon/HP" id="Telepon" required>
-                <label for="Telepon" class="text-primary">Telepon/HP <span class="text-danger">*</span></label>
-              </div>
+                  <div class="form-floating password-field mb-3">
+                    <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password" id="loginPasswordConfirm" minlength="6" maxlength="32" required>
+                    <span class="password-toggle"><i class="uil uil-eye"></i></span>
+                    <label for="loginPasswordConfirm" class="text-primary">Konfirmasi Password <span class="text-danger">*</span></label>
+                  </div>
 
-              <p class="mt-4">
-                <button type="reset" name="reset" value="reset" class="btn btn-warning rounded-pill btn-login w-40 mb-2">Reset &nbsp; <i class="fa fa-times-circle"></i></button>
-                <button type="submit" id="btnSubmit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-60 mb-2">Buat Akun dan Lanjutkan &nbsp; <i class="fa fa-arrow-circle-right"></i></button>
-              </p>
-            </form>
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="telepon" value="<?php echo set_value('telepon') ?>" placeholder="Telepon/HP" id="Telepon" required>
+                    <label for="Telepon" class="text-primary">Telepon/HP <span class="text-danger">*</span></label>
+                  </div>
+
+                  <button type="submit" id="btnSubmit" name="submit" value="submit" class="btn btn-primary rounded-pill btn-login w-100 mt-2">
+                    Buat Akun dan Lanjutkan &nbsp; <i class="fa fa-arrow-circle-right"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
             <!-- /form -->
 
             <p class="mb-0 mt-3">Sudah punya Akun? <a href="<?php echo base_url('signin') ?>" class="hover">Login di sini</a>. <br>Atau <a href="<?php echo base_url() ?>">Kembali ke Beranda</a></p>
