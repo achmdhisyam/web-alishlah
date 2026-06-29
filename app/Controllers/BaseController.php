@@ -101,7 +101,12 @@ abstract class BaseController extends Controller
         $message_text = strip_tags(str_replace(['<br>', '<li>', '</ul>', '</p>'], ["\n", "- ", "\n", "\n\n"], $messageHtml));
         $email_service->setAltMessage($message_text);
 
-        return $email_service->send();
+        if ($email_service->send()) {
+            return true;
+        } else {
+            log_message('error', 'SMTP Error sending to ' . $to . '. Detail: ' . $email_service->printDebugger(['headers', 'subject', 'body']));
+            return false;
+        }
     }
 
     protected function getWaliData()
