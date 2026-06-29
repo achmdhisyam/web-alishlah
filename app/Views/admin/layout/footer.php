@@ -258,7 +258,7 @@ $(document).ready(function(){
               name: btn.attr('name'),
               value: btn.attr('value')
           }).appendTo(form);
-          form.submit();
+          HTMLFormElement.prototype.submit.call(form[0]);
         }
       });
   });

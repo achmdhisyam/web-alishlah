@@ -185,7 +185,7 @@ $(document).ready(function() {
         cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.isConfirmed) {
-          form.submit();
+          HTMLFormElement.prototype.submit.call(form);
         }
       });
     } else if (action.startsWith('update-')) {
@@ -202,7 +202,7 @@ $(document).ready(function() {
         cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.isConfirmed) {
-          form.submit();
+          HTMLFormElement.prototype.submit.call(form);
         }
       });
     }
