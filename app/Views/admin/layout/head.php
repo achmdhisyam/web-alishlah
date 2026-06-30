@@ -102,38 +102,88 @@ $uri = service('uri');
 
 <!-- TinyMCE Init -->
 <script>
-tinymce.init({
-  selector: '#isi',
-  plugins: 'image code',
-  toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | image code',
-  branding: false, // 
-  
-  images_upload_url: base_url + 'controllers/admin/upload.php',
-  automatic_uploads: true,
-  images_upload_handler: function (blobInfo, success, failure) {
-      let xhr, formData;
-      xhr = new XMLHttpRequest();
-      xhr.withCredentials = false;
-      xhr.open('POST', base_url + 'controllers/admin/upload.php');
+  function registerTinyMceUploadButton(editor) {
+      function triggerUpload() {
+          let input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+          
+          input.onchange = function () {
+              let file = this.files[0];
+              if (!file) return;
+              
+              editor.notificationManager.open({
+                  text: 'Sedang mengunggah gambar...',
+                  type: 'info',
+                  timeout: 3000
+              });
+              
+              let formData = new FormData();
+              formData.append('file', file);
+              
+              fetch('<?= base_url('admin/upload') ?>', {
+                  method: 'POST',
+                  body: formData
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Upload failed');
+                  }
+                  return response.json();
+              })
+              .then(result => {
+                  if (result.location) {
+                      editor.insertContent('<img src="' + result.location + '" style="max-width:100%; height:auto;" />');
+                  } else {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Gagal',
+                          text: result.error || 'Gagal mengunggah gambar'
+                      });
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'Terjadi kesalahan koneksi ke server.'
+                  });
+              });
+          };
+          
+          input.click();
+      }
 
-      xhr.onload = function() {
-        if (xhr.status != 200) {
-          failure('HTTP Error: ' + xhr.status);
-          return;
-        }
-        let json = JSON.parse(xhr.responseText);
-        if (!json || typeof json.location != 'string') {
-          failure('Invalid JSON: ' + xhr.responseText);
-          return;
-        }
-        success(json.location);
-      };
+      // Register Toolbar Button
+      editor.ui.registry.addButton('upload_image', {
+          icon: 'image',
+          tooltip: 'Unggah Gambar Langsung (Tanpa Dialog)',
+          onAction: triggerUpload
+      });
 
-      formData = new FormData();
-      formData.append('file', blobInfo.blob(), blobInfo.filename());
-      xhr.send(formData);
+      // Register Menu Item
+      editor.ui.registry.addMenuItem('upload_image', {
+          icon: 'image',
+          text: 'Image...',
+          onAction: triggerUpload
+      });
   }
-});
+
+  tinymce.init({
+    selector: '#isi',
+    plugins: 'image code',
+    toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | upload_image code',
+    menu: {
+      insert: { title: 'Insert', items: 'upload_image link media | template codesample insertdatetime charmap | hr pagebreak nonbreaking anchor toc' }
+    },
+    branding: false,
+    images_upload_url: '<?= base_url('admin/upload') ?>',
+    automatic_uploads: true,
+    setup: function (editor) {
+        registerTinyMceUploadButton(editor);
+    }
+  });
 </script>
 
 

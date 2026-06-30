@@ -58,8 +58,16 @@ $awal = $sek-100;
     convert_urls : true,
     height: 500,
     plugins: 'print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools colorpicker textpattern help',
-    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | blocks fontfamily fontsize | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | image | table | removeformat',
-    visual_table_class: 'tiny-table'
+    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | blocks fontfamily fontsize | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | upload_image | table | removeformat',
+    menu: {
+      insert: { title: 'Insert', items: 'upload_image link media | template codesample insertdatetime charmap | hr pagebreak nonbreaking anchor toc' }
+    },
+    visual_table_class: 'tiny-table',
+    images_upload_url: '<?= base_url('admin/upload') ?>',
+    automatic_uploads: true,
+    setup: function (editor) {
+        registerTinyMceUploadButton(editor);
+    }
   });
 // KONTEN
   tinymce.init({
@@ -72,11 +80,14 @@ $awal = $sek-100;
     plugins: 'print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools colorpicker textpattern help',
     toolbar: [
         'blocks fontfamily fontsize bold italic strikethrough forecolor backcolor copy | code fullscreen preview | save print | pagebreak anchor codesample',
-        'undo redo | alignleft aligncenter alignright alignjustify | link image media table | numlist bullist outdent indent | charmap emoticons removeformat | ltr rtl'
+        'undo redo | alignleft aligncenter alignright alignjustify | link upload_image media table | numlist bullist outdent indent | charmap emoticons removeformat | ltr rtl'
     ],
+    menu: {
+      insert: { title: 'Insert', items: 'upload_image link media | template codesample insertdatetime charmap | hr pagebreak nonbreaking anchor toc' }
+    },
     visual_table_class: 'tiny-table',
-
-    
+    images_upload_url: '<?= base_url('admin/upload') ?>',
+    automatic_uploads: true,
 
     // Integrasi Bootstrap
     content_style: `
@@ -89,6 +100,7 @@ $awal = $sek-100;
 
     // Menyesuaikan gambar agar tidak melebihi lebar textarea
     setup: function (editor) {
+        registerTinyMceUploadButton(editor);
         editor.on('init', function () {
             editor.getBody().style.maxWidth = "100%"; 
         });
@@ -104,8 +116,16 @@ $awal = $sek-100;
     convert_urls : true,
     height: 300,
     plugins: 'print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample code table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools colorpicker textpattern help',
-    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | image | table | removeformat',
-    visual_table_class: 'tiny-table'
+    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | upload_image | table | removeformat',
+    menu: {
+      insert: { title: 'Insert', items: 'upload_image link media | template codesample insertdatetime charmap | hr pagebreak nonbreaking anchor toc' }
+    },
+    visual_table_class: 'tiny-table',
+    images_upload_url: '<?= base_url('admin/upload') ?>',
+    automatic_uploads: true,
+    setup: function (editor) {
+        registerTinyMceUploadButton(editor);
+    }
   });
 
 </script>
@@ -554,6 +574,200 @@ if (Session()->get('username')) {
   });
 </script>
 <?php } ?>
+
+<style>
+.icon-select-item {
+  cursor: pointer;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px 10px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease-in-out;
+  background: #f8f9fa;
+  color: #495057;
+}
+.icon-select-item:hover {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,123,255,0.2);
+}
+.icon-select-item i {
+  font-size: 24px;
+  margin-bottom: 6px;
+  display: block;
+}
+.icon-select-item span {
+  font-size: 11px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+  let iconInputs = $('input[type="text"][name="icon"]');
+  if (iconInputs.length === 0) return; // Sangat Efisien: Keluar langsung jika tidak ada input icon di halaman ini!
+
+  // 1. Bungkus input dengan Input-Group Bootstrap secara dinamis
+  iconInputs.each(function(index, el) {
+    let input = $(el);
+    let wrapperId = 'icon-picker-wrap-' + index;
+    let previewId = 'icon-preview-' + index;
+
+    input.wrap('<div class="input-group" id="' + wrapperId + '"></div>');
+    let wrapper = $('#' + wrapperId);
+
+    let currentVal = input.val() || 'fas fa-star';
+    if (currentVal && !currentVal.includes('fa')) {
+        currentVal = 'fas fa-' + currentVal;
+    } else if (currentVal && !currentVal.startsWith('fa')) {
+        currentVal = 'fas ' + currentVal;
+    }
+
+    // Pasang preview box di depan input
+    wrapper.prepend(`
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light text-primary" style="width: 45px; justify-content: center;"><i id="${previewId}" class="${currentVal}"></i></span>
+      </div>
+    `);
+
+    // Pasang tombol Pilih di belakang input
+    wrapper.append(`
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary btn-picker-trigger" type="button" data-input-idx="${index}"><i class="fas fa-search"></i> Pilih Icon</button>
+      </div>
+    `);
+
+    // Event listener saat input diketik manual
+    input.on('input change', function() {
+        let val = $(this).val();
+        if (val) {
+            if (!val.includes('fa')) {
+                val = 'fas fa-' + val;
+            } else if (!val.startsWith('fa')) {
+                val = 'fas ' + val;
+            }
+            $('#' + previewId).attr('class', val);
+        } else {
+            $('#' + previewId).attr('class', 'fas fa-star');
+        }
+    });
+  });
+
+  let modalInitialized = false;
+  let activeInput = null;
+  let activePreview = null;
+
+  // Aksi Klik tombol Pilih Icon (Lazy Load Modal)
+  $(document).on('click', '.btn-picker-trigger', function() {
+      let idx = $(this).data('input-idx');
+      activeInput = $(iconInputs[idx]);
+      activePreview = $('#icon-preview-' + idx);
+      
+      // Modal baru digenerate & disuntikkan ke DOM saat tombol diklik pertama kali
+      if (!modalInitialized) {
+          initializeIconPickerModal();
+          modalInitialized = true;
+      }
+      
+      $('#searchIconInput').val('').trigger('input');
+      $('#iconPickerModal').modal('show');
+  });
+
+  // Fungsi menyuntikkan Modal HTML dan Icon List hanya saat dibutuhkan
+  function initializeIconPickerModal() {
+      const faIcons = [
+        'fa-home', 'fa-school', 'fa-graduation-cap', 'fa-book', 'fa-book-reader', 'fa-chalkboard-teacher',
+        'fa-user-graduate', 'fa-university', 'fa-certificate', 'fa-award', 'fa-trophy', 'fa-medal',
+        'fa-newspaper', 'fa-calendar-alt', 'fa-calendar-check', 'fa-images', 'fa-video', 'fa-music',
+        'fa-bullhorn', 'fa-bell', 'fa-envelope', 'fa-phone', 'fa-map-marker-alt', 'fa-globe',
+        'fa-briefcase', 'fa-users', 'fa-user-tie', 'fa-user-friends', 'fa-child', 'fa-building',
+        'fa-info-circle', 'fa-question-circle', 'fa-exclamation-triangle', 'fa-shield-alt', 'fa-key',
+        'fa-lock', 'fa-unlock', 'fa-cog', 'fa-cogs', 'fa-wrench', 'fa-laptop', 'fa-desktop', 'fa-tablet-alt',
+        'fa-mobile-alt', 'fa-wifi', 'fa-server', 'fa-database', 'fa-code', 'fa-terminal', 'fa-chart-bar',
+        'fa-chart-pie', 'fa-chart-line', 'fa-comments', 'fa-comment-alt', 'fa-check', 'fa-check-circle',
+        'fa-times', 'fa-times-circle', 'fa-star', 'fa-star-half-alt', 'fa-heart', 'fa-thumbs-up',
+        'fa-plus', 'fa-plus-circle', 'fa-minus', 'fa-minus-circle', 'fa-edit', 'fa-trash-alt',
+        'fa-download', 'fa-upload', 'fa-cloud-upload-alt', 'fa-cloud-download-alt', 'fa-eye', 'fa-eye-slash',
+        'fa-search', 'fa-history', 'fa-sync', 'fa-redo', 'fa-undo', 'fa-file', 'fa-file-pdf', 'fa-file-word',
+        'fa-file-excel', 'fa-file-powerpoint', 'fa-file-archive', 'fa-archive', 'fa-clipboard-list',
+        'fa-list-ol', 'fa-list-ul', 'fa-tasks', 'fa-flag', 'fa-link', 'fa-external-link-alt', 'fa-hashtag',
+        'fa-at', 'fa-paper-plane', 'fa-address-book', 'fa-address-card', 'fa-id-card', 'fa-wallet',
+        'fa-credit-card', 'fa-money-bill-wave', 'fa-shopping-cart', 'fa-gift', 'fa-tag', 'fa-bookmark',
+        'fa-calculator', 'fa-clock', 'fa-compass', 'fa-map', 'fa-road', 'fa-lightbulb', 'fa-rocket',
+        'fa-flask', 'fa-microscope', 'fa-atom', 'fa-brain', 'fa-pencil-alt', 'fa-pen', 'fa-marker',
+        'fa-eraser', 'fa-ruler', 'fa-folder', 'fa-folder-open', 'fa-save', 'fa-print', 'fa-camera',
+        'fa-microphone', 'fa-headphones'
+      ];
+
+      // Suntikkan modal HTML ke dasar body
+      $('body').append(`
+        <div class="modal fade" id="iconPickerModal" tabindex="-1" role="dialog" aria-labelledby="iconPickerModalLabel" aria-hidden="true" style="z-index: 9999;">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="iconPickerModalLabel"><i class="fas fa-search mr-2"></i> Pilih Icon Font Awesome</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <input type="text" id="searchIconInput" class="form-control" placeholder="Cari icon... (contoh: school, book, news, user, home)">
+                </div>
+                <hr>
+                <div class="row text-center" id="iconContainer" style="max-height: 380px; overflow-y: auto; padding: 5px;"></div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+
+      // Generate HTML item icon ke dalam container modal
+      let iconHtml = '';
+      faIcons.forEach(function(icon) {
+        iconHtml += `
+          <div class="col-3 col-sm-2 icon-item-wrapper" data-icon="${icon}">
+            <div class="icon-select-item">
+              <i class="fas ${icon}"></i>
+              <span>${icon.replace('fa-', '')}</span>
+            </div>
+          </div>
+        `;
+      });
+      $('#iconContainer').html(iconHtml);
+
+      // Fungsi Pencarian/Filter Icon
+      $('#searchIconInput').on('input', function() {
+          let query = $(this).val().toLowerCase().trim();
+          $('.icon-item-wrapper').each(function() {
+              let name = $(this).data('icon').toLowerCase();
+              if (name.includes(query)) {
+                  $(this).show();
+              } else {
+                  $(this).hide();
+              }
+          });
+      });
+  }
+
+  // Aksi Memilih Icon di Modal
+  $(document).on('click', '.icon-select-item', function() {
+      if (activeInput) {
+          let chosenIcon = $(this).find('i').attr('class');
+          activeInput.val(chosenIcon).trigger('change');
+          $('#iconPickerModal').modal('hide');
+      }
+  });
+});
+</script>
 
 </body>
 </html>
