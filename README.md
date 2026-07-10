@@ -100,22 +100,11 @@ Aplikasi dapat diakses dengan cara:
 
 ## 📁 Struktur Direktori Penting
 
-*   [`app/Controllers/`](file:///c:/laragon/www/websitesekolah-main/app/Controllers) - Logika kontroler utama aplikasi.
-*   [`app/Models/`](file:///c:/laragon/www/websitesekolah-main/app/Models) - Logika interaksi database.
-*   [`app/Views/`](file:///c:/laragon/www/websitesekolah-main/app/Views) - Template tampilan web (Front-End & Back-End).
-*   [`public/`](file:///c:/laragon/www/websitesekolah-main/public) - Aset publik (CSS, JS, Gambar) dan entry point utama `index.php`.
-*   [`assets/`](file:///c:/laragon/www/websitesekolah-main/assets) - Kumpulan plugin, vendor, dan aset asset-management.
+*   [`app/Controllers/`] - Logika kontroler utama aplikasi.
+*   [`app/Models/`] - Logika interaksi database.
+*   [`app/Views/`] - Template tampilan web (Front-End & Back-End).
+*   [`public/`]) - Aset publik (CSS, JS, Gambar) dan entry point utama `index.php`.
+*   [`assets/`] - Kumpulan plugin, vendor, dan aset asset-management.
 
 ---
-
-## 🔄 Pembaruan Terbaru (Changelog)
-
-*   **Pembersihan Berkas & Data Sentral (Cascading Delete - OOP/MVC):** Penerapan method `deleteSiswaCascading()` di `Siswa_model` untuk menghapus secara aman berkas pasfoto fisik (`assets/upload/image/`), berkas dokumen persyaratan (`assets/upload/pendaftaran/`), serta data relasi tabel database (`dokumen`, `siswa_rombel`, `siswa_logs`) secara otomatis saat pendaftar dihapus.
-*   **Redesain Bar Pintasan SPMB Beranda:** Bar horizontal ramping bertema hijau sekolah di bawah banner utama dengan tombol aksi dinamis (Daftar & Portal/Dasbor Siswa) berbasis status login siswa.
-*   **Perbaikan Pengunduhan Template Impor Excel:** Penambahan modul pembuat spreadsheet Excel dinamis 30 kolom (`template-siswa.xlsx`) menggunakan library `PhpSpreadsheet` di menu admin.
-*   **Proteksi Halaman Gelombang Pendaftaran:** Penanganan halaman kosong (*empty state*) pendaftaran siswa dengan Alert Warning interaktif dan WhatsApp floating widget jika tidak ada gelombang pendaftaran aktif.
-*   **Peningkatan Keamanan Pendaftaran:** Menghapus field status pendaftaran disabled dari form biodata siswa dan mengenkripsi kata sandi pendaftar baru menggunakan `PASSWORD_DEFAULT`.
-*   **Visual Risiko Admin:** Mengubah warna tombol aksi hapus siswa menjadi merah (`btn-danger`) di data master siswa admin.
-
-
 
